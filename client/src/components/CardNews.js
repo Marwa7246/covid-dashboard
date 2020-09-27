@@ -34,27 +34,32 @@ import styles from "assets/jss/material-dashboard-react/views/dashboardStyle.js"
 
 const useStyles = makeStyles(styles);
 
-export default function CardDashboard(props) {
-  const { statType, value, statColor, statIcon, updated } = props;
-  // console.log(props)
+export default function CardNews(props) {
+  const {
+    newsImage,
+    newsTitle,
+    newsDescription,
+    newsContent,
+    newsPublishedAt,
+  } = props;
+  // console.log(props);
 
   const classes = useStyles();
   return (
     <div>
       <Card>
-        <CardHeader color={statColor} stats icon>
-          <CardIcon color={statColor}>
-            <Icon>{statIcon}</Icon>
+        <CardHeader>
+          <CardIcon>
+            <Icon>{newsImage}</Icon>
           </CardIcon>
-          <p className={classes.cardCategory}>{statType}</p>
-          <h3 className={classes.cardTitle}>
-            {value} <small>per one Million</small>
-          </h3>
+          <h4 className={classes.cardCategory}>{newsTitle}</h4>
+          <p className={classes.cardTitle}>{newsDescription}</p>
+          <p className={classes.cardTitle}>{newsContent}</p>
         </CardHeader>
         <CardFooter stats>
           <div className={classes.stats}>
             <a href="#pablo" onClick={(e) => e.preventDefault()}>
-              updated {updated} {}
+              Published At: {newsPublishedAt} {}
             </a>
           </div>
         </CardFooter>
