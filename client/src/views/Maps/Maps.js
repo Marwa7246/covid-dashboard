@@ -3,13 +3,17 @@ import {
   withScriptjs,
   withGoogleMap,
   GoogleMap,
+  InfoWindow,
   Marker
 } from "react-google-maps";
+
+import useApplicationMapData from '../../hooks/useApplicationMapData';
+
 
 const CustomSkinMap = withScriptjs(
   withGoogleMap(() => (
     <GoogleMap
-      defaultZoom={13}
+      defaultZoom={3}
       defaultCenter={{ lat: 40.748817, lng: -73.985428 }}
       defaultOptions={{
         scrollwheel: false,
@@ -76,15 +80,48 @@ const CustomSkinMap = withScriptjs(
         ]
       }}
     >
-      <Marker position={{ lat: 40.748817, lng: -73.985428 }} />
+      <Marker position={{ lat: -10.748817, lng: 50.985428 }} />
+      <Marker position={{ lat: 10.748817, lng: -50.985428 }} />
+
     </GoogleMap>
   ))
 );
+const googleUrl = `https://maps.googleapis.com/maps/api/js?key=1${process.env.REACT_APP_API_KEY}`;
+console.log(googleUrl)
 
 export default function Maps() {
+  const { stateMap } = useApplicationMapData();
+  
+  console.log(stateMap)
+  let geoJson={};
+
+  if(!stateMap.loading) {
+    const mapData = stateMap.mapData
+    geoJson = {
+      type: 'FeatureCollection',
+      features: mapData.map((country = {}) => {
+        const { countryInfo = {} } = country;
+        const { lat, long: lng } = countryInfo;
+        return {
+          type: 'Feature',
+          properties: {
+           ...country,
+          },
+          geometry: {
+            type: 'Point',
+            coordinates: [ lng, lat ]
+          }
+        }
+      })
+    }
+  }
+
+console.log(geoJson)
+
+
   return (
     <CustomSkinMap
-      googleMapURL="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"
+      googleMapURL={googleUrl}
       loadingElement={<div style={{ height: `100%` }} />}
       containerElement={<div style={{ height: `100vh` }} />}
       mapElement={<div style={{ height: `100%` }} />}
