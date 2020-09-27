@@ -7,7 +7,7 @@ import {
   Marker
 } from "react-google-maps";
 
-import useApplicationMapData from '../../hooks/useApplicationMapData';
+import useApplicationMapData from '../hooks/useApplicationMapData';
 
 
 const CustomSkinMap = withScriptjs(
