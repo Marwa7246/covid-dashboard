@@ -113,15 +113,15 @@ export default function Application({ ...rest } ) {
           <StateContext.Provider value={state}>
 
           <Sidebar
-        routes={routes}
-        logoText={"COVID DASHBOARD"}
-        logo={logo}
-        image={image}
-        handleDrawerToggle={handleDrawerToggle}
-        open={mobileOpen}
-        color={color}
-        {...rest}
-      />
+            routes={routes}
+            logoText={"COVID DASHBOARD"}
+            logo={logo}
+            image={image}
+            handleDrawerToggle={handleDrawerToggle}
+            open={mobileOpen}
+            color={color}
+            {...rest}
+          />
       <div className={classes.mainPanel} ref={mainPanel}>
         <Navbar
           routes={routes}
