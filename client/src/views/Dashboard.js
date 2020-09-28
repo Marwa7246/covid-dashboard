@@ -17,12 +17,10 @@ import styles from "assets/jss/material-dashboard-react/views/dashboardStyle.js"
 
 import "../App.scss";
 
-import useApplicationData from "../hooks/useApplicationData";
 
 const useStyles = makeStyles(styles);
 
-export default function Dashboard() {
-  const { state, dispatch } = useApplicationData();
+export default function Dashboard({state}) {
 
   // const userList = state.users.map((user) => (
   //   <li key={user.id}>
@@ -89,6 +87,7 @@ export default function Dashboard() {
             statColor={"warning"}
             statIcon={"local_hospital_outline"}
             updated={state.yesterdayGlobal.updated}
+
           />
         </GridItem>
 
@@ -102,6 +101,7 @@ export default function Dashboard() {
             statColor={"danger"}
             statIcon={"warning"}
             updated={state.yesterdayGlobal.updated}
+
           />
         </GridItem>
       </GridContainer>
@@ -116,6 +116,7 @@ export default function Dashboard() {
             }
             statColor={"info"}
             statIcon={"info_outlined"}
+
           />
         </GridItem>
 
@@ -128,6 +129,7 @@ export default function Dashboard() {
             }
             statColor={"primary"}
             statIcon={"add_alert_outlined"}
+
           />
         </GridItem>
 
@@ -140,6 +142,7 @@ export default function Dashboard() {
             }
             statColor={"danger"}
             statIcon={"local_hotel_outlined"}
+
           />
         </GridItem>
       </GridContainer>
@@ -152,11 +155,12 @@ export default function Dashboard() {
             days={days}
             series={casesRecovered}
             type="Line"
+
           />
         </GridItem>
 
         <GridItem xs={12} sm={12} md={4}>
-          <ChartPie />
+          <ChartPie  state={state}/>
         </GridItem>
 
         <GridItem xs={12} sm={12} md={4}>
@@ -167,7 +171,7 @@ export default function Dashboard() {
             series={cases}
             type="Bar"
             warning="warning"
-          />
+            />
         </GridItem>
       </GridContainer>
     </div>

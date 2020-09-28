@@ -23,12 +23,9 @@ import styles from "assets/jss/material-dashboard-react/views/dashboardStyle.js"
 const useStyles = makeStyles(styles);
 
 
-export default function CasesChart({color, days, series, title, type, warning}) {
+export default function CasesChart({color, days, series, title, type, warning, state}) {
 
-  // console.log(days)
-
-  // const { state, dispatch } = useApplicationData();
-  // console.log(state)
+  
 
   // const globalHistorical =state.globalHistorical 
 
@@ -130,7 +127,7 @@ return (
               {series && <p className={classes.cardCategory}>
                                
                 <span className={classColorText}>
-                {warning && <i class="fa fa-exclamation-triangle"></i>}
+                {warning && <i className="fa fa-exclamation-triangle"></i>}
                 <ArrowUpward className={classes.upArrowCardCategory} /> {Math.floor(Math.max(...series)- Math.max(...series) / Math.max(...series) )}
                 </span>{" "}
                 increase.

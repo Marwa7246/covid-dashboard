@@ -30,30 +30,53 @@ import Icons from "views/Icons/Icons.js";
 import Maps from "views/Maps.js";
 import Login from "views/Login"
 import Signup from "views/Signup"
+import { isPropertySignature } from "typescript";
 
 
 let ps;
 
-const switchRoutes = (
-  <Switch>
-    {routes.map((prop, key) => {
-      console.log(prop)
-        return (
-          <Route
-            path={prop.path}
-            component={prop.component}
-            key={key}
-          />
-        );
-    })}
-    <Redirect from="/" to="/dashboard" />
-  </Switch>
-);
+// const switchRoutes = (
+//   <Switch>
+//     {routes.map((prop, key) => {
+//       console.log(prop)
+//         return (
+//           <Route
+//             path={prop.path}
+//             component={prop.component}
+//             key={key}
+//           />
+//         );
+//     })}
+//     <Redirect from="/" to="/dashboard" />
+//   </Switch>
+// );
 
 const useStyles = makeStyles(styles);
 
 export default function Application({ ...rest } ) {
+
+
+
   const { state, dispatch } = useApplicationData();
+
+
+  const switchRoutes = (
+    <Switch>
+      {routes.map((prop, key) => {
+        console.log(prop)
+          if (prop.name === 'Dashboard') return (<Route key={key}path={prop.path}><Dashboard state={state}/></Route>);
+          if (prop.name === 'Maps') return (<Route key={key}path={prop.path}><Maps state={state}/></Route>);
+          if (prop.name === 'News') return (<Route key={key}path={prop.path}><News state={state}/></Route>);
+          if (prop.name === 'Favourites') return (<Route key={key}path={prop.path}><Favourites state={state}/></Route>);
+          return (<Route key={key}path={prop.path}>{prop.component}</Route>);
+
+      })}
+      <Redirect from="/" to="/dashboard" />
+    </Switch>
+  );
+
+
+
 
   // styles
   const classes = useStyles();

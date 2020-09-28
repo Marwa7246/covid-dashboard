@@ -2,14 +2,16 @@ import { useEffect, useReducer } from "react";
 import axios from "axios";
 import dataReducer, {
   SET_USERS,
-  SET_HISTORICAL_GLOBAL,
-  SET_YESTERDAY_CONTINENTS,
-  SET_YESTERDAY_GLOBAL,
-  SET_WORLD_COVID_NEWS,
+  // SET_HISTORICAL_GLOBAL,
+  // SET_YESTERDAY_CONTINENTS,
+  // SET_YESTERDAY_GLOBAL,
+  // SET_MAP_DATA,
+  // SET_WORLD_COVID_NEWS,
+  SET_APPLICATION_DATA,
 } from "../reducers/dataReducer";
 require("dotenv").config();
 
-const WORLD_COVID_NEWS_URL = `http://newsapi.org/v2/top-headlines?apiKey=${process.env.REACT_APP_NEWS_API_KEY}&lang=en&q=covid&sortby=publishedAt`;
+const newsUrl = `http://newsapi.org/v2/top-headlines?apiKey=${process.env.REACT_APP_NEWS_API_KEY}&lang=en&q=covid&sortby=publishedAt`;
 
 const useApplicationData = () => {
   const [state, dispatch] = useReducer(dataReducer, {
@@ -17,62 +19,36 @@ const useApplicationData = () => {
     globalHistorical: {},
     yesterdayContinents: [],
     yesterdayGlobal: {},
+    mapData: [],
     worldCovidNews: {},
     loading: true,
   });
 
-  useEffect(() => {
-    axios({
-      method: "GET",
-      url: "/api/users",
-    }).then(({ data }) => {
-      // update the state with the result
-      dispatch({ type: SET_USERS, users: data });
-    });
-  }, []);
 
   useEffect(() => {
-    axios({
-      method: "GET",
-      url: "https://disease.sh/v3/covid-19/historical/all?lastdays=20",
-    }).then(({ data }) => {
+    Promise.all([
+    axios.get(" https://disease.sh/v3/covid-19/continents"),
+    axios.get(" https://disease.sh/v3/covid-19/historical/all?lastdays=20"),
+    axios.get(" https://disease.sh/v3/covid-19/all"),
+    axios.get(" https://disease.sh/v3/covid-19/countries"),
+    axios.get(newsUrl)
+  ]).then((all) => {
+    console.log(all)
       // update the state with the result
-      dispatch({ type: SET_HISTORICAL_GLOBAL, globalHistorical: data });
+      dispatch({ 
+        type: SET_APPLICATION_DATA, 
+        yesterdayContinents: all[0].data,
+        globalHistorical: all[1].data,
+        yesterdayGlobal: all[2].data,
+        mapData: all[3].data,
+        worldCovidNews: all[4].data, 
+      });
+
       // console.log(data);
     });
   }, []);
 
-  useEffect(() => {
-    axios({
-      method: "GET",
-      url: " https://disease.sh/v3/covid-19/continents",
-    }).then(({ data }) => {
-      // update the state with the result
-      dispatch({ type: SET_YESTERDAY_CONTINENTS, yesterdayContinents: data });
-      // console.log(data);
-    });
-  }, []);
 
-  useEffect(() => {
-    axios({
-      method: "GET",
-      url: " https://disease.sh/v3/covid-19/all",
-    }).then(({ data }) => {
-      // update the state with the result
-      dispatch({ type: SET_YESTERDAY_GLOBAL, yesterdayGlobal: data });
-      // console.log(data);
-    });
-  }, []);
-
-  useEffect(() => {
-    axios({
-      method: "GET",
-      url: WORLD_COVID_NEWS_URL,
-    }).then(({ data }) => {
-      // update the state with the result
-      dispatch({ type: SET_WORLD_COVID_NEWS, worldCovidNews: data });
-    });
-  }, []);
 
   return {
     state,
