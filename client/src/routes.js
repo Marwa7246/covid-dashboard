@@ -16,14 +16,14 @@
 
 */
 // @material-ui/icons
-import Dashboard from "@material-ui/icons/Dashboard";
+import DashboardIcon from "@material-ui/icons/Dashboard";
 import Person from "@material-ui/icons/Person";
 import LibraryBooks from "@material-ui/icons/LibraryBooks";
 import BubbleChart from "@material-ui/icons/BubbleChart";
 import LocationOn from "@material-ui/icons/LocationOn";
 import Notifications from "@material-ui/icons/Notifications";
-// core components/views for Admin layout
-import DashboardPage from "views/Dashboard.js";
+ 
+import Dashboard from "views/Dashboard.js";
 import News from "views/News/News.js";
 import Favourites from "views/Favourites.js";
 import Icons from "views/Icons/Icons.js";
@@ -36,9 +36,8 @@ const dashboardRoutes = [
   {
     path: "/dashboard",
     name: "Dashboard",
-    icon: Dashboard,
-    component: DashboardPage,
-    layout: "/admin",
+    icon: DashboardIcon,
+    component: Dashboard,
   },
   
   
@@ -47,45 +46,41 @@ const dashboardRoutes = [
     name: "News",
     icon: LibraryBooks,
     component: News,
-    layout: "/admin",
   },
   
-  {
-    path: "/icons",
-    name: "Icons",
-    icon: BubbleChart,
-    component: Icons,
-    layout: "/admin",
-  },
+ 
   {
     path: "/maps",
     name: "Maps",
     icon: LocationOn,
     component: Maps,
-    layout: "/admin",
   },
   {
     path: "/login",
     name: "Login",
     icon: Person,
     component: Login,
-    layout: "/admin",
   },
   
   {
     path: "/signup",
     name: "Sign-up",
-    icon: Notifications,
+    icon: Person,
     component: Signup,
-    layout: "/admin",
   },
   {
     path: "/favourites",
     name: "Favourites",
     icon: Notifications,
     component: Favourites,
-    layout: "/admin",
   },
+  // {
+  //   path: "/icons",
+  //   name: "Icons",
+  //   icon: BubbleChart,
+  //   component: Icons,
+  //   layout: "/admin",
+  // },
     
 ];
 

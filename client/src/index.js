@@ -17,24 +17,25 @@
 */
 import React from "react";
 import ReactDOM from "react-dom";
-import { createBrowserHistory } from "history";
+// import { createBrowserHistory } from "history";
 import { Router, Route, Switch, Redirect } from "react-router-dom";
 import App from './App';
 
 // core components
-import Admin from "layouts/Admin.js";
+import Application from "./components/Application/Application";
 
 import "assets/css/material-dashboard-react.css?v=1.9.0";
 
-const hist = createBrowserHistory();
+// const hist = createBrowserHistory();
 
-ReactDOM.render(
-  <Router history={hist}>
-    <Switch>
-      <Route path="/admin" component={Admin} />
-      <Redirect from="/" to="/admin/dashboard" />
-    </Switch>
-  </Router>,
-  document.getElementById("root")
-);
-// ReactDOM.render(<App />, document.getElementById('root'));
+// ReactDOM.render(
+//   <Router >
+//     <Switch>
+//       {<Application />}
+//       <Route path="/" component={Application} />
+//       <Redirect from="/" to="/dashboard" />
+//     </Switch>
+//   </Router>,
+//   document.getElementById("root")
+// );
+  ReactDOM.render(<Application />, document.getElementById('root'));
