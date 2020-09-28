@@ -5,10 +5,10 @@ import PropTypes from "prop-types";
 // nodejs library that concatenates classes
 import classnames from "classnames";
 
-import imagine1 from "assets/img/sidebar-1.jpg";
-import imagine2 from "assets/img/sidebar-2.jpg";
-import imagine3 from "assets/img/sidebar-3.jpg";
-import imagine4 from "assets/img/sidebar-4.jpg";
+import imagine1 from "assets/img/africa.png";
+import imagine2 from "assets/img/asia.png";
+import imagine3 from "assets/img/north_america.png";
+import imagine4 from "assets/img/south_america.png";
 
 import Button from "components/CustomButtons/Button.js";
 
@@ -21,78 +21,17 @@ export default function FixedPlugin(props) {
   };
   return (
     <div
-      className={classnames("fixed-plugin", {
-        "rtl-fixed-plugin": props.rtlActive
-      })}
+      className={classnames("fixed-plugin")}
     >
       <div id="fixedPluginClasses" className={props.fixedClasses}>
         <div onClick={handleClick}>
           <i className="fa fa-cog fa-2x" />
         </div>
         <ul className="dropdown-menu">
-          <li className="header-title">SIDEBAR FILTERS</li>
-          <li className="adjustments-line">
-            <a className="switch-trigger">
-              <div>
-                <span
-                  className={
-                    props.bgColor === "purple"
-                      ? "badge filter badge-purple active"
-                      : "badge filter badge-purple"
-                  }
-                  data-color="purple"
-                  onClick={() => {
-                    props.handleColorClick("purple");
-                  }}
-                />
-                <span
-                  className={
-                    props.bgColor === "blue"
-                      ? "badge filter badge-blue active"
-                      : "badge filter badge-blue"
-                  }
-                  data-color="blue"
-                  onClick={() => {
-                    props.handleColorClick("blue");
-                  }}
-                />
-                <span
-                  className={
-                    props.bgColor === "green"
-                      ? "badge filter badge-green active"
-                      : "badge filter badge-green"
-                  }
-                  data-color="green"
-                  onClick={() => {
-                    props.handleColorClick("green");
-                  }}
-                />
-                <span
-                  className={
-                    props.bgColor === "red"
-                      ? "badge filter badge-red active"
-                      : "badge filter badge-red"
-                  }
-                  data-color="red"
-                  onClick={() => {
-                    props.handleColorClick("red");
-                  }}
-                />
-                <span
-                  className={
-                    props.bgColor === "orange"
-                      ? "badge filter badge-orange active"
-                      : "badge filter badge-orange"
-                  }
-                  data-color="orange"
-                  onClick={() => {
-                    props.handleColorClick("orange");
-                  }}
-                />
-              </div>
-            </a>
+          <li className="header-title">Options</li>
+          <li className="adjustments-line">            
           </li>
-          <li className="header-title">Images</li>
+          <li className="header-title">Zoom on a specif continent map</li>
           <li className={bgImage === imagine1 ? "active" : ""}>
             <a
               className="img-holder switch-trigger"
@@ -142,11 +81,11 @@ export default function FixedPlugin(props) {
             <div className="button-container">
               <Button
                 color="success"
-                href="https://www.creative-tim.com/product/material-dashboard-react?ref=mdr-fixed-plugin"
+                href="#"
                 target="_blank"
                 fullWidth
               >
-                Download free!
+                Login First
               </Button>
             </div>
           </li>
@@ -154,24 +93,15 @@ export default function FixedPlugin(props) {
             <div className="button-container">
               <Button
                 color="warning"
-                href="https://www.creative-tim.com/product/material-dashboard-pro-react?ref=mdr-fixed-plugin"
+                href="#"
                 target="_blank"
                 fullWidth
               >
-                Get PRO version
+                Don't Have an account? Signup
               </Button>
             </div>
           </li>
-          <li className="button-container">
-            <Button
-              color="info"
-              fullWidth
-              href="https://demos.creative-tim.com/material-dashboard-react/#/documentation/tutorial?ref=mdr-fixed-plugin"
-              target="_blank"
-            >
-              Documentation
-            </Button>
-          </li>
+       
           <li className="adjustments-line" />
         </ul>
       </div>
