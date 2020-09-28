@@ -39,8 +39,7 @@ const dashboardRoutes = [
     icon: DashboardIcon,
     component: Dashboard,
   },
-  
-  
+
   {
     path: "/news",
     name: "News",
