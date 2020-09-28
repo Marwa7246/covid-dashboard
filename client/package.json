@@ -11,6 +11,8 @@
     "chartist-plugin-legend": "^0.6.2",
     "classnames": "2.2.6",
     "history": "4.10.1",
+    "material-ui-image": "^3.2.4",
+    "moment": "^2.29.0",
     "node-sass": "^4.14.1",
     "nodemon": "^2.0.4",
     "perfect-scrollbar": "1.5.0",
