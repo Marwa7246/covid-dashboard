@@ -34,13 +34,14 @@ export default function News() {
             let localTime = moment(publishedTime)
               .local()
               .format("YYYY-MM-DD HH:mm");
+            let timeFormat = moment(localTime).fromNow();
             return (
               <GridItem xs={12} sm={12} md={12}>
                 <CardNews
                   newsTitle={item.title}
                   newsDescription={item.description}
                   newsURL={item.url}
-                  newsPublishedAt={localTime}
+                  newsPublishedAt={timeFormat}
                 />
               </GridItem>
             );

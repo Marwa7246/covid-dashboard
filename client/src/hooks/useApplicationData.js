@@ -7,10 +7,9 @@ import dataReducer, {
   SET_YESTERDAY_GLOBAL,
   SET_WORLD_COVID_NEWS,
 } from "../reducers/dataReducer";
+require("dotenv").config();
 
-// const API_KEY = process.env.NEWS_API_KEY;
-// const NEWS_URL = `http://newsapi.org/v2/top-headlines?apiKey=${API_KEY}&lang=en&q=covid&sortby=publishedAt`;
-// console.log("NEWS_URL is @@@@@@@", NEWS_URL);
+const WORLD_COVID_NEWS_URL = `http://newsapi.org/v2/top-headlines?apiKey=${process.env.REACT_APP_NEWS_API_KEY}&lang=en&q=covid&sortby=publishedAt`;
 
 const useApplicationData = () => {
   const [state, dispatch] = useReducer(dataReducer, {
@@ -66,18 +65,12 @@ const useApplicationData = () => {
   }, []);
 
   useEffect(() => {
-    // ****** Place API key in the environment variables ****
     axios({
       method: "GET",
-      url:
-        // NEWS_URL,
-        "http://newsapi.org/v2/top-headlines?apiKey=93894a50640e4b77a88f4d1b8c720c4d&language=en&q=covid&sortby=publishedAt",
+      url: WORLD_COVID_NEWS_URL,
     }).then(({ data }) => {
       // update the state with the result
       dispatch({ type: SET_WORLD_COVID_NEWS, worldCovidNews: data });
-      // console.log(
-      //  "useApplicationData.js @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
-      // console.log(data);
     });
   }, []);
 
