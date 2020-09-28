@@ -20,14 +20,13 @@ import CardFooter from "components/Card/CardFooter.js";
 import styles from "assets/jss/material-dashboard-react/views/dashboardStyle.js";
 
 
-import useApplicationData from '../hooks/useApplicationData';
+
 
 const useStyles = makeStyles(styles);
 
 
-export default function ChartPie() {
+export default function ChartPie({state}) {
 
-  const { state, dispatch } = useApplicationData();
   //  console.log(state)
 
   const yesterdayContinents =state.yesterdayContinents 

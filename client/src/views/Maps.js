@@ -7,8 +7,6 @@ import {
   Marker
 } from "react-google-maps";
 
-import useApplicationMapData from '../hooks/useApplicationMapData';
-
 
 const CustomSkinMap = withScriptjs(
   withGoogleMap(() => (
@@ -86,17 +84,15 @@ const CustomSkinMap = withScriptjs(
     </GoogleMap>
   ))
 );
-const googleUrl = `https://maps.googleapis.com/maps/api/js?key=1${process.env.REACT_APP_API_KEY}`;
+const googleUrl = `https://maps.googleapis.com/maps/api/js?key=1${process.env.REACT_APP_MAPS_API_KEY}`;
 console.log(googleUrl)
 
-export default function Maps() {
-  const { stateMap } = useApplicationMapData();
+export default function Maps({ state }) {
   
-  console.log(stateMap)
   let geoJson={};
 
-  if(!stateMap.loading) {
-    const mapData = stateMap.mapData
+  if(!state.loading) {
+    const mapData = state.mapData
     geoJson = {
       type: 'FeatureCollection',
       features: mapData.map((country = {}) => {

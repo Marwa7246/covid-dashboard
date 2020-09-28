@@ -15,12 +15,10 @@ import styles from "assets/jss/material-dashboard-react/views/dashboardStyle.js"
 
 import "../../App.scss";
 
-import useApplicationData from "../../hooks/useApplicationData";
 
 const useStyles = makeStyles(styles);
 
-export default function News() {
-  const { state, dispatch } = useApplicationData();
+export default function News({state}) {
 
   const worldCovidNews = state.worldCovidNews;
 
