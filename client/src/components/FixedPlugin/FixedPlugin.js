@@ -12,6 +12,13 @@ import imagine4 from "assets/img/south_america.png";
 
 import Button from "components/CustomButtons/Button.js";
 
+import Show from "./Show"
+import Signup from "./Signup"
+
+const SIGNUP= 'SIGNUP'
+const SHOW="SHOW";
+let mode = SIGNUP;
+
 export default function FixedPlugin(props) {
   const [classes, setClasses] = React.useState("dropdown show");
   const [bg_checked, setBg_checked] = React.useState(true);
@@ -27,9 +34,9 @@ export default function FixedPlugin(props) {
         <div onClick={handleClick}>
           <i className="fa fa-cog fa-2x" />
         </div>
-        <ul className="dropdown-menu">
-          <li className="header-title">Options</li>
-          <li className="adjustments-line">            
+        {/* <ul className="dropdown-menu"> */}
+          {/* <li className="header-title">Options</li> */}
+          {/* <li className="adjustments-line">            
           </li>
           <li className="header-title">Zoom on a specif continent map</li>
           <li className={bgImage === imagine1 ? "active" : ""}>
@@ -100,10 +107,13 @@ export default function FixedPlugin(props) {
                 Don't Have an account? Signup
               </Button>
             </div>
-          </li>
+          </li> */}
+          {mode === SHOW && <Show onSignup={()=>{console.log('signup from fixed plugin')}} />}
+          {mode === SIGNUP && <Signup onSubmit={()=>{console.log('submit from fixed plugin')}} onCancel={()=>console.log('Cancel from fixed plugin')} />}
+
        
-          <li className="adjustments-line" />
-        </ul>
+          {/* <li className="adjustments-line" /> */}
+        {/* </ul> */}
       </div>
     </div>
   );
