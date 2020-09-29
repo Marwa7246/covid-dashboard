@@ -18,19 +18,21 @@
 // @material-ui/icons
 import DashboardIcon from "@material-ui/icons/Dashboard";
 import Person from "@material-ui/icons/Person";
+import VpnKey from "@material-ui/icons/VpnKey";
+import Create from "@material-ui/icons/Create";
+import Stars from "@material-ui/icons/Stars";
 import LibraryBooks from "@material-ui/icons/LibraryBooks";
 import BubbleChart from "@material-ui/icons/BubbleChart";
 import LocationOn from "@material-ui/icons/LocationOn";
 import Notifications from "@material-ui/icons/Notifications";
- 
+
 import Dashboard from "views/Dashboard.js";
 import News from "views/News/News.js";
 import Favourites from "views/Favourites.js";
 import Icons from "views/Icons/Icons.js";
 import Maps from "views/Maps.js";
-import Login from "views/Login"
-import Signup from "views/Signup"
-
+import Login from "views/Login";
+import Signup from "views/Signup";
 
 const dashboardRoutes = [
   {
@@ -46,8 +48,7 @@ const dashboardRoutes = [
     icon: LibraryBooks,
     component: News,
   },
-  
- 
+
   {
     path: "/maps",
     name: "Maps",
@@ -57,20 +58,20 @@ const dashboardRoutes = [
   {
     path: "/login",
     name: "Login",
-    icon: Person,
+    icon: VpnKey,
     component: Login,
   },
-  
+
   {
     path: "/signup",
     name: "Sign-up",
-    icon: Person,
+    icon: Create,
     component: Signup,
   },
   {
     path: "/favourites",
     name: "Favourites",
-    icon: Notifications,
+    icon: Stars,
     component: Favourites,
   },
   // {
@@ -80,7 +81,6 @@ const dashboardRoutes = [
   //   component: Icons,
   //   layout: "/admin",
   // },
-    
 ];
 
 export default dashboardRoutes;
