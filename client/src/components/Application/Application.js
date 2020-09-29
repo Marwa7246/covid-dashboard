@@ -35,7 +35,7 @@ import Maps from "../Maps/Maps";
 import Login from "views/Login"
 import Signup from "views/Signup"
 import { isPropertySignature } from "typescript";
-import { getMapDataLayer } from "./helpers";
+import { getMapDataLayer } from "../../helpers/helpers";
 
 let ps;
 
@@ -75,7 +75,7 @@ export default function Application({ ...rest }) {
         if (prop.name === "Maps")
           return (
             <Route key={key} path={prop.path}>
-              <Maps mapData={mapData} />
+              <Maps state={state} />
             </Route>
           );
         if (prop.name === "News")
@@ -107,36 +107,7 @@ export default function Application({ ...rest }) {
             {prop.component}
           </Route>
         );
-        console.log(prop);
-        if (prop.name === "Dashboard")
-          return (
-            <Route key={key} path={prop.path}>
-              <Dashboard state={state} />
-            </Route>
-          );
-        if (prop.name === "Maps")
-          return (
-            <Route key={key} path={prop.path}>
-              <Maps mapData={mapData} />
-            </Route>
-          );
-        if (prop.name === "News")
-          return (
-            <Route key={key} path={prop.path}>
-              <News state={state} />
-            </Route>
-          );
-        if (prop.name === "Favourites")
-          return (
-            <Route key={key} path={prop.path}>
-              <Favourites state={state} />
-            </Route>
-          );
-        return (
-          <Route key={key} path={prop.path}>
-            {prop.component}
-          </Route>
-        );
+
       })}
       <Redirect from="/" to="/dashboard" />
     </Switch>
@@ -168,7 +139,7 @@ export default function Application({ ...rest }) {
     setMobileOpen(!mobileOpen);
   };
   const getRoute = () => {
-    return window.location.pathname !== "/admin/maps";
+    return window.location.pathname !== "/maps";
   };
   const resizeFunction = () => {
     if (window.innerWidth >= 960) {
@@ -195,7 +166,6 @@ export default function Application({ ...rest }) {
   }, [mainPanel]);
   return (
     <div className={classes.wrapper}>
-      {/* <Router> */}
       <DispatchContext.Provider value={dispatch}>
         <StateContext.Provider value={state}>
           <Sidebar
@@ -216,138 +186,9 @@ export default function Application({ ...rest }) {
             />
             {/* On the /maps route we want the map to be on full screen - this is not possible if the content and conatiner classes are present because they have some paddings which would make the map smaller */}
 
-            {getRoute() ? (
-              <div className={classes.content}>
-                <div className={classes.container}>{switchRoutes}</div>
-              </div>
-            ) : (
-              <div className={classes.map}>{switchRoutes}</div>
-            )}
-
-            {/* <Switch>
-              <Route exact path="/">
-                <Redirect from="/" to="/dashboard" />
-                <Sidebar
-                routes={routes}
-                logoText={"COVID DASHBOARD"}
-                logo={logo}
-                image={image}
-                handleDrawerToggle={handleDrawerToggle}
-                open={mobileOpen}
-                color={color}
-                {...rest}
-              />
-              <div className={classes.mainPanel} ref={mainPanel}>
-                <Navbar
-                  routes={routes}
-                  handleDrawerToggle={handleDrawerToggle}
-                  {...rest}
-                />
-                
-                <div className={classes.content}>            
-                  <div className={classes.container}><Dashboard /></div>
-                </div>
-                </div>
-
-              </Route>
-
-              <Route path="/dashboard">
-
-                <Sidebar
-                  routes={routes}
-                  logoText={"COVID DASHBOARD"}
-                  logo={logo}
-                  image={image}
-                  handleDrawerToggle={handleDrawerToggle}
-                  open={mobileOpen}
-                  color={color}
-                  {...rest}
-                />
-                <div className={classes.mainPanel} ref={mainPanel}>
-                  <Navbar
-                    routes={routes}
-                    handleDrawerToggle={handleDrawerToggle}
-                    {...rest}
-                  />
-                  <div className={classes.content}>            
-                    <div className={classes.container}><Dashboard /></div>
-                  </div>  
-                </div>
-
-              </Route>
-
-              <Route path="/news">
-                <Sidebar
-                  routes={routes}
-                  logoText={"COVID DASHBOARD"}
-                  logo={logo}
-                  image={image}
-                  handleDrawerToggle={handleDrawerToggle}
-                  open={mobileOpen}
-                  color={color}
-                  {...rest}
-                />
-                <div className={classes.mainPanel} ref={mainPanel}>
-                  <Navbar
-                    routes={routes}
-                    handleDrawerToggle={handleDrawerToggle}
-                    {...rest}
-                  />
-                  <div className={classes.content}>            
-                    <div className={classes.container}><News /></div>
-                  </div>   
-
-                  </div>             
-              </Route>
-
-              <Route path="/Signup">
-                <div className={classes.content}>            
-                  <div className={classes.container}><Signup /></div>
-                </div>                
-                
-              </Route>
-
-              <Route path="/login">
-                <div className={classes.content}>            
-                  <div className={classes.container}><Login /></div>
-                </div>                
-              </Route>
-              <Route path="/favourites">
-
-                <Sidebar
-                  routes={routes}
-                  logoText={"COVID DASHBOARD"}
-                  logo={logo}
-                  image={image}
-                  handleDrawerToggle={handleDrawerToggle}
-                  open={mobileOpen}
-                  color={color}
-                  {...rest}
-                />
-                <div className={classes.mainPanel} ref={mainPanel}>
-                  <Navbar
-                    routes={routes}
-                    handleDrawerToggle={handleDrawerToggle}
-                    {...rest}
-                  />
-                <div className={classes.content}>            
-                  <div className={classes.container}><Favourites /></div>
-                </div>    
-
-                </div>            
-              </Route>
-
-              <Route path="/maps">
-                <div className={classes.map}>
-                  <Maps />
-                </div>
-              </Route>
-
-              <Route path="*">
-              <div className={classes.content}><Redirect to="/dashboard" /></div>         
-              </Route>
-            </Switch> */}
-
+          <div className={classes.content}>
+            <div className={classes.container}>{switchRoutes}</div>
+          </div>
             {getRoute() ? <Footer /> : null}
             <FixedPlugin
               handleImageClick={handleImageClick}
