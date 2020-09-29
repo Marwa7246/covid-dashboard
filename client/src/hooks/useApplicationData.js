@@ -45,13 +45,13 @@ const useApplicationData = () => {
     });
   }, []);
 
-  useEffect(() => {
-    Promise.all([axios.get("/api/users")]).then((data) => {
-      // console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@", all);
-      // update the state with the result
-      dispatch({ type: SET_USERS, users: data });
-    });
-  }, []);
+  // useEffect(() => {
+  //   Promise.all([axios.get("/api/users")]).then((data) => {
+  //     // console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@", all);
+  //     // update the state with the result
+  //     dispatch({ type: SET_USERS, users: data });
+  //   });
+  // }, []);
 
   return {
     state,

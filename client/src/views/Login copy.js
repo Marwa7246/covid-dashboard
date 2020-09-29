@@ -14,7 +14,7 @@ import TextField from "@material-ui/core/TextField";
 
 import useLogin from "./useLogin";
 
-export default function Login(props) {
+export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -37,41 +37,23 @@ export default function Login(props) {
       password,
     };
 
-    
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    axios(`/api/users`, { 
-      method: 'POST',
-      headers: {
-        "Content-Type": "application/json",
-        "Accept": "application/json"
-      },
-      body: JSON.stringify({
-        email,
-        password
-      })
-    })
+    axios
+      .post(`/login`, { user })
       .then((res) => {
-        res.json();
         console.log(res);
         console.log(res.data);
         toggleLogin();
       })
-      .then(data => {
-        localStorage.setItem("token", data.jwt);
-        props.handleLogin(data.user);
-      })
       .catch((err) => {
         console.log(err);
         setError("Incorrect Email or Password!");
-      })
-      setEmail("")
-      setPassword("")   
-       
+      });
+  };
 
-    // validate();
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    validate();
   };
 
   const handleChangeEmail = (e) => {
