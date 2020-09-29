@@ -75,7 +75,7 @@ export default function Application({ ...rest }) {
         if (prop.name === "Maps")
           return (
             <Route key={key} path={prop.path}>
-              <Maps state={state} />
+              <Maps mapData={mapData} />
             </Route>
           );
         if (prop.name === "News")
