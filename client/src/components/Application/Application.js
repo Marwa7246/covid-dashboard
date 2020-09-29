@@ -31,6 +31,8 @@ import Maps from "views/Maps.js";
 import Login from "views/Login"
 import Signup from "views/Signup"
 import { isPropertySignature } from "typescript";
+import {getMapDataLayer} from './helpers'
+
 
 
 let ps;
@@ -58,14 +60,15 @@ export default function Application({ ...rest } ) {
 
 
   const { state, dispatch } = useApplicationData();
-
+  let mapData=[]
+  if (!state.loading) mapData=getMapDataLayer(state.mapData)
 
   const switchRoutes = (
     <Switch>
       {routes.map((prop, key) => {
         console.log(prop)
           if (prop.name === 'Dashboard') return (<Route key={key}path={prop.path}><Dashboard state={state}/></Route>);
-          if (prop.name === 'Maps') return (<Route key={key}path={prop.path}><Maps state={state}/></Route>);
+          if (prop.name === 'Maps') return (<Route key={key}path={prop.path}><Maps mapData={mapData}/></Route>);
           if (prop.name === 'News') return (<Route key={key}path={prop.path}><News state={state}/></Route>);
           if (prop.name === 'Favourites') return (<Route key={key}path={prop.path}><Favourites state={state}/></Route>);
           return (<Route key={key}path={prop.path}>{prop.component}</Route>);
