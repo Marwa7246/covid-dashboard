@@ -45,7 +45,7 @@ export default function Signup() {
                 <GridItem xs={12} sm={12} md={5}>
                   <CustomInput
                     labelText="Email address"
-                    id="email-address"
+                    id="email"
                     formControlProps={{
                       fullWidth: true,
                     }}
