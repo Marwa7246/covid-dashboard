@@ -17,14 +17,13 @@
 */
 // @material-ui/icons
 import DashboardIcon from "@material-ui/icons/Dashboard";
-import Person from "@material-ui/icons/Person";
+
 import VpnKey from "@material-ui/icons/VpnKey";
 import Create from "@material-ui/icons/Create";
 import Stars from "@material-ui/icons/Stars";
 import LibraryBooks from "@material-ui/icons/LibraryBooks";
-import BubbleChart from "@material-ui/icons/BubbleChart";
+
 import LocationOn from "@material-ui/icons/LocationOn";
-import Notifications from "@material-ui/icons/Notifications";
 
 import Dashboard from "views/Dashboard.js";
 import News from "views/News/News.js";

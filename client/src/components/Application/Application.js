@@ -1,5 +1,10 @@
 import React from "react";
-import { Switch, Route, Redirect, BrowserRouter as Router } from "react-router-dom";
+import {
+  Switch,
+  Route,
+  Redirect,
+  BrowserRouter as Router,
+} from "react-router-dom";
 // creates a beautiful scrollbar
 import PerfectScrollbar from "perfect-scrollbar";
 import "perfect-scrollbar/css/perfect-scrollbar.css";
@@ -13,8 +18,8 @@ import FixedPlugin from "components/FixedPlugin/FixedPlugin.js";
 
 import routes from "routes.js";
 
-import StateContext from '../../StateContext';
-import DispatchContext from '../../DispatchContext';
+import StateContext from "../../StateContext";
+import DispatchContext from "../../DispatchContext";
 
 import styles from "assets/jss/material-dashboard-react/layouts/adminStyle.js";
 
@@ -22,16 +27,14 @@ import bgImage from "assets/img/north_america.png";
 import logo from "assets/img/covid.png";
 import useApplicationData from "hooks/useApplicationData";
 
-
 import Dashboard from "views/Dashboard.js";
 import News from "views/News/News.js";
 import Favourites from "views/Favourites.js";
 import Icons from "views/Icons/Icons.js";
 import Maps from "views/Maps.js";
-import Login from "views/Login"
-import Signup from "views/Signup"
+import Login from "views/Login";
+import Signup from "views/Signup";
 import { isPropertySignature } from "typescript";
-
 
 let ps;
 
@@ -53,30 +56,58 @@ let ps;
 
 const useStyles = makeStyles(styles);
 
-export default function Application({ ...rest } ) {
-
-
-
+export default function Application({ ...rest }) {
   const { state, dispatch } = useApplicationData();
-
 
   const switchRoutes = (
     <Switch>
       {routes.map((prop, key) => {
-        console.log(prop)
-          if (prop.name === 'Dashboard') return (<Route key={key}path={prop.path}><Dashboard state={state}/></Route>);
-          if (prop.name === 'Maps') return (<Route key={key}path={prop.path}><Maps state={state}/></Route>);
-          if (prop.name === 'News') return (<Route key={key}path={prop.path}><News state={state}/></Route>);
-          if (prop.name === 'Favourites') return (<Route key={key}path={prop.path}><Favourites state={state}/></Route>);
-          return (<Route key={key}path={prop.path}>{prop.component}</Route>);
-
+        console.log(prop);
+        if (prop.name === "Dashboard")
+          return (
+            <Route key={key} path={prop.path}>
+              <Dashboard state={state} />
+            </Route>
+          );
+        if (prop.name === "Maps")
+          return (
+            <Route key={key} path={prop.path}>
+              <Maps state={state} />
+            </Route>
+          );
+        if (prop.name === "News")
+          return (
+            <Route key={key} path={prop.path}>
+              <News state={state} />
+            </Route>
+          );
+        if (prop.name === "Login")
+          return (
+            <Route key={key} path={prop.path}>
+              <Login state={state} />
+            </Route>
+          );
+        if (prop.name === "Signup")
+          return (
+            <Route key={key} path={prop.path}>
+              <Signup state={state} />
+            </Route>
+          );
+        if (prop.name === "Favourites")
+          return (
+            <Route key={key} path={prop.path}>
+              <Favourites state={state} />
+            </Route>
+          );
+        return (
+          <Route key={key} path={prop.path}>
+            {prop.component}
+          </Route>
+        );
       })}
       <Redirect from="/" to="/dashboard" />
     </Switch>
   );
-
-
-
 
   // styles
   const classes = useStyles();
@@ -87,10 +118,10 @@ export default function Application({ ...rest } ) {
   const [color, setColor] = React.useState("blue");
   const [fixedClasses, setFixedClasses] = React.useState("dropdown show");
   const [mobileOpen, setMobileOpen] = React.useState(false);
-  const handleImageClick = image => {
+  const handleImageClick = (image) => {
     setImage(image);
   };
-  const handleColorClick = color => {
+  const handleColorClick = (color) => {
     setColor(color);
   };
   const handleFixedClick = () => {
@@ -116,7 +147,7 @@ export default function Application({ ...rest } ) {
     if (navigator.platform.indexOf("Win") > -1) {
       ps = new PerfectScrollbar(mainPanel.current, {
         suppressScrollX: true,
-        suppressScrollY: false
+        suppressScrollY: false,
       });
       document.body.style.overflow = "hidden";
     }
@@ -133,8 +164,7 @@ export default function Application({ ...rest } ) {
     <div className={classes.wrapper}>
       {/* <Router> */}
       <DispatchContext.Provider value={dispatch}>
-          <StateContext.Provider value={state}>
-
+        <StateContext.Provider value={state}>
           <Sidebar
             routes={routes}
             logoText={"COVID DASHBOARD"}
@@ -145,26 +175,22 @@ export default function Application({ ...rest } ) {
             color={color}
             {...rest}
           />
-      <div className={classes.mainPanel} ref={mainPanel}>
-        <Navbar
-          routes={routes}
-          handleDrawerToggle={handleDrawerToggle}
-          {...rest}
-        />
-        {/* On the /maps route we want the map to be on full screen - this is not possible if the content and conatiner classes are present because they have some paddings which would make the map smaller */}
+          <div className={classes.mainPanel} ref={mainPanel}>
+            <Navbar
+              routes={routes}
+              handleDrawerToggle={handleDrawerToggle}
+              {...rest}
+            />
+            {/* On the /maps route we want the map to be on full screen - this is not possible if the content and conatiner classes are present because they have some paddings which would make the map smaller */}
 
+            {getRoute() ? (
+              <div className={classes.content}>
+                <div className={classes.container}>{switchRoutes}</div>
+              </div>
+            ) : (
+              <div className={classes.map}>{switchRoutes}</div>
+            )}
 
-
-
-        {getRoute() ? (
-          <div className={classes.content}>            
-            <div className={classes.container}>{switchRoutes}</div>
-          </div>
-
-        ) : (
-          <div className={classes.map}>{switchRoutes}</div>
-        )}
-        
             {/* <Switch>
               <Route exact path="/">
                 <Redirect from="/" to="/dashboard" />
@@ -288,26 +314,20 @@ export default function Application({ ...rest } ) {
               <div className={classes.content}><Redirect to="/dashboard" /></div>         
               </Route>
             </Switch> */}
-    
-  
 
-
-
-
-    {getRoute() ? <Footer /> : null}
+            {getRoute() ? <Footer /> : null}
             <FixedPlugin
-          handleImageClick={handleImageClick}
-          handleColorClick={handleColorClick}
-          bgColor={color}
-          bgImage={image}
-          handleFixedClick={handleFixedClick}
-          fixedClasses={fixedClasses}
-        />
-      </div>
-      </StateContext.Provider>
-        </DispatchContext.Provider>
+              handleImageClick={handleImageClick}
+              handleColorClick={handleColorClick}
+              bgColor={color}
+              bgImage={image}
+              handleFixedClick={handleFixedClick}
+              fixedClasses={fixedClasses}
+            />
+          </div>
+        </StateContext.Provider>
+      </DispatchContext.Provider>
       {/* </Router> */}
-
     </div>
   );
 }
