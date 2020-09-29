@@ -31,23 +31,25 @@ const useApplicationData = () => {
       axios.get(" https://disease.sh/v3/covid-19/all"),
       axios.get(" https://disease.sh/v3/covid-19/countries"),
       axios.get(newsUrl),
-      axios.get("/api/users"),
     ]).then((all) => {
       console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@", all);
       // update the state with the result
-      dispatch(
-        {
-          type: SET_APPLICATION_DATA,
-          yesterdayContinents: all[0].data,
-          globalHistorical: all[1].data,
-          yesterdayGlobal: all[2].data,
-          mapData: all[3].data,
-          worldCovidNews: all[4].data,
-        }
-        // { type: SET_USERS, users: all[5].data }
-      );
+      dispatch({
+        type: SET_APPLICATION_DATA,
+        yesterdayContinents: all[0].data,
+        globalHistorical: all[1].data,
+        yesterdayGlobal: all[2].data,
+        mapData: all[3].data,
+        worldCovidNews: all[4].data,
+      });
+    });
+  }, []);
 
-      // console.log(data);
+  useEffect(() => {
+    Promise.all([axios.get("/api/users")]).then((data) => {
+      // console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@", all);
+      // update the state with the result
+      dispatch({ type: SET_USERS, users: data });
     });
   }, []);
 

@@ -9,83 +9,111 @@ import Card from "components/Card/Card.js";
 import CardHeader from "components/Card/CardHeader.js";
 import CardBody from "components/Card/CardBody.js";
 import CardFooter from "components/Card/CardFooter.js";
+import axios from "axios";
+import TextField from "@material-ui/core/TextField";
+
+import useLogin from "./useLogin";
 
 export default function Login() {
-  const [inputs, setInputs] = useState({
-    username: "",
-    password: "",
-  });
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
-  const [submitted, setSubmitted] = useState(false);
-  const { username, password } = inputs;
+  const { loginShowing, toggleLogin } = useLogin();
 
-  function handleChange(e) {
-    const { name, value } = e.target;
-    setInputs((inputs) => ({ ...inputs, [name]: value }));
-  }
+  const validate = () => {
+    if (!email) {
+      setError("Email is required!");
+      return;
+    }
+    if (!password) {
+      setError("Password is required!");
+      console.log(error);
+      return;
+    }
 
-  function handleSubmit(e) {
+    const user = {
+      email,
+      password,
+    };
+
+    axios
+      .post(`http://localhost:3002/dashboard`, { user })
+      .then((res) => {
+        console.log(res);
+        console.log(res.data);
+        toggleLogin();
+      })
+      .catch((err) => {
+        console.log(err);
+        setError("Incorrect Email or Password!");
+      });
+  };
+
+  const handleSubmit = (e) => {
     e.preventDefault();
 
-    setSubmitted(true);
-    if (username && password) {
-      // Add code to return navigate to the home page
-    }
-  }
+    validate();
+  };
+
+  const handleChangeEmail = (e) => {
+    setEmail(e.target.value);
+  };
+
+  const handleChangePassword = (e) => {
+    setPassword(e.target.value);
+  };
 
   return (
     <div>
       <GridContainer>
         <GridItem xs={12} sm={12} md={12}>
           <Card>
-            <CardHeader color="primary" style={{ color: "white" }}>
-              <h4>Enter your credentials</h4>
-            </CardHeader>
-            <CardBody>
-              <GridContainer>
-                <GridItem xs={12} sm={12} md={5}>
-                  <CustomInput
-                    labelText="Email address"
-                    id="email"
-                    value={username}
-                    onChange={handleChange}
-                    formControlProps={{
-                      fullWidth: true,
-                    }}
-                  />
-                  {submitted && !username && (
-                    <div className="invalid-feedback">Email ID is required</div>
-                  )}
-                </GridItem>
-              </GridContainer>
-              <GridContainer>
-                <GridItem xs={12} sm={12} md={5}>
-                  <CustomInput
-                    labelText="Password"
-                    id="password"
-                    value={password}
-                    onChange={handleChange}
-                    formControlProps={{
-                      fullWidth: true,
-                    }}
-                  />
-                  {submitted && !password && (
-                    <div className="invalid-feedback">Password is required</div>
-                  )}
-                </GridItem>
-              </GridContainer>
-            </CardBody>
-            <CardFooter>
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={() => {
-                  alert("clicked");
-                }}
-              >
-                Login
-              </Button>
-            </CardFooter>
+            <div>
+              <br />
+              {error && <p>{error}</p>}
+              <form onSubmit={handleSubmit}>
+                <CardHeader color="primary" style={{ color: "white" }}>
+                  <h4>Enter your credentials</h4>
+                </CardHeader>
+
+                <CardBody>
+                  <GridContainer>
+                    <GridItem xs={12} sm={12} md={5}>
+                      <TextField
+                        labelText="Email address"
+                        id="email"
+                        value={email}
+                        onChange={handleChangeEmail}
+                        placeholder="Email"
+                        formControlProps={{
+                          fullWidth: true,
+                        }}
+                      />
+                    </GridItem>
+                  </GridContainer>
+                  <GridContainer>
+                    <GridItem xs={12} sm={12} md={5}>
+                      <TextField
+                        onChange={handleChangePassword}
+                        labelText="Password"
+                        id="password"
+                        value={password}
+                        placeholder="Password"
+                        formControlProps={{
+                          fullWidth: true,
+                        }}
+                      />
+                    </GridItem>
+                  </GridContainer>
+                </CardBody>
+                <CardFooter>
+                  <Button variant="contained" color="primary" type="submit">
+                    Login
+                  </Button>
+                </CardFooter>
+              </form>
+            </div>
           </Card>
         </GridItem>
       </GridContainer>
