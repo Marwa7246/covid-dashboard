@@ -31,9 +31,9 @@ import Dashboard from "views/Dashboard.js";
 import News from "views/News/News.js";
 import Favourites from "views/Favourites.js";
 import Icons from "views/Icons/Icons.js";
-import Maps from "views/Maps.js";
-import Login from "views/Login";
-import Signup from "views/Signup";
+import Maps from "../Maps/Maps";
+import Login from "views/Login"
+import Signup from "views/Signup"
 import { isPropertySignature } from "typescript";
 import { getMapDataLayer } from "./helpers";
 
