@@ -38,7 +38,7 @@ export default function Login() {
     };
 
     axios
-      .post(`http://localhost:3002/dashboard`, { user })
+      .post(`/login`, { user })
       .then((res) => {
         console.log(res);
         console.log(res.data);

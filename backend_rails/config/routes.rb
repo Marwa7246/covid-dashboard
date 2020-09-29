@@ -8,6 +8,8 @@ namespace :api do
   get 'api/news' => 'news#index'
 end
 
+post '/login' => 'sessions#create'
+
 
 
 end
