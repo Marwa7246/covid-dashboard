@@ -13,7 +13,7 @@ class Api::UsersController < ApplicationController
   def create
     puts 'createeeeeeeeeeeeee'
     puts params
-    user = User.new(user_params) 
+    user = User.create(user_params) 
     if user.valid?
         payload = {user_id: user.id}
         token = encode_token(payload)

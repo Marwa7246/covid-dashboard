@@ -39,7 +39,7 @@ export default function Login(props) {
       password,
     };
   };
-
+//////////////////////////////////// 2- after login ---> auto login ---> get requet to auto login
   const handleLogin = (user) => {
     setUser(user);
     const token = localStorage.getItem("token");
@@ -58,7 +58,7 @@ export default function Login(props) {
         });
     }
   };
-
+///////////////////////////3- after auto login, get to user_is_auth
   const handleAuthClick = () => {
     const token = localStorage.getItem("token");
     axios
@@ -68,13 +68,13 @@ export default function Login(props) {
         },
       })
       // .then(resp => resp.json())
-      .then((data) => console.log(data));
+      .then((data) => console.log('final login ', data));
   };
 
   const handleFormSwitch = (input) => {
     setForm(input);
   };
-
+////////////////////////// 1- after submitting the form--post request to login
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
@@ -97,22 +97,22 @@ export default function Login(props) {
     // validate();
   };
 
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      axios
-        .get(`/auto_login`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        })
-        // .then(resp => resp.json())
-        .then((res) => {
-          setUser(res.data);
-          console.log("res after auto login : ", res);
-        });
-    }
-  }, []);
+  // useEffect(() => {
+  //   const token = localStorage.getItem("token");
+  //   if (token) {
+  //     axios
+  //       .get(`/auto_login`, {
+  //         headers: {
+  //           Authorization: `Bearer ${token}`,
+  //         },
+  //       })
+  //       // .then(resp => resp.json())
+  //       .then((res) => {
+  //         setUser(res.data);
+  //         console.log("res after auto login : ", res);
+  //       });
+  //   }
+  // }, []);
 
   const handleChangeEmail = (e) => {
     setEmail(e.target.value);

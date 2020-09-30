@@ -3,8 +3,11 @@ class AuthController < ApplicationController
   skip_before_action :require_login, only: [:login, :auto_login]
 
   def login
-    user = User.find_by(email: params[:email])
-    if user && user.authenticate(params[:password])
+    # user = User.find_by(email: params[:email])
+    # if user && user.authenticate(params[:password])
+      if user = User.authenticate_with_credentials(params[:email], params[:password])
+        # byebug
+
         payload = {user_id: user.id}
         token = encode_token(payload)
         render json: {user: user, jwt: token, success: "Welcome back, #{user.email}"}
