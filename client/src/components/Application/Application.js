@@ -32,8 +32,8 @@ import News from "views/News/News.js";
 import Favourites from "views/Favourites.js";
 import Icons from "views/Icons/Icons.js";
 import Maps from "../Maps/Maps";
-import Login from "views/Login"
-import Signup from "views/Signup"
+import Login from "views/Login";
+import Signup from "views/Signup";
 import { isPropertySignature } from "typescript";
 import { getMapDataLayer } from "../../helpers/helpers";
 
@@ -66,48 +66,12 @@ export default function Application({ ...rest }) {
     <Switch>
       {routes.map((prop, key) => {
         console.log(prop);
-        if (prop.name === "Dashboard")
-          return (
-            <Route key={key} path={prop.path}>
-              <Dashboard state={state} />
-            </Route>
-          );
-        if (prop.name === "Maps")
-          return (
-            <Route key={key} path={prop.path}>
-              <Maps state={state} />
-            </Route>
-          );
-        if (prop.name === "News")
-          return (
-            <Route key={key} path={prop.path}>
-              <News state={state} />
-            </Route>
-          );
-        if (prop.name === "Login")
-          return (
-            <Route key={key} path={prop.path}>
-              <Login state={state} />
-            </Route>
-          );
-        if (prop.name === "Signup")
-          return (
-            <Route key={key} path={prop.path}>
-              <Signup state={state} />
-            </Route>
-          );
-        if (prop.name === "Favourites")
-          return (
-            <Route key={key} path={prop.path}>
-              <Favourites state={state} />
-            </Route>
-          );
+        const Component = prop.component;
         return (
           <Route key={key} path={prop.path}>
-            {prop.component}
+            <Component state={state} />
           </Route>
         );
-
       })}
       <Redirect from="/" to="/dashboard" />
     </Switch>
@@ -186,9 +150,9 @@ export default function Application({ ...rest }) {
             />
             {/* On the /maps route we want the map to be on full screen - this is not possible if the content and conatiner classes are present because they have some paddings which would make the map smaller */}
 
-          <div className={classes.content}>
-            <div className={classes.container}>{switchRoutes}</div>
-          </div>
+            <div className={classes.content}>
+              <div className={classes.container}>{switchRoutes}</div>
+            </div>
             {getRoute() ? <Footer /> : null}
             <FixedPlugin
               handleImageClick={handleImageClick}
