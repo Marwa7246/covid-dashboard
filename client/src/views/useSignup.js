@@ -1,10 +1,10 @@
-import { useState } from 'react';
+import { useState } from "react";
 
 const useSignup = () => {
   const [signupShowing, setSignupShowing] = useState(false);
 
   function toggleSignup() {
-    if (registerSignup) {
+    if (signupShowing) {
       setSignupShowing(false);
     } else {
       setSignupShowing(true);
@@ -14,8 +14,7 @@ const useSignup = () => {
   return {
     signupShowing,
     toggleSignup,
-  }
+  };
 };
 
-
-export default useSignup
+export default useSignup;
