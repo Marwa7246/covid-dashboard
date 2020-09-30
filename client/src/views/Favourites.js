@@ -1,6 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
+
+import 'bootstrap/dist/css/bootstrap.min.css';
+import DropdownButton from 'react-bootstrap/DropdownButton'
+import SplitButton from 'react-bootstrap/SplitButton'
+import ButtonGroup from 'react-bootstrap/ButtonGroup'
+ 
+
 import InputLabel from "@material-ui/core/InputLabel";
 
 import moment from "moment";
@@ -19,14 +26,12 @@ import CasesChart from "components/CasesChart.js";
 import CardNews from "components/CardNews.js";
 import { getMapDataLayer } from "../helpers/helpers";
 import CardCountry from "components/CardCountry.js";
-import DropDownSearch from "components/DropdownSearch"
 
 
 import avatar from "assets/img/faces/marc.jpg";
 import { isConstructSignatureDeclaration } from "typescript";
 import 'semantic-ui-css/semantic.min.css'
-import { Dropdown } from "semantic-ui-react";
-import DropdownSearch from "components/DropdownSearch";
+import { Dropdown } from 'semantic-ui-react'
 
 const styles = {
   cardCategoryWhite: {
@@ -47,9 +52,20 @@ const styles = {
   }
 };
 
+const countryOptions = [
+  { key: 'af', value: 'af', flag: 'af', text: 'Afghanistan' },
+  { key: 'ca', value: 'ca', flag: 'ca', text: 'Canada' },
+  { key: 'al', value: 'al', flag: 'al', text: 'Albania' },
+
+]
+
+
+
 const useStyles = makeStyles(styles);
 
 export default function Favourites({state}) {
+
+  const [countryName, setCountryName] = useState('');
   const classes = useStyles();
 
   const globalHistorical = state.globalHistorical;
@@ -93,7 +109,15 @@ export default function Favourites({state}) {
     );
   }
 
-  
+  const handleChange = (e) => {
+    console.log('handleChange', e.currentTarget)
+    setCountryName(e.target.innerText)
+    // const selectedCountry = mapData.find(ele=>ele.country===countryName)
+    // console.log(selectedCountry)
+
+  }
+
+
   return (
     <div>
 
@@ -108,19 +132,32 @@ export default function Favourites({state}) {
             <CardBody>
               <GridContainer>  
               <GridItem xs={12} sm={12} md={12}>
-                <h4>Select a country to see more information</h4>  
+                <h4>{countryName} Select a country to see more information</h4>  
      
                 </GridItem>            
               </GridContainer>
+
+              
 
               <GridContainer>
 
             
                 <GridItem xs={12} sm={12} md={12}>
-                  <DropdownSearch/>
-     
+                  <Dropdown
+                    placeholder='Select Country'
+                    fluid
+                    selection
+                    onChange={handleChange}
+                    options={countryOptions}
+                  />     
                 </GridItem>
               </GridContainer>
+
+              <GridContainer>            
+              <GridItem xs={12} sm={12} md={12}>
+                </GridItem>
+              </GridContainer>
+
               <GridContainer>
                 
                 
@@ -140,8 +177,9 @@ export default function Favourites({state}) {
 
         <GridItem xs={12} sm={12} md={6}>
 
-         { !state.loading && <CardCountry
+         { !state.loading && countryName && <CardCountry
          mapData={mapData}
+         countryName={countryName}
          
          />}
         </GridItem>
