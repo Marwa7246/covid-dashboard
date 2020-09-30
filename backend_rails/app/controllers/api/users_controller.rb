@@ -8,6 +8,8 @@ class Api::UsersController < ApplicationController
   skip_before_action :require_login, only: [:create, :show]
 
   def create
+    puts 'createeeeeeeeeeeeee'
+    puts params
     user = User.create(user_params) 
     if user.valid?
         payload = {user_id: user.id}
@@ -22,6 +24,8 @@ class Api::UsersController < ApplicationController
   private 
 
   def user_params
+    puts 'helllllllllllllllllloooooooooooooo'
+    puts params
     params.permit(:email, :password)
   end
 end

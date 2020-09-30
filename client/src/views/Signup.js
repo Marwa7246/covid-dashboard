@@ -14,7 +14,7 @@ import TextField from "@material-ui/core/TextField";
 
 import useLogin from "./useLogin";
 
-export default function Login() {
+export default function Signup() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");

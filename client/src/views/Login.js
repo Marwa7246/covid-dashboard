@@ -1,4 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, {
+  useState,
+  useEffect
+} from "react";
 
 // core components
 import GridItem from "components/Grid/GridItem.js";
@@ -19,7 +22,10 @@ export default function Login(props) {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
-  const { loginShowing, toggleLogin } = useLogin();
+  const {
+    loginShowing,
+    toggleLogin
+  } = useLogin();
 
   const validate = () => {
     if (!email) {
@@ -42,26 +48,14 @@ export default function Login(props) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios(`/api/users`, { 
-      method: 'POST',
-      headers: {
-        "Content-Type": "application/json",
-        "Accept": "application/json"
-      },
-      body: JSON.stringify({
-        email,
-        password
-      })
-    })
+    axios.post(`/api/users`, { email, password })
       .then((res) => {
-        res.json();
+        // res.json();
         console.log(res);
         console.log(res.data);
-        toggleLogin();
-      })
-      .then(data => {
-        localStorage.setItem("token", data.jwt);
-        props.handleLogin(data.user);
+        localStorage.setItem("token", res.data.jwt);
+        props.handleLogin(res.data.user);
+        // toggleLogin();
       })
       .catch((err) => {
         console.log(err);
