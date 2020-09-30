@@ -112,8 +112,6 @@ export default function Favourites({state}) {
   const handleChange = (e) => {
     console.log('handleChange', e.currentTarget)
     setCountryName(e.target.innerText)
-    // const selectedCountry = mapData.find(ele=>ele.country===countryName)
-    // console.log(selectedCountry)
 
   }
 
@@ -152,25 +150,8 @@ export default function Favourites({state}) {
                   />     
                 </GridItem>
               </GridContainer>
-
-              <GridContainer>            
-              <GridItem xs={12} sm={12} md={12}>
-                </GridItem>
-              </GridContainer>
-
-              <GridContainer>
-                
-                
-              </GridContainer>
-              <GridContainer>
-                <GridItem xs={12} sm={12} md={12}>
-
-                </GridItem>
-              </GridContainer>
             </CardBody>
-            <CardFooter>
-              <Button color="primary">Select</Button>
-            </CardFooter>
+ 
           </Card>
         </GridItem>
 
