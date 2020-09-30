@@ -19,11 +19,14 @@ import CasesChart from "components/CasesChart.js";
 import CardNews from "components/CardNews.js";
 import { getMapDataLayer } from "../helpers/helpers";
 import CardCountry from "components/CardCountry.js";
-
+import DropDownSearch from "components/DropdownSearch"
 
 
 import avatar from "assets/img/faces/marc.jpg";
 import { isConstructSignatureDeclaration } from "typescript";
+import 'semantic-ui-css/semantic.min.css'
+import { Dropdown } from "semantic-ui-react";
+import DropdownSearch from "components/DropdownSearch";
 
 const styles = {
   cardCategoryWhite: {
@@ -69,9 +72,6 @@ export default function Favourites({state}) {
       );
     })
 
-    console.log(newsList)
-
-
 
     
   const mapData = getMapDataLayer(state.mapData)
@@ -83,7 +83,6 @@ export default function Favourites({state}) {
 
   if (!state.loading) {
     const casesObject = globalHistorical.cases;
-  console.log(mapData[0])
 
     days = Object.keys(casesObject);
     cases = Object.values(casesObject).map((e) => Number(e) / 1000000);
@@ -103,48 +102,28 @@ export default function Favourites({state}) {
         <GridItem xs={12} sm={12} md={6}>
           <Card>
             <CardHeader color="primary">
-              <h4 className={classes.cardTitleWhite}>Countries</h4>
+              <h4 className={classes.cardTitleWhite}>List of Countries</h4>
 
             </CardHeader>
             <CardBody>
-              <GridContainer>
-                
-                
-                
+              <GridContainer>  
+              <GridItem xs={12} sm={12} md={12}>
+                <h4>Select a country to see more information</h4>  
+     
+                </GridItem>            
               </GridContainer>
+
               <GridContainer>
-                <GridItem xs={12} sm={12} md={6}>
+
+            
+                <GridItem xs={12} sm={12} md={12}>
+                  <DropdownSearch/>
      
                 </GridItem>
               </GridContainer>
               <GridContainer>
-                <GridItem xs={12} sm={12} md={4}>
-                  <CustomInput
-                    labelText="City"
-                    id="city"
-                    formControlProps={{
-                      fullWidth: true
-                    }}
-                  />
-                </GridItem>
-                <GridItem xs={12} sm={12} md={4}>
-                  <CustomInput
-                    labelText="Country"
-                    id="country"
-                    formControlProps={{
-                      fullWidth: true
-                    }}
-                  />
-                </GridItem>
-                <GridItem xs={12} sm={12} md={4}>
-                  <CustomInput
-                    labelText="Postal Code"
-                    id="postal-code"
-                    formControlProps={{
-                      fullWidth: true
-                    }}
-                  />
-                </GridItem>
+                
+                
               </GridContainer>
               <GridContainer>
                 <GridItem xs={12} sm={12} md={12}>
@@ -153,7 +132,7 @@ export default function Favourites({state}) {
               </GridContainer>
             </CardBody>
             <CardFooter>
-              <Button color="primary">Update Profile</Button>
+              <Button color="primary">Select</Button>
             </CardFooter>
           </Card>
         </GridItem>
@@ -176,7 +155,14 @@ export default function Favourites({state}) {
         </GridItem>
 
         <GridItem xs={12} sm={12} md={6}>
-            {newsList[1]}
+        <CasesChart
+              color="success"
+              title="recovered"
+              days={days}
+              series={casesRecovered}
+              type="Line"
+
+          /> 
         </GridItem>
 
 
@@ -184,21 +170,13 @@ export default function Favourites({state}) {
 
       
       <GridContainer>
-          {/* ////////////////////////// */}
 
         <GridItem xs={12} sm={12} md={6}>
-          <CasesChart
-              color="success"
-              title="recovered"
-              days={days}
-              series={casesRecovered}
-              type="Line"
+        {newsList[1]}
 
-          />          
         </GridItem>
 
 
-        {/* ///////////////////////////// */}
         <GridItem xs={12} sm={12} md={6}>
         <CasesChart
             color="danger"
