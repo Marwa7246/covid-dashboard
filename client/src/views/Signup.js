@@ -15,134 +15,147 @@ import TextField from "@material-ui/core/TextField";
 import useSignup from "./useSignup";
 
 export default function Signup(props) {
-  // const [first_name, setFirstName] = useState("");
-  // const [last_name, setLastName] = useState("");
-  // const [mobile, setMobile] = useState("");
+  const [first_name, setFirstName] = useState("");
+  const [last_name, setLastName] = useState("");
+  const [mobile, setMobile] = useState("");
 
-  // const [email, setEmail] = useState("");
-  // const [password, setPassword] = useState("");
-  // const [error, setError] = useState("");
-  // const [user, setUser] = useState({});
-  // const [form, setForm] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [user, setUser] = useState({});
+  const [form, setForm] = useState("");
 
-  // const { signupShowing, toggleSignup } = useSignup();
+  //let confirm_password;
 
-  // const validate = () => {
-  //   if (!email) {
-  //     setError("Email is required!");
-  //     return;
-  //   }
-  //   if (!password) {
-  //     setError("Password is required!");
-  //     console.log(error);
-  //     return;
-  //   }
+  const { signupShowing, toggleSignup } = useSignup();
 
-  //   const user = {
-  //     first_name,
-  //     last_name,
-  //     email,
-  //     password,
-  //     phone,
-  //   };
-  // };
+  const validate = () => {
+    if (!first_name) {
+      setError("First Name is required!");
+      return;
+    }
+    if (!last_name) {
+      setError("Last Name is required!");
+      return;
+    }
+    if (!email) {
+      setError("Email is required!");
+      return;
+    }
+    if (!password) {
+      setError("Password is required!");
+      console.log(error);
+      return;
+    }
 
-  // const handleLogin = (user) => {
-  //   setUser(user);
-  //   const token = localStorage.getItem("token");
-  //   if (token) {
-  //     axios
-  //       .get(`/auto_login`, {
-  //         headers: {
-  //           Authorization: `Bearer ${token}`,
-  //         },
-  //       })
-  //       // .then(resp => resp.json())
-  //       .then((res) => {
-  //         setUser(res.data);
-  //         console.log("res after auto login : ", res);
-  //         handleAuthClick();
-  //       });
-  //   }
-  // };
+    const user = {
+      first_name,
+      last_name,
+      email,
+      password,
+      mobile,
+    };
+  };
 
-  // const handleAuthClick = () => {
-  //   const token = localStorage.getItem("token");
-  //   axios
-  //     .get(`/user_is_authed`, {
-  //       headers: {
-  //         Authorization: `Bearer ${token}`,
-  //       },
-  //     })
-  //     // .then(resp => resp.json())
-  //     .then((data) => console.log(data));
-  // };
+  const handleLogin = (user) => {
+    setUser(user);
+    const token = localStorage.getItem("token");
+    if (token) {
+      axios
+        .get(`/auto_login`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        // .then(resp => resp.json())
+        .then((res) => {
+          setUser(res.data);
+          console.log("res after auto login : ", res);
+          handleAuthClick();
+        });
+    }
+  };
 
-  // const handleFormSwitch = (input) => {
-  //   setForm(input);
-  // };
+  const handleAuthClick = () => {
+    const token = localStorage.getItem("token");
+    axios
+      .get(`/user_is_authed`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      // .then(resp => resp.json())
+      .then((data) => console.log(data));
+  };
 
-  // const handleSubmitSignup = (e) => {
-  //   e.preventDefault();
-  //   axios
-  //     .post(`/api/users`, { first_name, last_name, email, password, mobile })
-  //     .then((res) => {
-  //       // res.json();
-  //       console.log(res);
-  //       console.log(res.data);
-  //       localStorage.setItem("token", res.data.jwt);
-  //       handleLogin(res.data.user);
-  //       // toggleLogin();
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //       setError("Incorrect Email or Password!");
-  //     });
-  //   setFirstName("");
-  //   setLastName("");
-  //   setMobile("");
-  //   setEmail("");
-  //   setPassword("");
+  const handleFormSwitch = (input) => {
+    setForm(input);
+  };
 
-  //   // validate();
-  // };
+  const handleSubmitSignup = (e) => {
+    e.preventDefault();
+    axios
+      .post(`/api/users`, { first_name, last_name, email, password, mobile })
+      .then((res) => {
+        // res.json();
+        console.log(res);
+        console.log("res.data is", res.data);
+        localStorage.setItem("token", res.data.jwt);
+        handleLogin(res.data.user);
+        // toggleLogin();
+      })
+      .catch((err) => {
+        console.log(err);
+        setError("Incorrect Email or Password!");
+      });
 
-  // useEffect(() => {
-  //   const token = localStorage.getItem("token");
-  //   if (token) {
-  //     axios
-  //       .get(`/auto_login`, {
-  //         headers: {
-  //           Authorization: `Bearer ${token}`,
-  //         },
-  //       })
-  //       // .then(resp => resp.json())
-  //       .then((res) => {
-  //         setUser(res.data);
-  //         console.log("res after auto login : ", res);
-  //       });
-  //   }
-  // }, []);
+    //validate();
 
-  // const handleChangeFirstName = (e) => {
-  //   setFirstName(e.target.value);
-  // };
+    setFirstName("");
+    setLastName("");
+    setMobile("");
+    setEmail("");
+    setPassword("");
 
-  // const handleChangeLastName = (e) => {
-  //   setLastName(e.target.value);
-  // };
+    //validate();
+  };
 
-  // const handleChangeMobile = (e) => {
-  //   setMobile(e.target.value);
-  // };
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      axios
+        .get(`/auto_login`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        // .then(resp => resp.json())
+        .then((res) => {
+          setUser(res.data);
+          console.log("res after auto login : ", res);
+        });
+    }
+  }, []);
 
-  // const handleChangeEmail = (e) => {
-  //   setEmail(e.target.value);
-  // };
+  const handleChangeFirstName = (e) => {
+    setFirstName(e.target.value);
+  };
 
-  // const handleChangePassword = (e) => {
-  //   setPassword(e.target.value);
-  // };
+  const handleChangeLastName = (e) => {
+    setLastName(e.target.value);
+  };
+
+  const handleChangeMobile = (e) => {
+    setMobile(e.target.value);
+  };
+
+  const handleChangeEmail = (e) => {
+    setEmail(e.target.value);
+  };
+
+  const handleChangePassword = (e) => {
+    setPassword(e.target.value);
+  };
 
   return (
     <div>
@@ -150,10 +163,9 @@ export default function Signup(props) {
         <GridItem xs={12} sm={12} md={12}>
           <Card>
             <div>
-              {/* <br />
+              <br />
               {error && <p>{error}</p>}
-              <form onSubmit={handleSubmitSignup}> */}
-              <form>
+              <form onSubmit={handleSubmitSignup}>
                 <CardHeader color="primary" style={{ color: "white" }}>
                   <h4>Register</h4>
                 </CardHeader>
@@ -164,8 +176,8 @@ export default function Signup(props) {
                         labelText="First Name"
                         id="first-name"
                         placeholder="First Name"
-                        // value={first_name}
-                        // onChange={handleChangeFirstName}
+                        value={first_name}
+                        onChange={handleChangeFirstName}
                         formControlProps={{
                           fullWidth: true,
                         }}
@@ -177,8 +189,8 @@ export default function Signup(props) {
                         labelText="Last Name"
                         id="last-name"
                         placeholder="Last Name"
-                        // value={last_name}
-                        // onChange={handleChangeLastName}
+                        value={last_name}
+                        onChange={handleChangeLastName}
                         formControlProps={{
                           fullWidth: true,
                         }}
@@ -191,8 +203,8 @@ export default function Signup(props) {
                         labelText="Email address"
                         placeholder="Email address"
                         id="email"
-                        // value={email}
-                        // onChange={handleChangeEmail}
+                        value={email}
+                        onChange={handleChangeEmail}
                         formControlProps={{
                           fullWidth: true,
                         }}
@@ -202,8 +214,8 @@ export default function Signup(props) {
                       <TextField
                         labelText="Mobile Number"
                         placeholder="Mobile Number"
-                        // value={mobile}
-                        // onChange={handleChangeMobile}
+                        value={mobile}
+                        onChange={handleChangeMobile}
                         id="mobile"
                         formControlProps={{
                           fullWidth: true,
@@ -214,28 +226,29 @@ export default function Signup(props) {
                   <GridContainer>
                     <GridItem xs={12} sm={12} md={5}>
                       <TextField
+                        type="password"
                         labelText="Password"
                         placeholder="Password"
                         id="password"
-                        // value={password}
-                        // onChange={handleChangePassword}
+                        value={password}
+                        onChange={handleChangePassword}
                         formControlProps={{
                           fullWidth: true,
                         }}
                       />
                     </GridItem>
-                    <GridItem xs={12} sm={12} md={5}>
+                    {/* <GridItem xs={12} sm={12} md={5}>
                       <TextField
                         labelText="Confirm Password"
                         placeholder="Confirm Password"
                         id="confirm-password"
-                        // value={password}
-                        // onChange={handleChangePassword}
+                        value={confirm_password}
+                        onChange={handleChangePassword}
                         formControlProps={{
                           fullWidth: true,
                         }}
                       />
-                    </GridItem>
+                    </GridItem> */}
                   </GridContainer>
                 </CardBody>
                 <CardFooter>
