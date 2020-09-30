@@ -1,7 +1,4 @@
-import React, {
-  useState,
-  useEffect
-} from "react";
+import React, { useState, useEffect } from "react";
 
 // core components
 import GridItem from "components/Grid/GridItem.js";
@@ -24,10 +21,7 @@ export default function Login(props) {
   const [user, setUser] = useState({});
   const [form, setForm] = useState("");
 
-  const {
-    loginShowing,
-    toggleLogin
-  } = useLogin();
+  const { loginShowing, toggleLogin } = useLogin();
 
   const validate = () => {
     if (!email) {
@@ -44,49 +38,47 @@ export default function Login(props) {
       email,
       password,
     };
-    
-
-    
   };
 
-
   const handleLogin = (user) => {
-    setUser(user)
-    const token = localStorage.getItem("token")
-    if(token){
-      axios.get(`/auto_login`, {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      })
-      // .then(resp => resp.json())
-      .then(res => {
-        setUser(res.data)
-        console.log("res after auto login : ", res)
-        handleAuthClick()
-      })
+    setUser(user);
+    const token = localStorage.getItem("token");
+    if (token) {
+      axios
+        .get(`/auto_login`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        // .then(resp => resp.json())
+        .then((res) => {
+          setUser(res.data);
+          console.log("res after auto login : ", res);
+          handleAuthClick();
+        });
     }
-  }
-
+  };
 
   const handleAuthClick = () => {
-    const token = localStorage.getItem("token")
-    axios.get(`/user_is_authed`, {
-      headers: {
-        "Authorization": `Bearer ${token}`
-      }
-    })
-    // .then(resp => resp.json())
-    .then(data => console.log(data))
-  }
+    const token = localStorage.getItem("token");
+    axios
+      .get(`/user_is_authed`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      // .then(resp => resp.json())
+      .then((data) => console.log(data));
+  };
 
   const handleFormSwitch = (input) => {
-    setForm(input)
-  }
-  
+    setForm(input);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.post(`/api/users`, { email, password })
+    axios
+      .post(`/login`, { email, password })
       .then((res) => {
         // res.json();
         console.log(res);
@@ -98,29 +90,29 @@ export default function Login(props) {
       .catch((err) => {
         console.log(err);
         setError("Incorrect Email or Password!");
-      })
-      setEmail("")
-      setPassword("")   
-       
+      });
+    setEmail("");
+    setPassword("");
 
     // validate();
   };
 
   useEffect(() => {
-    const token = localStorage.getItem("token")
-    if(token){
-      axios.get(`/auto_login`, {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      })
-      // .then(resp => resp.json())
-      .then(res => {
-        setUser(res.data)
-        console.log("res after auto login : ", res)
-      })
+    const token = localStorage.getItem("token");
+    if (token) {
+      axios
+        .get(`/auto_login`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        // .then(resp => resp.json())
+        .then((res) => {
+          setUser(res.data);
+          console.log("res after auto login : ", res);
+        });
     }
-  }, [])
+  }, []);
 
   const handleChangeEmail = (e) => {
     setEmail(e.target.value);
