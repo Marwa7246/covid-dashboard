@@ -12,57 +12,137 @@ import CardFooter from "components/Card/CardFooter.js";
 import axios from "axios";
 import TextField from "@material-ui/core/TextField";
 
-import useLogin from "./useLogin";
+import useSignup from "./useSignup";
 
-export default function Signup() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+export default function Signup(props) {
+  // const [first_name, setFirstName] = useState("");
+  // const [last_name, setLastName] = useState("");
+  // const [mobile, setMobile] = useState("");
 
-  const { loginShowing, toggleLogin } = useLogin();
+  // const [email, setEmail] = useState("");
+  // const [password, setPassword] = useState("");
+  // const [error, setError] = useState("");
+  // const [user, setUser] = useState({});
+  // const [form, setForm] = useState("");
 
-  const validate = () => {
-    if (!email) {
-      setError("Email is required!");
-      return;
-    }
-    if (!password) {
-      setError("Password is required!");
-      console.log(error);
-      return;
-    }
+  // const { signupShowing, toggleSignup } = useSignup();
 
-    const user = {
-      email,
-      password,
-    };
+  // const validate = () => {
+  //   if (!email) {
+  //     setError("Email is required!");
+  //     return;
+  //   }
+  //   if (!password) {
+  //     setError("Password is required!");
+  //     console.log(error);
+  //     return;
+  //   }
 
-    axios
-      .post(`http://localhost:3002/dashboard`, { user })
-      .then((res) => {
-        console.log(res);
-        console.log(res.data);
-        toggleLogin();
-      })
-      .catch((err) => {
-        console.log(err);
-        setError("Incorrect Email or Password!");
-      });
-  };
+  //   const user = {
+  //     first_name,
+  //     last_name,
+  //     email,
+  //     password,
+  //     phone,
+  //   };
+  // };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  // const handleLogin = (user) => {
+  //   setUser(user);
+  //   const token = localStorage.getItem("token");
+  //   if (token) {
+  //     axios
+  //       .get(`/auto_login`, {
+  //         headers: {
+  //           Authorization: `Bearer ${token}`,
+  //         },
+  //       })
+  //       // .then(resp => resp.json())
+  //       .then((res) => {
+  //         setUser(res.data);
+  //         console.log("res after auto login : ", res);
+  //         handleAuthClick();
+  //       });
+  //   }
+  // };
 
-    validate();
-  };
+  // const handleAuthClick = () => {
+  //   const token = localStorage.getItem("token");
+  //   axios
+  //     .get(`/user_is_authed`, {
+  //       headers: {
+  //         Authorization: `Bearer ${token}`,
+  //       },
+  //     })
+  //     // .then(resp => resp.json())
+  //     .then((data) => console.log(data));
+  // };
 
-  const handleChangeEmail = (e) => {
-    setEmail(e.target.value);
-  };
+  // const handleFormSwitch = (input) => {
+  //   setForm(input);
+  // };
 
-  const handleChangePassword = (e) => {
-    setPassword(e.target.value);
-  };
+  // const handleSubmitSignup = (e) => {
+  //   e.preventDefault();
+  //   axios
+  //     .post(`/api/users`, { first_name, last_name, email, password, mobile })
+  //     .then((res) => {
+  //       // res.json();
+  //       console.log(res);
+  //       console.log(res.data);
+  //       localStorage.setItem("token", res.data.jwt);
+  //       handleLogin(res.data.user);
+  //       // toggleLogin();
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //       setError("Incorrect Email or Password!");
+  //     });
+  //   setFirstName("");
+  //   setLastName("");
+  //   setMobile("");
+  //   setEmail("");
+  //   setPassword("");
+
+  //   // validate();
+  // };
+
+  // useEffect(() => {
+  //   const token = localStorage.getItem("token");
+  //   if (token) {
+  //     axios
+  //       .get(`/auto_login`, {
+  //         headers: {
+  //           Authorization: `Bearer ${token}`,
+  //         },
+  //       })
+  //       // .then(resp => resp.json())
+  //       .then((res) => {
+  //         setUser(res.data);
+  //         console.log("res after auto login : ", res);
+  //       });
+  //   }
+  // }, []);
+
+  // const handleChangeFirstName = (e) => {
+  //   setFirstName(e.target.value);
+  // };
+
+  // const handleChangeLastName = (e) => {
+  //   setLastName(e.target.value);
+  // };
+
+  // const handleChangeMobile = (e) => {
+  //   setMobile(e.target.value);
+  // };
+
+  // const handleChangeEmail = (e) => {
+  //   setEmail(e.target.value);
+  // };
+
+  // const handleChangePassword = (e) => {
+  //   setPassword(e.target.value);
+  // };
 
   return (
     <div>
@@ -70,22 +150,35 @@ export default function Signup() {
         <GridItem xs={12} sm={12} md={12}>
           <Card>
             <div>
-              <br />
+              {/* <br />
               {error && <p>{error}</p>}
-              <form onSubmit={handleSubmit}>
+              <form onSubmit={handleSubmitSignup}> */}
+              <form>
                 <CardHeader color="primary" style={{ color: "white" }}>
-                  <h4>Enter your credentials</h4>
+                  <h4>Register</h4>
                 </CardHeader>
-
                 <CardBody>
                   <GridContainer>
                     <GridItem xs={12} sm={12} md={5}>
                       <TextField
-                        labelText="Email address"
-                        id="email"
-                        value={email}
-                        onChange={handleChangeEmail}
-                        placeholder="Email"
+                        labelText="First Name"
+                        id="first-name"
+                        placeholder="First Name"
+                        // value={first_name}
+                        // onChange={handleChangeFirstName}
+                        formControlProps={{
+                          fullWidth: true,
+                        }}
+                      />
+                    </GridItem>
+                    <GridItem xs={12} sm={12} md={5}>
+                      <TextField
+                        onSubmit={() => console.log("from submit")}
+                        labelText="Last Name"
+                        id="last-name"
+                        placeholder="Last Name"
+                        // value={last_name}
+                        // onChange={handleChangeLastName}
                         formControlProps={{
                           fullWidth: true,
                         }}
@@ -95,11 +188,49 @@ export default function Signup() {
                   <GridContainer>
                     <GridItem xs={12} sm={12} md={5}>
                       <TextField
-                        onChange={handleChangePassword}
+                        labelText="Email address"
+                        placeholder="Email address"
+                        id="email"
+                        // value={email}
+                        // onChange={handleChangeEmail}
+                        formControlProps={{
+                          fullWidth: true,
+                        }}
+                      />
+                    </GridItem>
+                    <GridItem xs={12} sm={12} md={5}>
+                      <TextField
+                        labelText="Mobile Number"
+                        placeholder="Mobile Number"
+                        // value={mobile}
+                        // onChange={handleChangeMobile}
+                        id="mobile"
+                        formControlProps={{
+                          fullWidth: true,
+                        }}
+                      />
+                    </GridItem>
+                  </GridContainer>
+                  <GridContainer>
+                    <GridItem xs={12} sm={12} md={5}>
+                      <TextField
                         labelText="Password"
-                        id="password"
-                        value={password}
                         placeholder="Password"
+                        id="password"
+                        // value={password}
+                        // onChange={handleChangePassword}
+                        formControlProps={{
+                          fullWidth: true,
+                        }}
+                      />
+                    </GridItem>
+                    <GridItem xs={12} sm={12} md={5}>
+                      <TextField
+                        labelText="Confirm Password"
+                        placeholder="Confirm Password"
+                        id="confirm-password"
+                        // value={password}
+                        // onChange={handleChangePassword}
                         formControlProps={{
                           fullWidth: true,
                         }}
@@ -109,7 +240,7 @@ export default function Signup() {
                 </CardBody>
                 <CardFooter>
                   <Button variant="contained" color="primary" type="submit">
-                    Login
+                    Sign-Up
                   </Button>
                 </CardFooter>
               </form>
