@@ -22,11 +22,13 @@ export default function News({state}) {
 
   const worldCovidNews = state.worldCovidNews;
 
+  
+
   const classes = useStyles();
   return (
     <div>
       <GridContainer>
-        {state.worldCovidNews.articles &&
+        {!state.loading &&
           worldCovidNews.articles.map((item, index) => {
             let publishedTime = moment.utc(item.publishedAt).toDate();
             let localTime = moment(publishedTime)

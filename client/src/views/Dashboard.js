@@ -22,22 +22,15 @@ const useStyles = makeStyles(styles);
 
 export default function Dashboard({state}) {
 
-  // const userList = state.users.map((user) => (
-  //   <li key={user.id}>
-  //     {user.id},{user.first_name} ,{user.last_name} ,
-  //     {JSON.parse(user.email).length}
-  //   </li>
-  // ));
 
-  // console.log("Dashboard State", state);
-
+  console.log(state.loading)
   const globalHistorical = state.globalHistorical;
 
   let days = [];
   let cases = [];
   let casesRecovered = [];
 
-  if (globalHistorical.cases) {
+  if (!state.loading) {
     // console.log(globalHistorical)
     const casesObject = globalHistorical.cases;
     days = Object.keys(casesObject);
@@ -49,19 +42,12 @@ export default function Dashboard({state}) {
     );
   }
 
-  if (state.yesterdayGlobal.updated) {
-  }
+
 
   const classes = useStyles();
   return (
     <div>
-      {/* <div className='App'>
-        <h1>Users</h1>
 
-        {state.loading && <h3>Loading...</h3>}
-
-        <ul>{!state.loading && userList}</ul>
-      </div>        */}
 
       <GridContainer>
         <GridItem xs={12} sm={6} md={4}>
