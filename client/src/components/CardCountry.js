@@ -16,26 +16,27 @@ import styles from "assets/jss/material-dashboard-react/views/dashboardStyle.js"
 
 const useStyles = makeStyles(styles);
 
-export default function CardDashboard(props) {
-  const { mapData, state } = props;
-  // console.log(props)
+export default function CardCountry(props) {
+  const { mapData, countryName } = props;
+  console.log(props)
+
+  const selectedCountry = mapData.find(ele=>ele.country===countryName)
+  console.log(mapData, countryName, selectedCountry)
 
   const classes = useStyles();
   return (
     <div>
       <Card profile>
             <CardAvatar profile>
-              <a href="#pablo" onClick={e => e.preventDefault()}>
-                <img src={mapData[0].flag} alt="..." />
-              </a>
+                <img src={selectedCountry.flag} alt="..." />
             </CardAvatar>
             <CardBody profile>
-              <h4 className={classes.cardTitle}>{mapData[0].country}</h4>
-              <div className='country'>
-                <div><strong>Cases:</strong>  {mapData[0].cases} </div>
-                <div><strong>Deaths:</strong>{mapData[0].deaths} </div>
-                <div><strong>Recovered:</strong>{mapData[0].recovered} </div>
-                <div><strong>Last Updated:</strong>{mapData[0].updated} </div>
+              <h4 className={classes.cardTitle}>{selectedCountry.country}</h4>
+              <div className='Country'>
+                <div><strong>Cases:</strong>  {selectedCountry.cases} </div>
+                <div><strong>Deaths:</strong>{selectedCountry.deaths} </div>
+                <div><strong>Recovered:</strong>{selectedCountry.recovered} </div>
+                <div><strong>Last Updated:</strong>{selectedCountry.updated} </div>
               </div>
 
             </CardBody>
