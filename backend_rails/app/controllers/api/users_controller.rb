@@ -1,16 +1,19 @@
 class Api::UsersController < ApplicationController
 
-  # def index
-  #   users = User.all
-  #   render json: users
-  # end
+  def index
+    users = User.all
+    render json: users
+  end
 
   skip_before_action :require_login, only: [:create, :show]
+
+  def show
+  end
 
   def create
     puts 'createeeeeeeeeeeeee'
     puts params
-    user = User.create(user_params) 
+    user = User.new(user_params) 
     if user.valid?
         payload = {user_id: user.id}
         token = encode_token(payload)
@@ -26,6 +29,6 @@ class Api::UsersController < ApplicationController
   def user_params
     puts 'helllllllllllllllllloooooooooooooo'
     puts params
-    params.permit(:email, :password)
+    params.require(:user).permit(:first_name, :last_name, :email, :password, :mobile)
   end
 end
