@@ -7,11 +7,8 @@ import MapWindow from './MapWindow';
 import { getMapDataLayer } from "../../helpers/helpers";
 
 const Maps = ({state}) => {
-  console.log(state)
 
-  console.log(state.mapData)
-let mapData=[]
-if (!state.loading) mapData=getMapDataLayer(state.mapData)
+  const mapData = !state.loading && getMapDataLayer(state.mapData)
 
   const MapLoader = withScriptjs(MapWindow);
 

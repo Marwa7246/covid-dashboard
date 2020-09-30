@@ -7,12 +7,12 @@ import '../../assets/css/InfoWindow.scss'
 
 
 function InfoWindowName(props) {
-  const {country, cases, onClick, image, deaths, recovered, updated} = props
+  const {country, cases, onClick, flag, deaths, recovered, updated} = props
 
   return (
     <div className='InfoWindow' >
       <img className='InfoWindow-image'
-              src= {image}
+              src= {flag}
               alt={country}
               onClick={onClick}
             />
