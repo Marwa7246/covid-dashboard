@@ -17,9 +17,13 @@ import CardBody from "components/Card/CardBody.js";
 import CardFooter from "components/Card/CardFooter.js";
 import CasesChart from "components/CasesChart.js";
 import CardNews from "components/CardNews.js";
+import { getMapDataLayer } from "../helpers/helpers";
+import CardCountry from "components/CardCountry.js";
+
 
 
 import avatar from "assets/img/faces/marc.jpg";
+import { isConstructSignatureDeclaration } from "typescript";
 
 const styles = {
   cardCategoryWhite: {
@@ -65,15 +69,21 @@ export default function Favourites({state}) {
       );
     })
 
+    console.log(newsList)
 
-  console.log(state)
 
+
+    
+  const mapData = getMapDataLayer(state.mapData)
+
+  
   let days = [];
   let cases = [];
   let casesRecovered = [];
 
   if (!state.loading) {
     const casesObject = globalHistorical.cases;
+  console.log(mapData[0])
 
     days = Object.keys(casesObject);
     cases = Object.values(casesObject).map((e) => Number(e) / 1000000);
@@ -93,60 +103,18 @@ export default function Favourites({state}) {
         <GridItem xs={12} sm={12} md={6}>
           <Card>
             <CardHeader color="primary">
-              <h4 className={classes.cardTitleWhite}>Edit Profile</h4>
-              <p className={classes.cardCategoryWhite}>Complete your profile</p>
+              <h4 className={classes.cardTitleWhite}>Countries</h4>
+
             </CardHeader>
             <CardBody>
               <GridContainer>
-                <GridItem xs={12} sm={12} md={5}>
-                  <CustomInput
-                    labelText="Company (disabled)"
-                    id="company-disabled"
-                    formControlProps={{
-                      fullWidth: true
-                    }}
-                    inputProps={{
-                      disabled: true
-                    }}
-                  />
-                </GridItem>
-                <GridItem xs={12} sm={12} md={3}>
-                  <CustomInput
-                    labelText="Username"
-                    id="username"
-                    formControlProps={{
-                      fullWidth: true
-                    }}
-                  />
-                </GridItem>
-                <GridItem xs={12} sm={12} md={4}>
-                  <CustomInput
-                    labelText="Email address"
-                    id="email-address"
-                    formControlProps={{
-                      fullWidth: true
-                    }}
-                  />
-                </GridItem>
+                
+                
+                
               </GridContainer>
               <GridContainer>
                 <GridItem xs={12} sm={12} md={6}>
-                  <CustomInput
-                    labelText="First Name"
-                    id="first-name"
-                    formControlProps={{
-                      fullWidth: true
-                    }}
-                  />
-                </GridItem>
-                <GridItem xs={12} sm={12} md={6}>
-                  <CustomInput
-                    labelText="Last Name"
-                    id="last-name"
-                    formControlProps={{
-                      fullWidth: true
-                    }}
-                  />
+     
                 </GridItem>
               </GridContainer>
               <GridContainer>
@@ -180,18 +148,7 @@ export default function Favourites({state}) {
               </GridContainer>
               <GridContainer>
                 <GridItem xs={12} sm={12} md={12}>
-                  <InputLabel style={{ color: "#AAAAAA" }}>About me</InputLabel>
-                  <CustomInput
-                    labelText="Lamborghini Mercy, Your chick she so thirsty, I'm in that two seat Lambo."
-                    id="about-me"
-                    formControlProps={{
-                      fullWidth: true
-                    }}
-                    inputProps={{
-                      multiline: true,
-                      rows: 5
-                    }}
-                  />
+
                 </GridItem>
               </GridContainer>
             </CardBody>
@@ -200,26 +157,14 @@ export default function Favourites({state}) {
             </CardFooter>
           </Card>
         </GridItem>
+
+
         <GridItem xs={12} sm={12} md={6}>
-          <Card profile>
-            <CardAvatar profile>
-              <a href="#pablo" onClick={e => e.preventDefault()}>
-                <img src={avatar} alt="..." />
-              </a>
-            </CardAvatar>
-            <CardBody profile>
-              <h6 className={classes.cardCategory}>CEO / CO-FOUNDER</h6>
-              <h4 className={classes.cardTitle}>Alec Thompson</h4>
-              <p className={classes.description}>
-                Don{"'"}t be scared of the truth because we need to restart the
-                human foundation in truth And I love you like Kanye loves Kanye
-                I love Rick Owens’ bed design but the back is...
-              </p>
-              <Button color="primary" round>
-                Follow
-              </Button>
-            </CardBody>
-          </Card>
+
+         { !state.loading && <CardCountry
+         mapData={mapData}
+         
+         />}
         </GridItem>
       </GridContainer>
 
