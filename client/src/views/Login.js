@@ -156,6 +156,7 @@ export default function Login(props) {
                         onChange={handleChangePassword}
                         labelText="Password"
                         id="password"
+                        type="password"
                         value={password}
                         placeholder="Password"
                         formControlProps={{
