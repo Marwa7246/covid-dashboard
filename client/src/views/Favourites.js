@@ -6,6 +6,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import DropdownButton from 'react-bootstrap/DropdownButton'
 import SplitButton from 'react-bootstrap/SplitButton'
 import ButtonGroup from 'react-bootstrap/ButtonGroup'
+import AllCountriesSelection from '../components/AllCountriesSelection'
  
 
 import InputLabel from "@material-ui/core/InputLabel";
@@ -66,6 +67,8 @@ const useStyles = makeStyles(styles);
 export default function Favourites({state}) {
 
   const [countryName, setCountryName] = useState('');
+  // const [allCountries, setAllCountries] = useState([]);
+  
   const classes = useStyles();
 
   const globalHistorical = state.globalHistorical;
@@ -110,10 +113,13 @@ export default function Favourites({state}) {
   }
 
   const handleChange = (e) => {
-    console.log('handleChange', e.currentTarget)
+    console.log('handleChange', e)
     setCountryName(e.target.innerText)
+    // setAllCountries([...allCountries, e.target.innerText])
+    // setTheArray([...theArray, newElement]);
 
   }
+    // console.log(allCountries)
 
 
   return (
@@ -121,7 +127,7 @@ export default function Favourites({state}) {
 
       <GridContainer>
 
-        <GridItem xs={12} sm={12} md={6}>
+        <GridItem xs={12} sm={12} md={4}>
           <Card>
             <CardHeader color="primary">
               <h4 className={classes.cardTitleWhite}>List of Countries</h4>
@@ -130,15 +136,64 @@ export default function Favourites({state}) {
             <CardBody>
               <GridContainer>  
               <GridItem xs={12} sm={12} md={12}>
+                <h4>{countryName} Add countries to you Favourite list</h4>  
+     
+                </GridItem>            
+            
+                <GridItem xs={12} sm={12} md={12}>
+                  {/* <Dropdown
+                    placeholder='Select Country'
+                    fluid
+                    search
+                    multiple
+                    selection
+                    onChange={handleChange}
+                    onBlur={()=>console.log(allCountries)}
+                    options={countryOptions}
+                  />      */}
+
+{/* <>
+  {['Primary', 'Secondary', 'Success', 'Info', 'Warning', 'Danger'].map(
+    (variant) => (
+      <DropdownButton onClick={(e)=>console.log('all', e.target)}
+        as={ButtonGroup}
+        key={variant}
+        id={`dropdown-variants-${variant}`}
+        variant={variant.toLowerCase()}
+        title={variant}
+      >
+        <Dropdown.Item onSelect={(e)=>console.log('1', e.target)}>Action</Dropdown.Item>
+        <Dropdown.Item onChange={(e)=>console.log(e)}>Another action</Dropdown.Item>
+        <Dropdown.Item eventKey="3" active>
+          Active Item
+        </Dropdown.Item>
+        <Dropdown.Divider />
+        <Dropdown.Item eventKey="4">Separated link</Dropdown.Item>
+      </DropdownButton>
+    ),
+  )}
+
+</> */}
+
+<AllCountriesSelection/>
+                </GridItem>
+              </GridContainer>
+            </CardBody>
+ 
+          </Card>
+        </GridItem>
+        <GridItem xs={12} sm={12} md={4}>
+          <Card>
+            <CardHeader color="primary">
+              <h4 className={classes.cardTitleWhite}>List of Your Favourites Countries</h4>
+
+            </CardHeader>
+            <CardBody>
+              <GridContainer>  
+              <GridItem xs={12} sm={12} md={12}>
                 <h4>{countryName} Select a country to see more information</h4>  
      
                 </GridItem>            
-              </GridContainer>
-
-              
-
-              <GridContainer>
-
             
                 <GridItem xs={12} sm={12} md={12}>
                   <Dropdown
@@ -153,10 +208,12 @@ export default function Favourites({state}) {
             </CardBody>
  
           </Card>
-        </GridItem>
+        </GridItem>        
 
 
-        <GridItem xs={12} sm={12} md={6}>
+
+
+        <GridItem xs={12} sm={12} md={4}>
 
          { !state.loading && countryName && <CardCountry
          mapData={mapData}
