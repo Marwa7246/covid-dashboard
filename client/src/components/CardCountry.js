@@ -18,10 +18,10 @@ const useStyles = makeStyles(styles);
 
 export default function CardCountry(props) {
   const { mapData, countryName } = props;
-  console.log(props)
+  // console.log(props)
 
   const selectedCountry = mapData.find(ele=>ele.country===countryName)
-  console.log(mapData, countryName, selectedCountry)
+  // console.log(mapData, countryName, selectedCountry)
 
   const classes = useStyles();
   return (
