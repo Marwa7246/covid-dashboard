@@ -40,11 +40,13 @@ const useApplicationData = () => {
   }, []);
 
   function saveFavourites(allFavouriteCountries) {
+    const id=1;
 
-console.log('from saveFavourites', allFavouriteCountries)
-    // return axios.post(`/api/appointments/${id}`, allFavouriteCountries).then(() => {
+    console.log('from saveFavourites', {user_id: id, country_name: allFavouriteCountries[0]})
+    return axios.post(`/api/favourites`, {user_id: id, country_name: allFavouriteCountries[0]}).then((res) => {
+      console.log(res)
     //   dispatch({ type: SET_FAVOURITES, allFavouriteCountries });
-    // });
+    });
   }
 
 
