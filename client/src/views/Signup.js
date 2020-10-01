@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 
 // core components
 import GridItem from "components/Grid/GridItem.js";
@@ -11,7 +12,6 @@ import CardFooter from "components/Card/CardFooter.js";
 import TextField from "@material-ui/core/TextField";
 
 import axios from "axios";
-import useUserData from "../hooks/useUserData";
 
 export default function Signup(props) {
   const [first_name, setFirstName] = useState("");
@@ -20,6 +20,8 @@ export default function Signup(props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+
+  const history = useHistory();
 
   const handleFirstNameChange = (e) => {
     setFirstName(e.target.value);
@@ -46,14 +48,18 @@ export default function Signup(props) {
     axios
       .post(`/api/users`, { first_name, last_name, email, password, mobile })
       .then((res) => {
-        console.log(res);
-        console.log("res.data is", res.data);
+        // console.log(res.data);
+        localStorage.setItem("user", res.data.user.email);
+        // console.log("login user is", res.data.user);
         localStorage.setItem("token", res.data.jwt);
-        props.handleLogin(res.data.user);
+        history.push("/dashboard");
+        //console.log(history.location);
       })
       .catch((err) => {
         console.log(err);
         setError("All Fields Required!");
+        localStorage.setItem("user", null);
+        localStorage.setItem("token", null);
       });
 
     setFirstName("");

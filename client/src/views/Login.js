@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 
 // core components
 import GridItem from "components/Grid/GridItem.js";
@@ -11,12 +12,13 @@ import CardFooter from "components/Card/CardFooter.js";
 import TextField from "@material-ui/core/TextField";
 
 import axios from "axios";
-import useUserData from "../hooks/useUserData";
 
 export default function Login(props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+
+  const history = useHistory();
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -32,12 +34,18 @@ export default function Login(props) {
       .post(`/login`, { email, password })
       .then((res) => {
         console.log(res.data);
+        localStorage.setItem("user", res.data.user.email);
+        console.log("login user is", res.data.user);
         localStorage.setItem("token", res.data.jwt);
-        props.handleLogin(res.data.user);
+        //props.handleLogin(res.data.user);
+        history.push("/dashboard");
+        //console.log(history.location);
       })
       .catch((err) => {
         console.log(err);
         setError("Incorrect Email or Password!");
+        localStorage.setItem("user", null);
+        localStorage.setItem("token", null);
       });
     setEmail("");
     setPassword("");
