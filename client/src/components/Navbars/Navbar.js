@@ -22,7 +22,7 @@ export default function Header(props) {
   const classes = useStyles();
   function makeBrand() {
     var name;
-    props.routes.map(prop => {
+    props.routes.map((prop) => {
       if (window.location.href.indexOf(prop.path) !== -1) {
         name = prop.name;
       }
@@ -31,21 +31,21 @@ export default function Header(props) {
 
     return name;
   }
-    console.log(makeBrand())
-
+  // console.log(makeBrand());
 
   const { color } = props;
   const appBarClasses = classNames({
-    [" " + classes[color]]: color
+    [" " + classes[color]]: color,
   });
   return (
     <AppBar className={classes.appBar + appBarClasses}>
       <Toolbar className={classes.container}>
         <div className={classes.flex}>
           {/* Here we create navbar brand, based on route name */}
-          <Button color="transparent" href="#" className={classes.title}>
+          {/* <Button color="transparent" href="#" className={classes.title}>
             {makeBrand()}
-          </Button>
+          </Button> */}
+          <h3> {makeBrand()}</h3>
         </div>
         <Hidden smDown implementation="css">
           {<AdminNavbarLinks />}
@@ -67,5 +67,5 @@ export default function Header(props) {
 Header.propTypes = {
   color: PropTypes.oneOf(["primary", "info", "success", "warning", "danger"]),
   handleDrawerToggle: PropTypes.func,
-  routes: PropTypes.arrayOf(PropTypes.object)
+  routes: PropTypes.arrayOf(PropTypes.object),
 };
