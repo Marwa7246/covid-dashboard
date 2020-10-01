@@ -39,9 +39,18 @@ const useApplicationData = () => {
     });
   }, []);
 
+  function saveFavourites(allFavouriteCountries) {
+
+console.log('from saveFavourites', allFavouriteCountries)
+    // return axios.post(`/api/appointments/${id}`, allFavouriteCountries).then(() => {
+    //   dispatch({ type: SET_FAVOURITES, allFavouriteCountries });
+    // });
+  }
+
+
   return {
     state,
-    dispatch,
+    dispatch, saveFavourites,
   };
 };
 

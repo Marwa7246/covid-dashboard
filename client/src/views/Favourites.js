@@ -66,7 +66,7 @@ const countryOptionsFavourites = [
 
 const useStyles = makeStyles(styles);
 
-export default function Favourites({state}) {
+export default function Favourites({state, saveFavourites}) {
 
   const [countryName, setCountryName] = useState('');
   // const [allCountries, setAllCountries] = useState([]);
@@ -122,6 +122,12 @@ export default function Favourites({state}) {
 
   }
 
+  const onSave = (data) => {
+    console.log(data)
+    saveFavourites(data)
+
+  }
+
     // console.log(allCountries)
 
   
@@ -132,7 +138,7 @@ export default function Favourites({state}) {
       <GridContainer>
       <GridItem xs={12} sm={12} md={12}>
 
-      {!state.loading && <AllCountriesSelection />}
+      {!state.loading && <AllCountriesSelection onSave={onSave} />}
       </GridItem >
 
       </GridContainer>
