@@ -1,68 +1,65 @@
-import React, {useState, useEffect} from 'react';
-import './App.css';
-// import Header from './Header'
-// import SignInForm from './SignInForm';
-// import LoginForm from './LoginForm'
+import React, { useState, useEffect } from "react";
+import Application from "../components/Application/Application";
+import Login from "../views/Login";
+import Signup from "../views/Signup";
+import axios from "axios";
 
-function useUserData() {
-  const [user, setUser] = useState({})
-  const [form, setForm] = useState("")
+export default function useUserData() {
+  const [user, setUser] = useState({});
+  // const [form, setForm] = useState("");
 
   useEffect(() => {
-    const token = localStorage.getItem("token")
-    if(token){
-      fetch(`http://localhost:3000/auto_login`, {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      })
-      .then(resp => resp.json())
-      .then(data => {
-        setUser(data)
-        // console.log(data)
-      })
+    const token = localStorage.getItem("token");
+    if (token) {
+      axios
+        .get(`/auto_login`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((res) => {
+          setUser(res.data);
+          console.log("response after auto login : ", res);
+        });
     }
-  }, [])
+  }, []);
 
   const handleLogin = (user) => {
-    setUser(user)
-  }
+    setUser(user);
+  };
 
-  const handleFormSwitch = (input) => {
-    setForm(input)
-  }
+  // const handleFormSwitch = (input) => {
+  //   setForm(input);
+  // };
 
-  const handleAuthClick = () => {
-    const token = localStorage.getItem("token")
-    fetch(`http://localhost:3000/user_is_authed`, {
-      headers: {
-        "Authorization": `Bearer ${token}`
-      }
-    })
-    .then(resp => resp.json())
-    .then(data => console.log(data))
-  }
+  // const handleAuthClick = () => {
+  //   const token = localStorage.getItem("token");
+  //   axios
+  //     .get(`/user_is_authed`, {
+  //       headers: {
+  //         Authorization: `Bearer ${token}`,
+  //       },
+  //     })
+  //     .then((data) => console.log(data));
+  // };
 
-  console.log(user)
+  // console.log("USER is >>>>>>>>>>>>", user);
 
   // const renderForm = () => {
-  //   switch(form){
-  //     case "login":
-  //       return <LoginForm handleLogin={handleLogin}/>
+  //   switch (form) {
+  //     case "Login":
+  //       return <Login handleLogin={handleLogin} />;
   //       break;
   //     default:
-  //       return <SignInForm handleLogin={handleLogin}/>
+  //       return <Signup handleLogin={handleLogin} />;
   //   }
-  // }
+  // };
+
   // return (
-  //   <div className="App">
-  //       <Header handleFormSwitch={handleFormSwitch}/>
-  //       {
-  //         renderForm()
-  //       }
-  //       <button onClick={handleAuthClick} className="ui button">Access Authorized Route</button>
+  //   <div>
+  //     <Application />
+  //     {renderForm()}
+  //     <button onClick={handleAuthClick}>Access Authorized Route</button>
   //   </div>
   // );
 }
-
-export default useUserData;
