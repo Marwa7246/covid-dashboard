@@ -1,5 +1,5 @@
 class User < ApplicationRecord
-  encrypted_password
+  has_secure_password
   
   def self.authenticate_with_credentials(email, password)
     user = self.find_by_email(email)

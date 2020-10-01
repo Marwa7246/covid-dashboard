@@ -42,7 +42,9 @@ export default function Login(props) {
 //////////////////////////////////// 2- after login ---> auto login ---> get requet to auto login
   const handleLogin = (user) => {
     setUser(user);
+
     const token = localStorage.getItem("token");
+    // debugger
     if (token) {
       axios
         .get(`/auto_login`, {
@@ -52,8 +54,10 @@ export default function Login(props) {
         })
         // .then(resp => resp.json())
         .then((res) => {
+          console.log("res.data : ", res.data);
+
           setUser(res.data);
-          console.log("res after auto login : ", res);
+          console.log("user after auto login : ", user);
           handleAuthClick();
         });
     }
@@ -69,6 +73,7 @@ export default function Login(props) {
       })
       // .then(resp => resp.json())
       .then((data) => console.log('final login ', data));
+
   };
 
   const handleFormSwitch = (input) => {
@@ -81,9 +86,10 @@ export default function Login(props) {
       .post(`/login`, { email, password })
       .then((res) => {
         // res.json();
-        console.log(res);
+        // console.log(res);
         console.log(res.data);
         localStorage.setItem("token", res.data.jwt);
+        // debugger
         handleLogin(res.data.user);
         // toggleLogin();
       })

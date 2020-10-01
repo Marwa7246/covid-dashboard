@@ -25,7 +25,7 @@ class AuthController < ApplicationController
   end
 
   def user_is_authed
-    render json: {message: "You are authorized"}
+    render json: session_user
   end
 
 
