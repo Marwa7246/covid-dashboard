@@ -59,7 +59,7 @@ let ps;
 const useStyles = makeStyles(styles);
 
 export default function Application({ ...rest }) {
-  const { state, dispatch } = useApplicationData();
+  const { state, dispatch, saveFavourites } = useApplicationData();
   let mapData = [];
   if (!state.loading) mapData = getMapDataLayer(state.mapData);
 
@@ -75,7 +75,7 @@ export default function Application({ ...rest }) {
         const Component = prop.component;
         return (
           <Route key={key} path={prop.path}>
-            <Component state={state} />
+            <Component state={state} saveFavourites={saveFavourites} />
           </Route>
         );
       })}

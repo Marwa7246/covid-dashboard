@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   namespace :api do
     resource :users
     resources :data
+    resources :favourites
   end
 
   get 'api/news' => 'news#index'
