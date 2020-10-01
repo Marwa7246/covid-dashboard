@@ -21,6 +21,7 @@ import DashboardIcon from "@material-ui/icons/Dashboard";
 import VpnKey from "@material-ui/icons/VpnKey";
 import Create from "@material-ui/icons/Create";
 import Stars from "@material-ui/icons/Stars";
+import Person from "@material-ui/icons/Person";
 import LibraryBooks from "@material-ui/icons/LibraryBooks";
 
 import LocationOn from "@material-ui/icons/LocationOn";
@@ -55,6 +56,12 @@ const dashboardRoutes = [
     component: Maps,
   },
   {
+    path: "/favourites",
+    name: "Favourites",
+    icon: Stars,
+    component: Favourites,
+  },
+  {
     path: "/login",
     name: "Login",
     icon: VpnKey,
@@ -67,12 +74,7 @@ const dashboardRoutes = [
     icon: Create,
     component: Signup,
   },
-  {
-    path: "/favourites",
-    name: "Favourites",
-    icon: Stars,
-    component: Favourites,
-  },
+
   // {
   //   path: "/icons",
   //   name: "Icons",

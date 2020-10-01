@@ -1,6 +1,6 @@
 require('faker')
 
-3.times do
+1.times do
   User.create(first_name: 'test', last_name: 'userone', email: 'test1@gmail.com', password: 'test1', mobile: '9111111111')
   User.create(first_name: 'test', last_name: 'usertwo', email: 'test2@gmail.com', password: 'test2', mobile: '9222222222')
   User.create(first_name: 'test', last_name: 'userthree', email: 'test3@gmail.com', password: 'test3', mobile: '9333333333')

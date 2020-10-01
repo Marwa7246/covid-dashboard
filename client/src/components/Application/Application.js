@@ -26,6 +26,7 @@ import styles from "assets/jss/material-dashboard-react/layouts/adminStyle.js";
 import bgImage from "assets/img/north_america.png";
 import logo from "assets/img/covid.png";
 import useApplicationData from "hooks/useApplicationData";
+import useUserData from "hooks/useUserData";
 
 import Dashboard from "views/Dashboard.js";
 import News from "views/News/News.js";
@@ -65,7 +66,7 @@ export default function Application({ ...rest }) {
   const switchRoutes = (
     <Switch>
       {routes.map((prop, key) => {
-        console.log(prop);
+        // console.log("PROPS are: ", prop);
         const Component = prop.component;
         return (
           <Route key={key} path={prop.path}>

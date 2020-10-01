@@ -1,12 +1,7 @@
 import { useEffect, useReducer } from "react";
 import axios from "axios";
 import dataReducer, {
-  SET_USERS,
-  // SET_HISTORICAL_GLOBAL,
-  // SET_YESTERDAY_CONTINENTS,
-  // SET_YESTERDAY_GLOBAL,
-  // SET_MAP_DATA,
-  // SET_WORLD_COVID_NEWS,
+  SET_USER,
   SET_APPLICATION_DATA,
 } from "../reducers/dataReducer";
 require("dotenv").config();
@@ -15,7 +10,7 @@ const newsUrl = `http://newsapi.org/v2/top-headlines?apiKey=${process.env.REACT_
 
 const useApplicationData = () => {
   const [state, dispatch] = useReducer(dataReducer, {
-    users: [],
+    user: {},
     globalHistorical: {},
     yesterdayContinents: [],
     yesterdayGlobal: {},
@@ -32,7 +27,6 @@ const useApplicationData = () => {
       axios.get(" https://disease.sh/v3/covid-19/countries"),
       axios.get(newsUrl),
     ]).then((all) => {
-      console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@", all);
       // update the state with the result
       dispatch({
         type: SET_APPLICATION_DATA,
@@ -44,14 +38,6 @@ const useApplicationData = () => {
       });
     });
   }, []);
-
-  // useEffect(() => {
-  //   Promise.all([axios.get("/api/users")]).then((data) => {
-  //     // console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@", all);
-  //     // update the state with the result
-  //     dispatch({ type: SET_USERS, users: data });
-  //   });
-  // }, []);
 
   return {
     state,
