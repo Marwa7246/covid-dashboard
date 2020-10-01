@@ -44,11 +44,11 @@ const styles = {
 
 const useStyles = makeStyles(styles);
 
-const AllCountriesSelection = ({countryOptions}) => {
+const AllCountriesSelection = () => {
     const [allCountries, setAllCountries] = useState([]);
 const state = useContext(StateContext);
 
-countryOptions = (!state.loading) && getAllCountriesForDropDown(state.mapData)
+const countryOptions = (!state.loading) && getAllCountriesForDropDown(state.mapData)
 console.log(countryOptions)
 
 const classes = useStyles();

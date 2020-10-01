@@ -55,12 +55,12 @@ const styles = {
   }
 };
 
-// const countryOptions = [
-//   { key: 'af', value: 'af', flag: 'af', text: 'Afghanistan' },
-//   { key: 'ca', value: 'ca', flag: 'ca', text: 'Canada' },
-//   { key: 'al', value: 'al', flag: 'al', text: 'Albania' },
+const countryOptionsFavourites = [
+  { key: 'af', value: 'af', flag: 'af', text: 'Afghanistan' },
+  { key: 'ca', value: 'ca', flag: 'ca', text: 'Canada' },
+  { key: 'al', value: 'al', flag: 'al', text: 'Albania' },
 
-// ]
+]
 
 
 
@@ -101,7 +101,6 @@ export default function Favourites({state}) {
   let days = [];
   let cases = [];
   let casesRecovered = [];
-  let countryOptions=[];
 
   if (!state.loading) {
     const casesObject = globalHistorical.cases;
@@ -131,8 +130,10 @@ export default function Favourites({state}) {
     <div>
 
       <GridContainer>
+      <GridItem xs={12} sm={12} md={12}>
 
-      {!state.loading && <AllCountriesSelection countryOptions={countryOptions}/>}
+      {!state.loading && <AllCountriesSelection />}
+      </GridItem >
 
       </GridContainer>
       <GridContainer>
@@ -156,7 +157,7 @@ export default function Favourites({state}) {
                     fluid
                     selection
                     onChange={handleChange}
-                    options={countryOptions}
+                    options={countryOptionsFavourites}
                   />     
                 </GridItem>
               </GridContainer>
@@ -164,10 +165,6 @@ export default function Favourites({state}) {
  
           </Card>
         </GridItem>        
-
-
-
-
         <GridItem xs={12} sm={12} md={4}>
 
          { !state.loading && countryName && <CardCountry
@@ -177,8 +174,7 @@ export default function Favourites({state}) {
          />}
         </GridItem>
       </GridContainer>
-
-      
+            
       <GridContainer>
 
         <GridItem xs={12} sm={12} md={6}>
@@ -198,7 +194,6 @@ export default function Favourites({state}) {
 
 
       </GridContainer>
-
       
       <GridContainer>
 
