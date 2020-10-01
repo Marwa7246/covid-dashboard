@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 // react plugin for creating charts
 // @material-ui/core
 import { makeStyles } from "@material-ui/core/styles";
@@ -12,19 +12,20 @@ import CasesChart from "components/CasesChart.js";
 import ChartPie from "components/ChartPie.js";
 import CardDashboard from "components/CardDashboard.js";
 
-
 import styles from "assets/jss/material-dashboard-react/views/dashboardStyle.js";
 
 import "../App.scss";
 
-
 const useStyles = makeStyles(styles);
 
-export default function Dashboard({state}) {
-
-
-  console.log(state.loading)
+export default function Dashboard({ state }) {
+  console.log(state.loading);
   const globalHistorical = state.globalHistorical;
+
+  useEffect(() => {
+    const user = JSON.stringify(localStorage.getItem("user"));
+    console.log("Dashboard user email", user);
+  }, []);
 
   let days = [];
   let cases = [];
@@ -42,13 +43,9 @@ export default function Dashboard({state}) {
     );
   }
 
-
-
   const classes = useStyles();
   return (
     <div>
-
-
       <GridContainer>
         <GridItem xs={12} sm={6} md={4}>
           <CardDashboard
@@ -73,7 +70,6 @@ export default function Dashboard({state}) {
             statColor={"warning"}
             statIcon={"local_hospital_outline"}
             updated={state.yesterdayGlobal.updated}
-
           />
         </GridItem>
 
@@ -87,7 +83,6 @@ export default function Dashboard({state}) {
             statColor={"danger"}
             statIcon={"warning"}
             updated={state.yesterdayGlobal.updated}
-
           />
         </GridItem>
       </GridContainer>
@@ -102,7 +97,6 @@ export default function Dashboard({state}) {
             }
             statColor={"info"}
             statIcon={"info_outlined"}
-
           />
         </GridItem>
 
@@ -115,7 +109,6 @@ export default function Dashboard({state}) {
             }
             statColor={"primary"}
             statIcon={"add_alert_outlined"}
-
           />
         </GridItem>
 
@@ -128,7 +121,6 @@ export default function Dashboard({state}) {
             }
             statColor={"danger"}
             statIcon={"local_hotel_outlined"}
-
           />
         </GridItem>
       </GridContainer>
@@ -141,12 +133,11 @@ export default function Dashboard({state}) {
             days={days}
             series={casesRecovered}
             type="Line"
-
           />
         </GridItem>
 
         <GridItem xs={12} sm={12} md={4}>
-          <ChartPie  state={state}/>
+          <ChartPie state={state} />
         </GridItem>
 
         <GridItem xs={12} sm={12} md={4}>
@@ -157,7 +148,7 @@ export default function Dashboard({state}) {
             series={cases}
             type="Bar"
             warning="warning"
-            />
+          />
         </GridItem>
       </GridContainer>
     </div>

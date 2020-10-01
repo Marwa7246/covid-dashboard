@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Switch,
   Route,
@@ -62,6 +62,11 @@ export default function Application({ ...rest }) {
   const { state, dispatch } = useApplicationData();
   let mapData = [];
   if (!state.loading) mapData = getMapDataLayer(state.mapData);
+
+  useEffect(() => {
+    const user = localStorage.getItem("user");
+    console.log("Application user email", JSON.stringify(user));
+  }, []);
 
   const switchRoutes = (
     <Switch>

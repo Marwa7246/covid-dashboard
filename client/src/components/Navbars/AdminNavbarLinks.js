@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import classNames from "classnames";
+import { useHistory } from "react-router-dom";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import MenuItem from "@material-ui/core/MenuItem";
@@ -17,15 +18,33 @@ import Dashboard from "@material-ui/icons/Dashboard";
 // core components
 import Button from "components/CustomButtons/Button.js";
 
+import Login from "views/Login";
+import Signup from "views/Signup";
+import axios from "axios";
+import ReactDOM from "react-dom";
+import { Router, Route, Switch, Redirect } from "react-router-dom";
+import { createBrowserHistory } from "history";
+
 import styles from "assets/jss/material-dashboard-react/components/headerLinksStyle.js";
 
 const useStyles = makeStyles(styles);
 
 export default function AdminNavbarLinks() {
+  // const [form, setForm] = useState("");
+  // const [user, setUser] = useState({});
+
   const classes = useStyles();
   const [openNotification, setOpenNotification] = React.useState(null);
   const [openProfile, setOpenProfile] = React.useState(null);
-  const handleClickNotification = event => {
+
+  const history = useHistory();
+
+  useEffect(() => {
+    const user = JSON.stringify(localStorage.getItem("user"));
+    console.log("AdminNavbarLink user email", user);
+  }, []);
+
+  const handleClickNotification = (event) => {
     if (openNotification && openNotification.contains(event.target)) {
       setOpenNotification(null);
     } else {
@@ -35,7 +54,7 @@ export default function AdminNavbarLinks() {
   const handleCloseNotification = () => {
     setOpenNotification(null);
   };
-  const handleClickProfile = event => {
+  const handleClickProfile = (event) => {
     if (openProfile && openProfile.contains(event.target)) {
       setOpenProfile(null);
     } else {
@@ -45,9 +64,16 @@ export default function AdminNavbarLinks() {
   const handleCloseProfile = () => {
     setOpenProfile(null);
   };
+
+  const handleLogout = () => {
+    localStorage.setItem("user", null);
+    localStorage.setItem("token", null);
+    console.log("Logging out");
+    history.push("/dashboard");
+  };
+
   return (
     <div>
-      
       <Button
         color={window.innerWidth > 959 ? "transparent" : "white"}
         justIcon={window.innerWidth > 959}
@@ -95,7 +121,7 @@ export default function AdminNavbarLinks() {
               id="notification-menu-list-grow"
               style={{
                 transformOrigin:
-                  placement === "bottom" ? "center top" : "center bottom"
+                  placement === "bottom" ? "center top" : "center bottom",
               }}
             >
               <Paper>
@@ -105,19 +131,20 @@ export default function AdminNavbarLinks() {
                       onClick={handleCloseNotification}
                       className={classes.dropdownItem}
                     >
-                      High number of  cases values on favourite country 1
+                      High number of cases values on favourite country 1
                     </MenuItem>
                     <MenuItem
                       onClick={handleCloseNotification}
                       className={classes.dropdownItem}
                     >
-                      High number of  deaths values on favourite country 1
+                      High number of deaths values on favourite country 1
                     </MenuItem>
                     <MenuItem
                       onClick={handleCloseNotification}
                       className={classes.dropdownItem}
                     >
-                      High number of  critical cases values on favourite country 1
+                      High number of critical cases values on favourite country
+                      1
                     </MenuItem>
                     <MenuItem
                       onClick={handleCloseNotification}
@@ -170,7 +197,7 @@ export default function AdminNavbarLinks() {
               id="profile-menu-list-grow"
               style={{
                 transformOrigin:
-                  placement === "bottom" ? "center top" : "center bottom"
+                  placement === "bottom" ? "center top" : "center bottom",
               }}
             >
               <Paper>
@@ -189,8 +216,9 @@ export default function AdminNavbarLinks() {
                       Settings
                     </MenuItem>
                     <Divider light />
+
                     <MenuItem
-                      onClick={handleCloseProfile}
+                      onClick={handleLogout}
                       className={classes.dropdownItem}
                     >
                       Logout
