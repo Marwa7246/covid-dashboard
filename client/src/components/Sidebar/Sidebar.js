@@ -21,8 +21,7 @@ import styles from "assets/jss/material-dashboard-react/components/sidebarStyle.
 const useStyles = makeStyles(styles);
 
 export default function Sidebar(props) {
-
-  console.log(props)
+  console.log(props);
 
   const classes = useStyles();
   // verifies if routeName is the one active (in browser input)
@@ -38,15 +37,15 @@ export default function Sidebar(props) {
         if (prop.path === "/upgrade-to-pro") {
           activePro = classes.activePro + " ";
           listItemClasses = classNames({
-            [" " + classes[color]]: true
+            [" " + classes[color]]: true,
           });
         } else {
           listItemClasses = classNames({
-            [" " + classes[color]]: activeRoute(prop.path)
+            [" " + classes[color]]: activeRoute(prop.path),
           });
         }
         const whiteFontClasses = classNames({
-          [" " + classes.whiteFont]: activeRoute(prop.path)
+          [" " + classes.whiteFont]: activeRoute(prop.path),
         });
         return (
           <NavLink
@@ -80,10 +79,7 @@ export default function Sidebar(props) {
   );
   var brand = (
     <div className={classes.logo}>
-      <span 
-        className={classNames(classes.logoLink)}
-        target="_blank"
-      >
+      <span className={classNames(classes.logoLink)} target="_blank">
         <div className={classes.logoImage}>
           <img src={logo} alt="logo" className={classes.img} />
         </div>
@@ -99,11 +95,11 @@ export default function Sidebar(props) {
           anchor={"right"}
           open={props.open}
           classes={{
-            paper: classNames(classes.drawerPaper)
+            paper: classNames(classes.drawerPaper),
           }}
           onClose={props.handleDrawerToggle}
           ModalProps={{
-            keepMounted: true // Better open performance on mobile.
+            keepMounted: true, // Better open performance on mobile.
           }}
         >
           {brand}
@@ -121,11 +117,11 @@ export default function Sidebar(props) {
       </Hidden>
       <Hidden smDown implementation="css">
         <Drawer
-          anchor={ "left"}
+          anchor={"left"}
           variant="permanent"
           open
           classes={{
-            paper: classNames(classes.drawerPaper)
+            paper: classNames(classes.drawerPaper),
           }}
         >
           {brand}
@@ -149,5 +145,5 @@ Sidebar.propTypes = {
   image: PropTypes.string,
   logoText: PropTypes.string,
   routes: PropTypes.arrayOf(PropTypes.object),
-  open: PropTypes.bool
+  open: PropTypes.bool,
 };
