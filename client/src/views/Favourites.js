@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 
@@ -69,6 +69,19 @@ const useStyles = makeStyles(styles);
 export default function Favourites({state, saveFavourites}) {
 
   const [countryName, setCountryName] = useState('');
+  const [user, setUser] = useState('');
+
+
+  // let user = ''
+
+  useEffect(() => {
+    const user = JSON.stringify(localStorage.getItem("user"));
+    const token = JSON.stringify(localStorage.getItem("token"))
+    console.log("Dashboard user email", user, token);
+    setUser(user)
+  }, []);
+
+
   // const [allCountries, setAllCountries] = useState([]);
   
   const classes = useStyles();
@@ -145,9 +158,12 @@ export default function Favourites({state, saveFavourites}) {
       <GridContainer>
 
         <GridItem xs={12} sm={12} md={4}>
+        <Card>
+            <h2 style={{ color: "red" }}>{user && <p>{user}</p>}</h2>
+          </Card>
           <Card>
             <CardHeader color="primary">
-              <h4 className={classes.cardTitleWhite}>List of Your Favourites Countries</h4>
+            <h4 className={classes.cardTitleWhite}>{user} ABCD List of Your Favourites Countries</h4>
 
             </CardHeader>
             <CardBody>

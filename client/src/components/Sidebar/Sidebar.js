@@ -1,9 +1,10 @@
 /*eslint-disable*/
-import React from "react";
+import React, {useState} from "react";
 import classNames from "classnames";
 import PropTypes from "prop-types";
 import { NavLink } from "react-router-dom";
 import { Redirect } from "react-router-dom";
+import routes from "../../routes";
 
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
@@ -21,17 +22,51 @@ import styles from "assets/jss/material-dashboard-react/components/sidebarStyle.
 const useStyles = makeStyles(styles);
 
 export default function Sidebar(props) {
-  console.log(props);
+
+  console.log(props.user);
+  const user=props.user
+  const [route, setRoutes] = useState(routes)
+
+  const newRoutes = (routes) => {
+    let new_routes2 = []
+    for(let route of routes){
+      if (route.name !== 'Login' && route.name !== 'Signup'){
+        new_routes2.push(route)
+        console.log('added')
+      }
+    }
+    return new_routes2
+  }
+  const loggedRoutes = (routes) => {
+    let new_routes2 = []
+    for(let route of routes){
+      if (route.name !== 'Favourites'){
+        new_routes2.push(route)
+        console.log('added')
+      }
+    }
+    return new_routes2
+  }
+
+  React.useEffect(()=>{
+    let loggedUser = localStorage.getItem('user')
+    console.log(`loggedUser: ${JSON.stringify(loggedUser)}`)
+    if (loggedUser !== 'null') {
+      setRoutes(newRoutes(routes))
+    } else {
+      setRoutes(loggedRoutes(routes))
+    }
+  },[])
 
   const classes = useStyles();
   // verifies if routeName is the one active (in browser input)
   function activeRoute(routeName) {
     return window.location.href.indexOf(routeName) > -1 ? true : false;
   }
-  const { color, logo, image, logoText, routes } = props;
+  const { color, logo, image, logoText } = props;
   var links = (
     <List className={classes.list}>
-      {routes.map((prop, key) => {
+      {route.map((prop, key) => {
         var activePro = " ";
         var listItemClasses;
         if (prop.path === "/upgrade-to-pro") {
@@ -47,13 +82,15 @@ export default function Sidebar(props) {
         const whiteFontClasses = classNames({
           [" " + classes.whiteFont]: activeRoute(prop.path),
         });
-        return (
+        return ( <>
+        
           <NavLink
             to={prop.path}
             className={activePro + classes.item}
             activeClassName="active"
             key={key}
-          >
+          > 
+          
             <ListItem button className={classes.itemLink + listItemClasses}>
               {typeof prop.icon === "string" ? (
                 <Icon
@@ -73,6 +110,8 @@ export default function Sidebar(props) {
               />
             </ListItem>
           </NavLink>
+      
+          </>
         );
       })}
     </List>

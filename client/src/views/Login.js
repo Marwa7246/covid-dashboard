@@ -35,7 +35,7 @@ export default function Login(props) {
       .then((res) => {
         console.log(res.data);
         localStorage.setItem("user", res.data.user.email);
-        console.log("login user is", res.data.user);
+        console.log("login user is", res.data.user, res.data.jwt );
         localStorage.setItem("token", res.data.jwt);
         //props.handleLogin(res.data.user);
         history.push("/dashboard");

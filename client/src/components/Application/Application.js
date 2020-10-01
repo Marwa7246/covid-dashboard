@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Switch,
   Route,
@@ -60,22 +60,45 @@ const useStyles = makeStyles(styles);
 
 export default function Application({ ...rest }) {
   const { state, dispatch, saveFavourites } = useApplicationData();
+  const [user, setUser] = useState('')
+  // const [new_routes, setNewRoutes] = useState([])
   let mapData = [];
   if (!state.loading) mapData = getMapDataLayer(state.mapData);
 
-  useEffect(() => {
-    const user = localStorage.getItem("user");
-    console.log("Application user email", JSON.stringify(user));
-  }, []);
+  // const newRoutes = (routes) => {
+  //   let new_routes2 = []
+  //   for(let route of routes){
+  //     if (route.name !== 'Login'){
+  //       new_routes2.push(route)
+  //       console.log('added')
+  //     }
+  //   }
+  //   return new_routes2
+  // }
+
+
+  // React.useEffect(() => {
+  //   const user = JSON.stringify(localStorage.getItem("user"));
+  //   console.log("Application user email", user );
+  //   setUser(user)
+  //   setNewRoutes(newRoutes(routes))
+  //   console.log(`new_routes: ${newRoutes(routes)}`)
+  // }, []);
+  // let new_routes = routes
+  // if (user){
+  //   new_routes = newRoutes(routes)
+  // }
 
   const switchRoutes = (
     <Switch>
       {routes.map((prop, key) => {
         // console.log("PROPS are: ", prop);
         const Component = prop.component;
+        if (Component === 'Favourites' && user) console.log('from application')
         return (
           <Route key={key} path={prop.path}>
-            <Component state={state} saveFavourites={saveFavourites} />
+            
+            <Component state={state} saveFavourites={saveFavourites} user={user} />
           </Route>
         );
       })}
@@ -146,6 +169,7 @@ export default function Application({ ...rest }) {
             handleDrawerToggle={handleDrawerToggle}
             open={mobileOpen}
             color={color}
+            user={user}
             {...rest}
           />
           <div className={classes.mainPanel} ref={mainPanel}>
