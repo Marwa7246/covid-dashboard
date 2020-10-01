@@ -7,6 +7,8 @@ import DropdownButton from 'react-bootstrap/DropdownButton'
 import SplitButton from 'react-bootstrap/SplitButton'
 import ButtonGroup from 'react-bootstrap/ButtonGroup'
 import AllCountriesSelection from '../components/AllCountriesSelection'
+import {getAllCountriesForDropDown} from '../helpers/helpers'
+
  
 
 import InputLabel from "@material-ui/core/InputLabel";
@@ -53,12 +55,12 @@ const styles = {
   }
 };
 
-const countryOptions = [
-  { key: 'af', value: 'af', flag: 'af', text: 'Afghanistan' },
-  { key: 'ca', value: 'ca', flag: 'ca', text: 'Canada' },
-  { key: 'al', value: 'al', flag: 'al', text: 'Albania' },
+// const countryOptions = [
+//   { key: 'af', value: 'af', flag: 'af', text: 'Afghanistan' },
+//   { key: 'ca', value: 'ca', flag: 'ca', text: 'Canada' },
+//   { key: 'al', value: 'al', flag: 'al', text: 'Albania' },
 
-]
+// ]
 
 
 
@@ -99,6 +101,7 @@ export default function Favourites({state}) {
   let days = [];
   let cases = [];
   let casesRecovered = [];
+  let countryOptions=[];
 
   if (!state.loading) {
     const casesObject = globalHistorical.cases;
@@ -119,69 +122,21 @@ export default function Favourites({state}) {
     // setTheArray([...theArray, newElement]);
 
   }
+
     // console.log(allCountries)
 
+  
 
   return (
     <div>
 
       <GridContainer>
 
-        <GridItem xs={12} sm={12} md={4}>
-          <Card>
-            <CardHeader color="primary">
-              <h4 className={classes.cardTitleWhite}>List of Countries</h4>
+      {!state.loading && <AllCountriesSelection countryOptions={countryOptions}/>}
 
-            </CardHeader>
-            <CardBody>
-              <GridContainer>  
-              <GridItem xs={12} sm={12} md={12}>
-                <h4>{countryName} Add countries to you Favourite list</h4>  
-     
-                </GridItem>            
-            
-                <GridItem xs={12} sm={12} md={12}>
-                  {/* <Dropdown
-                    placeholder='Select Country'
-                    fluid
-                    search
-                    multiple
-                    selection
-                    onChange={handleChange}
-                    onBlur={()=>console.log(allCountries)}
-                    options={countryOptions}
-                  />      */}
+      </GridContainer>
+      <GridContainer>
 
-{/* <>
-  {['Primary', 'Secondary', 'Success', 'Info', 'Warning', 'Danger'].map(
-    (variant) => (
-      <DropdownButton onClick={(e)=>console.log('all', e.target)}
-        as={ButtonGroup}
-        key={variant}
-        id={`dropdown-variants-${variant}`}
-        variant={variant.toLowerCase()}
-        title={variant}
-      >
-        <Dropdown.Item onSelect={(e)=>console.log('1', e.target)}>Action</Dropdown.Item>
-        <Dropdown.Item onChange={(e)=>console.log(e)}>Another action</Dropdown.Item>
-        <Dropdown.Item eventKey="3" active>
-          Active Item
-        </Dropdown.Item>
-        <Dropdown.Divider />
-        <Dropdown.Item eventKey="4">Separated link</Dropdown.Item>
-      </DropdownButton>
-    ),
-  )}
-
-</> */}
-
-<AllCountriesSelection/>
-                </GridItem>
-              </GridContainer>
-            </CardBody>
- 
-          </Card>
-        </GridItem>
         <GridItem xs={12} sm={12} md={4}>
           <Card>
             <CardHeader color="primary">
