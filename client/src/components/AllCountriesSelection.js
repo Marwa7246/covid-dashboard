@@ -44,14 +44,15 @@ const styles = {
 
 const useStyles = makeStyles(styles);
 
-const AllCountriesSelection = () => {
-    const [allCountries, setAllCountries] = useState([]);
-const state = useContext(StateContext);
+const AllCountriesSelection = ({onSave}) => {
+  const [error, setError] = useState("");
+  const [allFavouriteCountries, setAllFavouriteCountries] = useState([]);
+  const state = useContext(StateContext);
 
-const countryOptions = (!state.loading) && getAllCountriesForDropDown(state.mapData)
-console.log(countryOptions)
+  const countryOptions = (!state.loading) && getAllCountriesForDropDown(state.mapData)
+  console.log(countryOptions)
 
-const classes = useStyles();
+  const classes = useStyles();
 
 
   // const countryOptions = [
@@ -60,13 +61,24 @@ const classes = useStyles();
   //   { key: 'al', value: 'al', flag: 'al', text: 'Albania' },
   
   // ]
+  
 
   const handleAllCountriesChange= (e: any, data?: any) => {
     if (data.value.length <= MAX_COUNTRIES_SELECTION) {
-      setAllCountries(data.value);
+      setAllFavouriteCountries(data.value);
     }
   };
-  console.log(allCountries)
+
+  const validate = function () {
+    if (allFavouriteCountries.length === 0) {
+      setError("Country list cannot be blank");
+      return;
+    }
+    setError("");
+    onSave(allFavouriteCountries);
+  };
+
+  console.log(allFavouriteCountries)
 
   return (
     <div>
@@ -92,7 +104,7 @@ const classes = useStyles();
             <Dropdown
               placeholder="Select Up to 3 Countries"
               onChange={handleAllCountriesChange}
-              value={allCountries}
+              value={allFavouriteCountries}
               fluid
               multiple
               selectOnNavigation={false}
@@ -106,7 +118,7 @@ const classes = useStyles();
           </GridContainer>
         </CardBody>
         <CardFooter>
-          <Button variant="contained" color="primary" onClick={()=> console.log(allCountries)}>
+          <Button variant="contained" color="primary" onClick={validate}>
             SELECT
           </Button>
         </CardFooter>
