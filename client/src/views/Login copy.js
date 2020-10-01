@@ -12,12 +12,15 @@ import CardFooter from "components/Card/CardFooter.js";
 import axios from "axios";
 import TextField from "@material-ui/core/TextField";
 
-import useLogin from "./useLogin";
+import useLogin from "../hooks/useLogin";
+import { Redirect } from "react-router-dom";
 
-export default function Login() {
+export default function Login(props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [user, setUser] = useState({});
+  const [form, setForm] = useState("");
 
   const { loginShowing, toggleLogin } = useLogin();
 
@@ -36,13 +39,46 @@ export default function Login() {
       email,
       password,
     };
+  };
 
+  //////////////////////////////////// 2- after login ---> auto login ---> get requet to auto login
+  const handleLogin = (user) => {
+    setUser(user);
+
+    const token = localStorage.getItem("token");
+    if (token) {
+      axios
+        .get(`/auto_login`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((res) => {
+          console.log("res.data : ", res.data);
+
+          setUser(res.data);
+          // console.log("user after auto login : ", user);
+          // console.log("email after auto login : ", email);
+          handleAuthClick();
+        });
+    }
+  };
+
+  ///////////////////////////3- after auto login, get to user_is_auth
+  const handleAuthClick = () => {
+    setError("");
+    const token = localStorage.getItem("token");
     axios
-      .post(`/login`, { user })
+      .get(`/user_is_authed`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
       .then((res) => {
-        console.log(res);
-        console.log(res.data);
-        toggleLogin();
+        console.log("data after user is authenticated ", res);
+        console.log("email after user is authenticated ", res.data.email);
+        console.log("redirecting to dashboard after successful authentication");
+        //Redirect(`/dashboard`);
       })
       .catch((err) => {
         console.log(err);
@@ -50,11 +86,48 @@ export default function Login() {
       });
   };
 
+  const handleFormSwitch = (input) => {
+    setForm(input);
+  };
+
+  ////////////////////////// 1- after submitting the form--post request to login
   const handleSubmit = (e) => {
     e.preventDefault();
+    axios
+      .post(`/login`, { email, password })
+      .then((res) => {
+        console.log(res.data);
+        localStorage.setItem("token", res.data.jwt);
 
-    validate();
+        handleLogin(res.data.user);
+        // toggleLogin();
+      })
+      .catch((err) => {
+        console.log(err);
+        setError("Incorrect Email or Password!");
+      });
+    setEmail("");
+    setPassword("");
+
+    // validate();
   };
+
+  // useEffect(() => {
+  //   const token = localStorage.getItem("token");
+  //   if (token) {
+  //     axios
+  //       .get(`/auto_login`, {
+  //         headers: {
+  //           Authorization: `Bearer ${token}`,
+  //         },
+  //       })
+  //       // .then(resp => resp.json())
+  //       .then((res) => {
+  //         setUser(res.data);
+  //         console.log("res after auto login : ", res);
+  //       });
+  //   }
+  // }, []);
 
   const handleChangeEmail = (e) => {
     setEmail(e.target.value);
@@ -98,6 +171,7 @@ export default function Login() {
                         onChange={handleChangePassword}
                         labelText="Password"
                         id="password"
+                        type="password"
                         value={password}
                         placeholder="Password"
                         formControlProps={{
