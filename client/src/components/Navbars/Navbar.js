@@ -28,8 +28,8 @@ export default function Header(props) {
       }
       return null;
     });
-
-    return name;
+    if (name === "Logout") return;
+    else return name;
   }
   // console.log(makeBrand());
 
