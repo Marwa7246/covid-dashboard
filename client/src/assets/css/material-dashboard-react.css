@@ -250,7 +250,7 @@ footer ul li a:hover {
   z-index: 1031;
   border-radius: 8px 0 0 8px;
   text-align: center;
-  top: 120px;
+  top: 45px;
   .badge-primary-background-color: #9c27b0;
 }
 
@@ -272,6 +272,7 @@ footer ul li a:hover {
   padding: 10px;
   border-radius: 0 0 6px 6px;
   width: auto;
+  top: 10px;
 }
 
 .fixed-plugin .dropdown-menu {
@@ -497,7 +498,6 @@ footer ul li a:hover {
   transform: translateY(-13%);
   transform-origin: 0 0;
 }
-
 
 * {
   letter-spacing: normal !important;
