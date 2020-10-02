@@ -1,5 +1,6 @@
 export const SET_USER = "SET_USER";
 export const SET_APPLICATION_DATA = "SET_APPLICATION_DATA";
+export const SET_FAVOURITES = "SET_FAVOURITES"
 
 const dataReducer = (state, action) => {
   // const actions = {
@@ -16,6 +17,7 @@ const dataReducer = (state, action) => {
         ...state,
         user: action.user,
         loading: false,
+
       };
     }
 
@@ -29,6 +31,15 @@ const dataReducer = (state, action) => {
         worldCovidNews: action.worldCovidNews,
 
         loading: false,
+      };
+    }
+
+    case SET_FAVOURITES: {
+      return {
+        ...state,
+        allFavouriteCountries: action.allFavouriteCountries,
+        loadingFavourites: false,
+
       };
     }
 

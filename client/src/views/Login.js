@@ -36,7 +36,11 @@ export default function Login(props) {
         console.log(res.data);
         localStorage.setItem("user", res.data.user.email);
         console.log("login user is", res.data.user, res.data.jwt );
-        localStorage.setItem("token", res.data.jwt);
+        localStorage.setItem("token", res.data.jwt)
+        localStorage.setItem("favourites", JSON.stringify(res.data.favourites))
+        console.log("favourites", JSON.stringify(res.data.favourites));
+
+        // props.getFavourites(res.data.user.email)
         //props.handleLogin(res.data.user);
         history.push("/dashboard");
         //console.log(history.location);

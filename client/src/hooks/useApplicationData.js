@@ -3,6 +3,7 @@ import axios from "axios";
 import dataReducer, {
   SET_USER,
   SET_APPLICATION_DATA,
+  SET_FAVOURITES,
 } from "../reducers/dataReducer";
 require("dotenv").config();
 
@@ -16,7 +17,9 @@ const useApplicationData = () => {
     yesterdayGlobal: {},
     mapData: [],
     worldCovidNews: {},
+    allFavouriteCountries: [],    
     loading: true,
+    loadingFavourites: true,
   });
 
   useEffect(() => {
@@ -43,16 +46,29 @@ const useApplicationData = () => {
     const id=1;
 
     console.log('from saveFavourites', {user_id: id, country_name: allFavouriteCountries[0]})
-    return axios.post(`/api/favourites`, {user_id: id, country_name: allFavouriteCountries[0]}).then((res) => {
+    return axios.post(`/api/favourites`, {user_id: id, country_name: allFavouriteCountries[0]})
+    .then((res) => {
       console.log(res)
-    //   dispatch({ type: SET_FAVOURITES, allFavouriteCountries });
+      dispatch({ type: SET_FAVOURITES, allFavouriteCountries });
+    });
+  }
+
+  function getFavourites(userEmail) {
+    const email="test2@gmail.com";
+    console.log('from getFavourites', userEmail)
+
+
+    return axios.get(`/api/users/${email}`)
+    .then((res) => {
+      console.log(res)
+      dispatch({ type: SET_FAVOURITES, allFavouriteCountries: res.data });
     });
   }
 
 
   return {
     state,
-    dispatch, saveFavourites,
+    dispatch, saveFavourites, getFavourites
   };
 };
 

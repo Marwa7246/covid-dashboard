@@ -59,7 +59,7 @@ let ps;
 const useStyles = makeStyles(styles);
 
 export default function Application({ ...rest }) {
-  const { state, dispatch, saveFavourites } = useApplicationData();
+  const { state, dispatch, saveFavourites, getFavourites } = useApplicationData();
   const [user, setUser] = useState('')
   // const [new_routes, setNewRoutes] = useState([])
   let mapData = [];
@@ -98,7 +98,7 @@ export default function Application({ ...rest }) {
         return (
           <Route key={key} path={prop.path}>
             
-            <Component state={state} saveFavourites={saveFavourites} user={user} />
+            <Component state={state} saveFavourites={saveFavourites} user={user} getFavourites={getFavourites}/>
           </Route>
         );
       })}
