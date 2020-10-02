@@ -20,6 +20,7 @@ export default function Signup(props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [message, setMessage] = useState("");
 
   const history = useHistory();
 
@@ -45,21 +46,17 @@ export default function Signup(props) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setError("");
     axios
       .post(`/api/users`, { first_name, last_name, email, password, mobile })
       .then((res) => {
-        // console.log(res.data);
         localStorage.setItem("user", res.data.user.email);
-        // console.log("login user is", res.data.user);
         localStorage.setItem("token", res.data.jwt);
-        history.push("/dashboard");
-        //console.log(history.location);
+        setMessage("Registration Successful! Please login to proceed...");
       })
       .catch((err) => {
         console.log(err);
         setError("All Fields Required!");
-        localStorage.setItem("user", null);
-        localStorage.setItem("token", null);
       });
 
     setFirstName("");
@@ -75,6 +72,9 @@ export default function Signup(props) {
         <GridItem xs={12} sm={12} md={12}>
           <Card>
             <h2 style={{ color: "red" }}>{error && <p>{error}</p>}</h2>
+          </Card>
+          <Card>
+            <h2 style={{ color: "green" }}>{message && <p>{message}</p>}</h2>
           </Card>
           <Card>
             <form onSubmit={handleSubmit}>
