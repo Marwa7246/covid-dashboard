@@ -35,47 +35,44 @@ export default function Sidebar(props) {
   console.log(props.user);
   const user = props.user;
   const [route, setRoutes] = useState(routes);
-  // const [email, setEmail] = useState('');
 
   const email = localStorage.getItem("userEmail");
 
-  console.log('from sidebar email', email, 'end')
+  // console.log("from sidebar email", email, "end");
 
-  const newRoutes = (routes) => {
-    let new_routes2 = [];
-    for (let route of routes) {
-      if (route.name !== "Login" && route.name !== "Signup") {
-        new_routes2.push(route);
-        console.log("added");
-      }
-    }
-    return new_routes2;
-  };
-  const loggedRoutes = (routes) => {
-    let new_routes2 = [];
-    for (let route of routes) {
-      if (route.name !== "Favourites" && route.name !== "Logout") {
-        new_routes2.push(route);
-        console.log("added");
-      }
-    }
-    return new_routes2;
-  };
+  // const newRoutes = (routes) => {
+  //   let new_routes2 = [];
+  //   for (let route of routes) {
+  //     if (route.name !== "Login" && route.name !== "Signup") {
+  //       new_routes2.push(route);
+  //       console.log("added");
+  //     }
+  //   }
+  //   return new_routes2;
+  // };
+  // const loggedRoutes = (routes) => {
+  //   let new_routes2 = [];
+  //   for (let route of routes) {
+  //     if (route.name !== "Favourites" && route.name !== "Logout") {
+  //       new_routes2.push(route);
+  //       console.log("added");
+  //     }
+  //   }
+  //   return new_routes2;
+  // };
 
+  // React.useEffect(() => {
+  //   // setEmail(localStorage.getItem("userEmail"));
+  //   // console.log('from sidebar email', email, 'end')
 
-  React.useEffect(() => {
-    // setEmail(localStorage.getItem("userEmail"));
-    // console.log('from sidebar email', email, 'end')
-
-
-    let loggedUser = localStorage.getItem("user");
-    console.log(`loggedUser: ${JSON.stringify(loggedUser)}`);
-    if (loggedUser !== "null") {
-      setRoutes(newRoutes(routes));
-    } else {
-      setRoutes(loggedRoutes(routes));
-    }
-  }, []);
+  //   let loggedUser = localStorage.getItem("user");
+  //   console.log(`loggedUser: ${JSON.stringify(loggedUser)}`);
+  //   if (loggedUser !== "null") {
+  //     setRoutes(newRoutes(routes));
+  //   } else {
+  //     setRoutes(loggedRoutes(routes));
+  //   }
+  // }, []);
 
   const classes = useStyles();
   // verifies if routeName is the one active (in browser input)
@@ -84,138 +81,258 @@ export default function Sidebar(props) {
   }
   const { color, logo, image, logoText } = props;
 
-  var links = (
-    <List className={classes.list}>
-      {route.map((prop, key) => {
-        // var activePro = " ";
-        var listItemClasses;
-        // if (prop.path === "/upgrade-to-pro") {
-        //   activePro = classes.activePro + " ";
-        //   listItemClasses = classNames({
-        //     [" " + classes[color]]: true,
-        //   });
-        // } else {
-          listItemClasses = classNames({
-            [" " + classes[color]]: activeRoute(prop.path),
-          });
-        // }
-        const whiteFontClasses = classNames({
-          [" " + classes.whiteFont]: activeRoute(prop.path),
-        });
-        return (
-          <>
-            <NavLink
-              to={prop.path}
-              className={classes.item}
-              activeClassName="active"
-              key={key}
-            >
-              <ListItem button className={classes.itemLink + listItemClasses}>
-                {typeof prop.icon === "string" ? (
-                  <Icon
-                    className={classNames(classes.itemIcon, whiteFontClasses)}
-                  >
-                    {prop.icon}
-                  </Icon>
-                ) : (
-                  <prop.icon
-                    className={classNames(classes.itemIcon, whiteFontClasses)}
-                  />
-                )}
-                <ListItemText
-                  primary={prop.name}
-                  className={classNames(classes.itemText, whiteFontClasses)}
-                  disableTypography={true}
-                />
-              </ListItem>
-            </NavLink>
-          </>
-        );
-      })}
-    </List>
-  );
-//////////////////////////////////////////////////////////////
+  // var links = (
+  //   <List className={classes.list}>
+  //     {route.map((prop, key) => {
+  //       // var activePro = " ";
+  //       var listItemClasses;
+  //       // if (prop.path === "/upgrade-to-pro") {
+  //       //   activePro = classes.activePro + " ";
+  //       //   listItemClasses = classNames({
+  //       //     [" " + classes[color]]: true,
+  //       //   });
+  //       // } else {
+  //       listItemClasses = classNames({
+  //         [" " + classes[color]]: activeRoute(prop.path),
+  //       });
+  //       // }
+  //       const whiteFontClasses = classNames({
+  //         [" " + classes.whiteFont]: activeRoute(prop.path),
+  //       });
+  //       return (
+  //         <>
+  //           <NavLink
+  //             to={prop.path}
+  //             className={classes.item}
+  //             activeClassName="active"
+  //             key={key}
+  //           >
+  //             <ListItem button className={classes.itemLink + listItemClasses}>
+  //               {typeof prop.icon === "string" ? (
+  //                 <Icon
+  //                   className={classNames(classes.itemIcon, whiteFontClasses)}
+  //                 >
+  //                   {prop.icon}
+  //                 </Icon>
+  //               ) : (
+  //                 <prop.icon
+  //                   className={classNames(classes.itemIcon, whiteFontClasses)}
+  //                 />
+  //               )}
+  //               <ListItemText
+  //                 primary={prop.name}
+  //                 className={classNames(classes.itemText, whiteFontClasses)}
+  //                 disableTypography={true}
+  //               />
+  //             </ListItem>
+  //           </NavLink>
+  //         </>
+  //       );
+  //     })}
+  //   </List>
+  // );
+  //////////////////////////////////////////////////////////////
   const listItemClasses0 = classNames({
     [" " + classes[color]]: activeRoute(route[0].path),
   });
-const whiteFontClasses0 = classNames({
-  [" " + classes.whiteFont]: activeRoute(route[0].path),
-});
-const listItemClasses4 = classNames({
-  [" " + classes[color]]: activeRoute(route[4].path),
-});
-const whiteFontClasses4 = classNames({
-[" " + classes.whiteFont]: activeRoute(route[4].path),
-});
-// ////////////////////////////////////////////////////////////////////////
-  const newLinksToUpdate = <List className={classes.list}>
-  
-    
+  const whiteFontClasses0 = classNames({
+    [" " + classes.whiteFont]: activeRoute(route[0].path),
+  });
+  const listItemClasses1 = classNames({
+    [" " + classes[color]]: activeRoute(route[1].path),
+  });
+  const whiteFontClasses1 = classNames({
+    [" " + classes.whiteFont]: activeRoute(route[1].path),
+  });
+  const listItemClasses2 = classNames({
+    [" " + classes[color]]: activeRoute(route[2].path),
+  });
+  const whiteFontClasses2 = classNames({
+    [" " + classes.whiteFont]: activeRoute(route[2].path),
+  });
+  const listItemClasses3 = classNames({
+    [" " + classes[color]]: activeRoute(route[3].path),
+  });
+  const whiteFontClasses3 = classNames({
+    [" " + classes.whiteFont]: activeRoute(route[3].path),
+  });
+  const listItemClasses4 = classNames({
+    [" " + classes[color]]: activeRoute(route[4].path),
+  });
+  const whiteFontClasses4 = classNames({
+    [" " + classes.whiteFont]: activeRoute(route[4].path),
+  });
+  const listItemClasses5 = classNames({
+    [" " + classes[color]]: activeRoute(route[5].path),
+  });
+  const whiteFontClasses5 = classNames({
+    [" " + classes.whiteFont]: activeRoute(route[5].path),
+  });
+  const listItemClasses6 = classNames({
+    [" " + classes[color]]: activeRoute(route[6].path),
+  });
+  const whiteFontClasses6 = classNames({
+    [" " + classes.whiteFont]: activeRoute(route[6].path),
+  });
+
+  // ////////////////////////////////////////////////////////////////////////
+  const newLinksToUpdate = (
+    <List className={classes.list}>
       <>
-      {<NavLink
-          to={route[0].path}
-          className={classes.item}
-          activeClassName="active"
-          key={route[0].path}
-        >
-          <ListItem button className={classes.itemLink + listItemClasses0}>
-            {/* {typeof route[0].icon === "string" ? (
-              <Icon
-                className={classNames(classes.itemIcon, whiteFontClasses)}
-              >
-                {prop.icon}
-              </Icon>
-            ) : (
-              <prop.icon
-                className={classNames(classes.itemIcon, whiteFontClasses)}
-              />
-            )} */}
-            <DashboardIcon
+        {
+          <NavLink
+            to={route[0].path}
+            className={classes.item}
+            activeClassName="active"
+            key={route[0].path}
+          >
+            <ListItem button className={classes.itemLink + listItemClasses0}>
+              <DashboardIcon
                 className={classNames(classes.itemIcon, whiteFontClasses0)}
               />
-            <ListItemText
-              primary={route[0].name}
-              className={classNames(classes.itemText, whiteFontClasses0)}
-              disableTypography={true}
-            />
-          </ListItem>
-        </NavLink>}
+              <ListItemText
+                primary={route[0].name}
+                className={classNames(classes.itemText, whiteFontClasses0)}
+                disableTypography={true}
+              />
+            </ListItem>
+          </NavLink>
+        }
       </>
       <>
-      {email && <NavLink
-          to={route[4].path}
-          className={classes.item}
-          activeClassName="active"
-          key={route[4].path}
-        >
-          <ListItem button className={classes.itemLink + listItemClasses4}>
-            {/* {typeof route[4].icon === "string" ? (
-              <Icon
-                className={classNames(classes.itemIcon, whiteFontClasses)}
-              >
-                {prop.icon}
-              </Icon>
-            ) : (
-              <prop.icon
-                className={classNames(classes.itemIcon, whiteFontClasses)}
+        {
+          <NavLink
+            to={route[1].path}
+            className={classes.item}
+            activeClassName="active"
+            key={route[1].path}
+          >
+            <ListItem button className={classes.itemLink + listItemClasses1}>
+              <LibraryBooks
+                className={classNames(classes.itemIcon, whiteFontClasses1)}
               />
-            )} */}
-            <ListItemText
-              primary={route[4].name}
-              className={classNames(classes.itemText, whiteFontClasses4)}
-              disableTypography={true}
-            />
-          </ListItem>
-        </NavLink>}
+              <ListItemText
+                primary={route[1].name}
+                className={classNames(classes.itemText, whiteFontClasses1)}
+                disableTypography={true}
+              />
+            </ListItem>
+          </NavLink>
+        }
       </>
-    );
-  {/* })} */}
-</List>
+      <>
+        {
+          <NavLink
+            to={route[2].path}
+            className={classes.item}
+            activeClassName="active"
+            key={route[2].path}
+          >
+            <ListItem button className={classes.itemLink + listItemClasses2}>
+              <LocationOn
+                className={classNames(classes.itemIcon, whiteFontClasses2)}
+              />
+              <ListItemText
+                primary={route[2].name}
+                className={classNames(classes.itemText, whiteFontClasses2)}
+                disableTypography={true}
+              />
+            </ListItem>
+          </NavLink>
+        }
+      </>
+      <>
+        {email && (
+          <NavLink
+            to={route[3].path}
+            className={classes.item}
+            activeClassName="active"
+            key={route[3].path}
+          >
+            <ListItem button className={classes.itemLink + listItemClasses3}>
+              <Stars
+                className={classNames(classes.itemIcon, whiteFontClasses3)}
+              />
+              <ListItemText
+                primary={route[3].name}
+                className={classNames(classes.itemText, whiteFontClasses3)}
+                disableTypography={true}
+              />
+            </ListItem>
+          </NavLink>
+        )}
+      </>
+      <>
+        {!email && (
+          <NavLink
+            to={route[4].path}
+            className={classes.item}
+            activeClassName="active"
+            key={route[4].path}
+          >
+            <ListItem button className={classes.itemLink + listItemClasses4}>
+              <VpnKey
+                className={classNames(classes.itemIcon, whiteFontClasses4)}
+              />
+              <ListItemText
+                primary={route[4].name}
+                className={classNames(classes.itemText, whiteFontClasses4)}
+                disableTypography={true}
+              />
+            </ListItem>
+          </NavLink>
+        )}
+      </>
+      <>
+        {!email && (
+          <NavLink
+            to={route[5].path}
+            className={classes.item}
+            activeClassName="active"
+            key={route[5].path}
+          >
+            <ListItem button className={classes.itemLink + listItemClasses5}>
+              <Create
+                className={classNames(classes.itemIcon, whiteFontClasses5)}
+              />
+              <ListItemText
+                primary={route[5].name}
+                className={classNames(classes.itemText, whiteFontClasses5)}
+                disableTypography={true}
+              />
+            </ListItem>
+          </NavLink>
+        )}
+      </>
+      <>
+        {email && (
+          <NavLink
+            to={route[6].path}
+            className={classes.item}
+            activeClassName="active"
+            key={route[6].path}
+          >
+            <ListItem button className={classes.itemLink + listItemClasses6}>
+              <ExitToApp
+                className={classNames(classes.itemIcon, whiteFontClasses6)}
+              />
+              <ListItemText
+                primary={route[6].name}
+                className={classNames(classes.itemText, whiteFontClasses6)}
+                disableTypography={true}
+              />
+            </ListItem>
+          </NavLink>
+        )}
+      </>
+      );
+      {/* })} */}
+    </List>
+  );
 
-// //////////////////////////////////////////////////////////////////////////
-  
+  // //////////////////////////////////////////////////////////////////////////
 
-var brand = (
+  var brand = (
     <div className={classes.logo}>
       <span className={classNames(classes.logoLink)} target="_blank">
         <div className={classes.logoImage}>
@@ -226,62 +343,58 @@ var brand = (
     </div>
   );
   return (
-<div>
+    <div>
+      <div>
+        <Hidden mdUp implementation="css">
+          <Drawer
+            variant="temporary"
+            anchor={"right"}
+            open={props.open}
+            classes={{
+              paper: classNames(classes.drawerPaper),
+            }}
+            onClose={props.handleDrawerToggle}
+            ModalProps={{
+              keepMounted: true, // Better open performance on mobile.
+            }}
+          >
+            {brand}
+            <div className={classes.sidebarWrapper}>
+              {<AdminNavbarLinks />}
+              {/* {links} */}
+              {newLinksToUpdate}
+            </div>
+            {image !== undefined ? (
+              <div
+                className={classes.background}
+                style={{ backgroundImage: "url(" + image + ")" }}
+              />
+            ) : null}
+          </Drawer>
+        </Hidden>
+        <Hidden smDown implementation="css">
+          <Drawer
+            anchor={"left"}
+            variant="permanent"
+            open
+            classes={{
+              paper: classNames(classes.drawerPaper),
+            }}
+          >
+            {brand}
 
-
-
-    <div>            
-      <Hidden mdUp implementation="css">
-        <Drawer
-          variant="temporary"
-          anchor={"right"}
-          open={props.open}
-          classes={{
-            paper: classNames(classes.drawerPaper),
-          }}
-          onClose={props.handleDrawerToggle}
-          ModalProps={{
-            keepMounted: true, // Better open performance on mobile.
-          }}
-        >
-          {brand}
-          <div className={classes.sidebarWrapper}>
-            {<AdminNavbarLinks />}
-            {links}
-            {newLinksToUpdate}
-          </div>
-          {image !== undefined ? (
-            <div
-              className={classes.background}
-              style={{ backgroundImage: "url(" + image + ")" }}
-            />
-          ) : null}
-        </Drawer>
-      </Hidden>
-      <Hidden smDown implementation="css">
-        <Drawer
-          anchor={"left"}
-          variant="permanent"
-          open
-          classes={{
-            paper: classNames(classes.drawerPaper),
-          }}
-        >
-          {brand}
-
- 
-          <div className={classes.sidebarWrapper}>{links}</div>
-          <div className={classes.sidebarWrapper}>{newLinksToUpdate}</div>
-          {image !== undefined ? (
-            <div
-              className={classes.background}
-              style={{ backgroundImage: "url(" + image + ")" }}
-            />
-          ) : null}
-        </Drawer>
-      </Hidden>
+            {/* <div className={classes.sidebarWrapper}>{links}</div> */}
+            <div className={classes.sidebarWrapper}>{newLinksToUpdate}</div>
+            {image !== undefined ? (
+              <div
+                className={classes.background}
+                style={{ backgroundImage: "url(" + image + ")" }}
+              />
+            ) : null}
+          </Drawer>
+        </Hidden>
       </div>
-      </div>
+    </div>
   );
 }
 
