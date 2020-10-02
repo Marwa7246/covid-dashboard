@@ -7,7 +7,7 @@ import DropdownButton from 'react-bootstrap/DropdownButton'
 import SplitButton from 'react-bootstrap/SplitButton'
 import ButtonGroup from 'react-bootstrap/ButtonGroup'
 import AllCountriesSelection from '../components/AllCountriesSelection'
-import {getFavouritesCountriesForDropDown} from '../helpers/helpers'
+import {getFavouritesCountriesForDropDown, addCountryNameKey} from '../helpers/helpers'
 
  
 
@@ -70,29 +70,35 @@ export default function Favourites({state, saveFavourites}) {
 
   const [countryName, setCountryName] = useState('');
   const [user, setUser] = useState('');
-  const [favourites, setFavourites] = useState([]);
+  const [favouritesFinal, setFavouritesFinal] = useState([]);
 
 
+  
+  
   // console.log(state.allFavouriteCountries)
 
 
   // let user = ''
-  useEffect(() => {
-    const user = JSON.parse(JSON.stringify(localStorage.getItem("user")));
-    const favourites = JSON.parse(localStorage.getItem("favourites"));
+  // useEffect(() => {
+  //   const user = JSON.parse(JSON.stringify(localStorage.getItem("user")));
+  //   const favourites = JSON.parse(localStorage.getItem("favourites"));
+  //   console.log("favourites inside useffects after local storage", favourites);
 
-    console.log("favourites from favourites", favourites);
   // const allFavouriteCountries = getFavouritesCountriesForDropDown(favourites, state.mapData);
+  // console.log("allFavouriteCountries inside useffects after function", allFavouriteCountries);
 
-    setUser(user)
-    setFavourites(favourites)
-  }, []);
+  //   setUser(user)
+  //   setFavourites(favourites)
+  //   console.log("favourites inside useffects after set", favourites);
 
-    console.log("favourites from outside useEffect", favourites);
+
+  // }, []);
+
+    // console.log("favourites from outside useEffect", favourites);
     // !state.loading && state.mapData.map(ele=>console.log(ele))
   // const [allCountries, setAllCountries] = useState([]);
 
-  const allFavouriteCountries = favourites.length > 0 && getFavouritesCountriesForDropDown(favourites, state.mapData);
+  // const allFavouriteCountries = favourites.length > 0 && !state.loading && getFavouritesCountriesForDropDown(favourites, state.mapData);
   
   const classes = useStyles();
 
@@ -117,7 +123,7 @@ export default function Favourites({state, saveFavourites}) {
       );
     })
 
-  favourites.length > 0 && console.log('allFavouriteCountries', allFavouriteCountries)
+  // favourites.length > 0 && console.log('allFavouriteCountries', allFavouriteCountries)
     
   const mapData = getMapDataLayer(state.mapData)
 
@@ -143,39 +149,48 @@ export default function Favourites({state, saveFavourites}) {
     setCountryName(e.target.innerText)
     // setAllCountries([...allCountries, e.target.innerText])
     // setTheArray([...theArray, newElement]);
+    console.log('countryName',countryName)
 
   }
 
-  const onSave = (data) => {
-    console.log(data)
-    saveFavourites(data)
-    .then(()=> console.log('success'))
+  const onSave = (favourites) => {
+    console.log(favourites)
+    saveFavourites(favourites)
+    .then(()=> console.log(getFavouritesCountriesForDropDown(favourites, state.mapData)))
+    .then(()=> console.log(favourites.length, !state.loading))
+
+    .then(()=> console.log(getFavouritesCountriesForDropDown(addCountryNameKey(favourites), state.mapData)))
+    // .then(()=> setFavouritesFinal([1,2,3]))
+     .then(()=> setFavouritesFinal(getFavouritesCountriesForDropDown(addCountryNameKey(favourites), state.mapData)))
+
 
   }
 
-    // console.log(allCountries)
 
-  
+
 
   return (
     <div>
-
+{favouritesFinal.length === 0 &&  
       <GridContainer>
       <GridItem xs={12} sm={12} md={12}>
-
       {!state.loading && <AllCountriesSelection onSave={onSave} />}
+
       </GridItem >
 
-      </GridContainer>
+      </GridContainer>}
+
+
       <GridContainer>
 
-        <GridItem xs={12} sm={12} md={4}>
+      {favouritesFinal.length > 0 &&  
+      <GridItem xs={12} sm={12} md={6}>
         <Card>
             <h2 style={{ color: "red" }}>{user && <p>{user}</p>}</h2>
           </Card>
           <Card>
             <CardHeader color="primary">
-            <h4 className={classes.cardTitleWhite}>{user}List of Your Favourites Countries</h4>
+            <h4 className={classes.cardTitleWhite}>List of Your Favourites Countries</h4>
 
             </CardHeader>
             <CardBody>
@@ -184,7 +199,6 @@ export default function Favourites({state, saveFavourites}) {
                 <h4>{countryName} Select a country to see more information</h4>  
      
                 </GridItem>            
-                {allFavouriteCountries.length > 0 && < h4>{allFavouriteCountries[0][0].value} TESTTTTTT {allFavouriteCountries.length}</h4>  }
 
                 <GridItem xs={12} sm={12} md={12}>
                    <Dropdown
@@ -192,24 +206,28 @@ export default function Favourites({state, saveFavourites}) {
                     fluid
                     selection
                     onChange={handleChange}
-                    options={allFavouriteCountries}
+                    options={favouritesFinal}
                   />   
                 </GridItem>
               </GridContainer>
             </CardBody>
  
           </Card>
-        </GridItem>        
-        <GridItem xs={12} sm={12} md={4}>
+        </GridItem> }       
+        <GridItem xs={12} sm={12} md={6}>
 
-         { !state.loading && countryName && <CardCountry
-         mapData={mapData}
-         countryName={countryName}
-         
-         />}
+         { !state.loading && countryName && 
+         <CardCountry
+          mapData={mapData}
+          countryName={countryName}         
+         />
+        }
         </GridItem>
+
       </GridContainer>
             
+      { !state.loading && countryName &&     
+      <>
       <GridContainer>
 
         <GridItem xs={12} sm={12} md={6}>
@@ -229,6 +247,7 @@ export default function Favourites({state, saveFavourites}) {
 
 
       </GridContainer>
+
       
       <GridContainer>
 
@@ -249,9 +268,9 @@ export default function Favourites({state, saveFavourites}) {
             />
         </GridItem>
       </GridContainer>
+</>
 
-
-
+}
 
 
     </div>
