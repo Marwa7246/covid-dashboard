@@ -75,7 +75,7 @@ export default function AdminNavbarLinks() {
 
   return (
     <div>
-      <Button
+      {/* <Button
         color={window.innerWidth > 959 ? "transparent" : "white"}
         justIcon={window.innerWidth > 959}
         simple={!(window.innerWidth > 959)}
@@ -86,9 +86,9 @@ export default function AdminNavbarLinks() {
         <Hidden mdUp implementation="css">
           <p className={classes.linkText}>Dashboard</p>
         </Hidden>
-      </Button>
+      </Button> */}
       <div className={classes.manager}>
-        <Button
+        {/* <Button
           color={window.innerWidth > 959 ? "transparent" : "white"}
           justIcon={window.innerWidth > 959}
           simple={!(window.innerWidth > 959)}
@@ -164,10 +164,10 @@ export default function AdminNavbarLinks() {
               </Paper>
             </Grow>
           )}
-        </Poppers>
+        </Poppers> */}
       </div>
       <div className={classes.manager}>
-        <Button
+        {/* <Button
           color={window.innerWidth > 959 ? "transparent" : "white"}
           justIcon={window.innerWidth > 959}
           simple={!(window.innerWidth > 959)}
@@ -229,7 +229,7 @@ export default function AdminNavbarLinks() {
               </Paper>
             </Grow>
           )}
-        </Poppers>
+        </Poppers> */}
       </div>
     </div>
   );
