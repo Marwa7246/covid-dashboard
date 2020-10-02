@@ -36,8 +36,9 @@ export default function Login(props) {
       .then((res) => {
         localStorage.setItem("user", res.data.user);
         localStorage.setItem("userEmail", res.data.user.email);
+        localStorage.setItem("userFirstName", res.data.user.first_name);
         localStorage.setItem("token", res.data.jwt);
-        localStorage.setItem("favourites", JSON.stringify(res.data.favourites))
+        localStorage.setItem("favourites", JSON.stringify(res.data.favourites));
         console.log("favourites", JSON.stringify(res.data.favourites));
 
         handleLogin(res.data.user);
