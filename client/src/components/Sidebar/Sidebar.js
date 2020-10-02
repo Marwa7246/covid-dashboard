@@ -1,5 +1,5 @@
 /*eslint-disable*/
-import React, {useState} from "react";
+import React, { useState } from "react";
 import classNames from "classnames";
 import PropTypes from "prop-types";
 import { NavLink } from "react-router-dom";
@@ -22,41 +22,40 @@ import styles from "assets/jss/material-dashboard-react/components/sidebarStyle.
 const useStyles = makeStyles(styles);
 
 export default function Sidebar(props) {
-
   console.log(props.user);
-  const user=props.user
-  const [route, setRoutes] = useState(routes)
+  const user = props.user;
+  const [route, setRoutes] = useState(routes);
 
   const newRoutes = (routes) => {
-    let new_routes2 = []
-    for(let route of routes){
-      if (route.name !== 'Login' && route.name !== 'Signup'){
-        new_routes2.push(route)
-        console.log('added')
+    let new_routes2 = [];
+    for (let route of routes) {
+      if (route.name !== "Login" && route.name !== "Signup") {
+        new_routes2.push(route);
+        console.log("added");
       }
     }
-    return new_routes2
-  }
+    return new_routes2;
+  };
   const loggedRoutes = (routes) => {
-    let new_routes2 = []
-    for(let route of routes){
-      if (route.name !== 'Favourites'){
-        new_routes2.push(route)
-        console.log('added')
+    let new_routes2 = [];
+    for (let route of routes) {
+      if (route.name !== "Favourites" && route.name !== "Logout") {
+        new_routes2.push(route);
+        console.log("added");
       }
     }
-    return new_routes2
-  }
+    return new_routes2;
+  };
 
-  React.useEffect(()=>{
-    let loggedUser = localStorage.getItem('user')
-    console.log(`loggedUser: ${JSON.stringify(loggedUser)}`)
-    if (loggedUser !== 'null') {
-      setRoutes(newRoutes(routes))
+  React.useEffect(() => {
+    let loggedUser = localStorage.getItem("user");
+    console.log(`loggedUser: ${JSON.stringify(loggedUser)}`);
+    if (loggedUser !== "null") {
+      setRoutes(newRoutes(routes));
     } else {
-      setRoutes(loggedRoutes(routes))
+      setRoutes(loggedRoutes(routes));
     }
-  },[])
+  }, []);
 
   const classes = useStyles();
   // verifies if routeName is the one active (in browser input)
@@ -82,35 +81,33 @@ export default function Sidebar(props) {
         const whiteFontClasses = classNames({
           [" " + classes.whiteFont]: activeRoute(prop.path),
         });
-        return ( <>
-        
-          <NavLink
-            to={prop.path}
-            className={activePro + classes.item}
-            activeClassName="active"
-            key={key}
-          > 
-          
-            <ListItem button className={classes.itemLink + listItemClasses}>
-              {typeof prop.icon === "string" ? (
-                <Icon
-                  className={classNames(classes.itemIcon, whiteFontClasses)}
-                >
-                  {prop.icon}
-                </Icon>
-              ) : (
-                <prop.icon
-                  className={classNames(classes.itemIcon, whiteFontClasses)}
+        return (
+          <>
+            <NavLink
+              to={prop.path}
+              className={activePro + classes.item}
+              activeClassName="active"
+              key={key}
+            >
+              <ListItem button className={classes.itemLink + listItemClasses}>
+                {typeof prop.icon === "string" ? (
+                  <Icon
+                    className={classNames(classes.itemIcon, whiteFontClasses)}
+                  >
+                    {prop.icon}
+                  </Icon>
+                ) : (
+                  <prop.icon
+                    className={classNames(classes.itemIcon, whiteFontClasses)}
+                  />
+                )}
+                <ListItemText
+                  primary={prop.name}
+                  className={classNames(classes.itemText, whiteFontClasses)}
+                  disableTypography={true}
                 />
-              )}
-              <ListItemText
-                primary={prop.name}
-                className={classNames(classes.itemText, whiteFontClasses)}
-                disableTypography={true}
-              />
-            </ListItem>
-          </NavLink>
-      
+              </ListItem>
+            </NavLink>
           </>
         );
       })}
