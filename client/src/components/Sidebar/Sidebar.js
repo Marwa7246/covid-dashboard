@@ -13,6 +13,7 @@ import Create from "@material-ui/icons/Create";
 import Stars from "@material-ui/icons/Stars";
 import ExitToApp from "@material-ui/icons/ExitToApp";
 import LibraryBooks from "@material-ui/icons/LibraryBooks";
+import PersonPin from "@material-ui/icons/PersonPin";
 
 import LocationOn from "@material-ui/icons/LocationOn";
 
@@ -37,6 +38,8 @@ export default function Sidebar(props) {
   const [route, setRoutes] = useState(routes);
 
   const email = localStorage.getItem("userEmail");
+  const firstName = localStorage.getItem("userFirstName");
+  const userString = `Welcome ${firstName}!`;
 
   // console.log("from sidebar email", email, "end");
 
@@ -178,6 +181,20 @@ export default function Sidebar(props) {
   // ////////////////////////////////////////////////////////////////////////
   const newLinksToUpdate = (
     <List className={classes.list}>
+      <>
+        {email && (
+          <ListItem button className={classes.itemLink + listItemClasses6}>
+            <PersonPin
+              className={classNames(classes.itemIcon, whiteFontClasses6)}
+            />
+            <ListItemText
+              primary={userString}
+              className={classNames(classes.itemText, whiteFontClasses6)}
+              disableTypography={true}
+            />
+          </ListItem>
+        )}
+      </>
       <>
         {
           <NavLink
