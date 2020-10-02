@@ -21,7 +21,7 @@ import DashboardIcon from "@material-ui/icons/Dashboard";
 import VpnKey from "@material-ui/icons/VpnKey";
 import Create from "@material-ui/icons/Create";
 import Stars from "@material-ui/icons/Stars";
-import Person from "@material-ui/icons/Person";
+import ExitToApp from "@material-ui/icons/ExitToApp";
 import LibraryBooks from "@material-ui/icons/LibraryBooks";
 
 import LocationOn from "@material-ui/icons/LocationOn";
@@ -33,6 +33,7 @@ import Icons from "views/Icons/Icons.js";
 import Maps from "./components/Maps/Maps";
 import Login from "views/Login";
 import Signup from "views/Signup";
+import Logout from "views/Logout";
 
 const dashboardRoutes = [
   {
@@ -73,6 +74,13 @@ const dashboardRoutes = [
     name: "Signup",
     icon: Create,
     component: Signup,
+  },
+
+  {
+    path: "/logout",
+    name: "Logout",
+    icon: ExitToApp,
+    component: Logout,
   },
 
   // {
