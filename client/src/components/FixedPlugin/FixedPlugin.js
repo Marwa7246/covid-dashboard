@@ -5,19 +5,12 @@ import PropTypes from "prop-types";
 // nodejs library that concatenates classes
 import classnames from "classnames";
 
-import imagine1 from "assets/img/africa.png";
-import imagine2 from "assets/img/asia.png";
-import imagine3 from "assets/img/north_america.png";
-import imagine4 from "assets/img/south_america.png";
+import imagine1 from "assets/img/sidebar-1.jpg";
+import imagine2 from "assets/img/sidebar-2.jpg";
+import imagine3 from "assets/img/sidebar-3.jpg";
+import imagine4 from "assets/img/sidebar-4.jpg";
 
 import Button from "components/CustomButtons/Button.js";
-
-import Show from "./Show"
-import Signup from "./Signup"
-
-const SIGNUP= 'SIGNUP'
-const SHOW="SHOW";
-let mode = SIGNUP;
 
 export default function FixedPlugin(props) {
   const [classes, setClasses] = React.useState("dropdown show");
@@ -28,17 +21,78 @@ export default function FixedPlugin(props) {
   };
   return (
     <div
-      className={classnames("fixed-plugin")}
+      className={classnames("fixed-plugin", {
+        "rtl-fixed-plugin": props.rtlActive,
+      })}
     >
       <div id="fixedPluginClasses" className={props.fixedClasses}>
         <div onClick={handleClick}>
           <i className="fa fa-cog fa-2x" />
         </div>
-        {/* <ul className="dropdown-menu"> */}
-          {/* <li className="header-title">Options</li> */}
-          {/* <li className="adjustments-line">            
+        <ul className="dropdown-menu">
+          <li className="header-title">SIDEBAR FILTERS</li>
+          <li className="adjustments-line">
+            <a className="switch-trigger">
+              <div>
+                <span
+                  className={
+                    props.bgColor === "purple"
+                      ? "badge filter badge-purple active"
+                      : "badge filter badge-purple"
+                  }
+                  data-color="purple"
+                  onClick={() => {
+                    props.handleColorClick("purple");
+                  }}
+                />
+                <span
+                  className={
+                    props.bgColor === "blue"
+                      ? "badge filter badge-blue active"
+                      : "badge filter badge-blue"
+                  }
+                  data-color="blue"
+                  onClick={() => {
+                    props.handleColorClick("blue");
+                  }}
+                />
+                <span
+                  className={
+                    props.bgColor === "green"
+                      ? "badge filter badge-green active"
+                      : "badge filter badge-green"
+                  }
+                  data-color="green"
+                  onClick={() => {
+                    props.handleColorClick("green");
+                  }}
+                />
+                <span
+                  className={
+                    props.bgColor === "red"
+                      ? "badge filter badge-red active"
+                      : "badge filter badge-red"
+                  }
+                  data-color="red"
+                  onClick={() => {
+                    props.handleColorClick("red");
+                  }}
+                />
+                <span
+                  className={
+                    props.bgColor === "orange"
+                      ? "badge filter badge-orange active"
+                      : "badge filter badge-orange"
+                  }
+                  data-color="orange"
+                  onClick={() => {
+                    props.handleColorClick("orange");
+                  }}
+                />
+              </div>
+            </a>
           </li>
-          <li className="header-title">Zoom on a specif continent map</li>
+          <li className="header-title">Images</li>
           <li className={bgImage === imagine1 ? "active" : ""}>
             <a
               className="img-holder switch-trigger"
@@ -84,36 +138,46 @@ export default function FixedPlugin(props) {
             </a>
           </li>
 
+          <li className="header-title">DEVELOPED BY:</li>
           <li className="button-container">
             <div className="button-container">
               <Button
                 color="success"
-                href="#"
+                href="https://www.linkedin.com/in/marwa-ragheb"
                 target="_blank"
                 fullWidth
               >
-                Login First
+                Marwa Ragheb
               </Button>
             </div>
           </li>
           <li className="button-container">
+            <Button
+              color="success"
+              fullWidth
+              href="https://www.linkedin.com/in/sameermenda"
+              target="_blank"
+            >
+              Sameer Nandan Menda
+            </Button>
+          </li>
+
+          <li className="header-title">Mentored By:</li>
+          <li className="button-container">
             <div className="button-container">
               <Button
-                color="warning"
-                href="#"
+                color="info"
+                href="https://www.lighthouselabs.ca/"
                 target="_blank"
                 fullWidth
               >
-                Don't Have an account? Signup
+                Lighthouse Labs
               </Button>
             </div>
-          </li> */}
-          {mode === SHOW && <Show onSignup={()=>{console.log('signup from fixed plugin')}} />}
-          {mode === SIGNUP && <Signup onSubmit={()=>{console.log('submit from fixed plugin')}} onCancel={()=>console.log('Cancel from fixed plugin')} />}
+          </li>
 
-       
-          {/* <li className="adjustments-line" /> */}
-        {/* </ul> */}
+          <li className="adjustments-line" />
+        </ul>
       </div>
     </div>
   );
@@ -122,8 +186,9 @@ export default function FixedPlugin(props) {
 FixedPlugin.propTypes = {
   bgImage: PropTypes.string,
   handleFixedClick: PropTypes.func,
+  rtlActive: PropTypes.bool,
   fixedClasses: PropTypes.string,
   bgColor: PropTypes.oneOf(["purple", "blue", "green", "orange", "red"]),
   handleColorClick: PropTypes.func,
-  handleImageClick: PropTypes.func
+  handleImageClick: PropTypes.func,
 };
