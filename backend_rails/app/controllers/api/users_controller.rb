@@ -1,11 +1,12 @@
 class Api::UsersController < ApplicationController
 
-  def index
-    users = User.all
-    render json: users
-  end
+  skip_before_action :require_login, only: [:create, :show]
 
-  #skip_before_action :require_login, only: [:create, :show]
+  # def index
+  #   users = User.all
+  #   render json: users
+  # end
+
 
   def show
     puts params
@@ -36,6 +37,6 @@ class Api::UsersController < ApplicationController
   def user_params
     puts 'helllllllllllllllllloooooooooooooo'
     puts params
-    params.permit(:first_name, :last_name, :email, :password, :mobile)
+    params.require.permit(:first_name, :last_name, :email, :password, :mobile)
   end
 end

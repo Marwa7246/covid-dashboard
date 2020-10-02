@@ -44,9 +44,12 @@ const useApplicationData = () => {
 
   function saveFavourites(allFavouriteCountries) {
     const id=1;
+    const token = localStorage.getItem("token");
+
 
     console.log('from saveFavourites', {user_id: id, country_name: allFavouriteCountries[0]})
-    return axios.post(`/api/favourites`, {user_id: id, country_name: allFavouriteCountries[0]})
+    return axios ({ method: 'GET', url: `/api/favourites`, headers: {
+      Authorization: `Bearer ${token}`}, data: {user_id: id, country_name: allFavouriteCountries[0]} })
     .then((res) => {
       console.log(res)
       dispatch({ type: SET_FAVOURITES, allFavouriteCountries });

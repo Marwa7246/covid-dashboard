@@ -78,7 +78,7 @@ export default function Favourites({state, saveFavourites}) {
 
   // let user = ''
   useEffect(() => {
-    const user = (localStorage.getItem("user"));
+    const user = JSON.parse(JSON.stringify(localStorage.getItem("user")));
     const favourites = JSON.parse(localStorage.getItem("favourites"));
 
     console.log("favourites from favourites", favourites);

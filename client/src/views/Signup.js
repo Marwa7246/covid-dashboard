@@ -21,6 +21,8 @@ export default function Signup(props) {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
+  const [user, setUser] = useState({});
+
 
   const history = useHistory();
 
@@ -47,11 +49,14 @@ export default function Signup(props) {
   const handleSubmit = (e) => {
     e.preventDefault();
     setError("");
+    const user = { first_name, last_name, email, password, mobile }
     axios
-      .post(`/api/users`, { first_name, last_name, email, password, mobile })
+      .post(`/api/users`, { user })
       .then((res) => {
-        localStorage.setItem("user", res.data.user.email);
-        localStorage.setItem("token", res.data.jwt);
+        // localStorage.setItem("user", res.data.user.email);
+        // localStorage.setItem("token", res.data.jwt);
+        console.log(res.data.user)
+        // handleLogin(res.data.user)
         setMessage("Registration Successful! Please login to proceed...");
       })
       .catch((err) => {
@@ -65,6 +70,7 @@ export default function Signup(props) {
     setEmail("");
     setPassword("");
   };
+
 
   return (
     <div>

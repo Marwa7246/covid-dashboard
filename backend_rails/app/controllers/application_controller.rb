@@ -7,11 +7,13 @@ before_action :require_login
     end
 
     def auth_header
-        request.headers['Authorization']
+        byebug
+        request.headers["Authorization"]
     end
 
     def decoded_token
         if auth_header
+            byebug
             token = auth_header.split(' ')[1]
             begin
                 # binding.pry
