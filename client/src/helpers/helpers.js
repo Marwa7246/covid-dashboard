@@ -1,4 +1,4 @@
-const test = [
+const mapData = [
   {
       "updated": 1601560189928,
       "country": "Afghanistan",
@@ -6883,7 +6883,7 @@ const test = [
 
 
 function getMapDataLayer (mapData) {
-  const notNullISO2Countries = test.filter(ele => ele["countryInfo"]['iso2']!==null)
+  const notNullISO2Countries = mapData.filter(ele => ele["countryInfo"]['iso2']!==null)
 
     const dataLayer = notNullISO2Countries.map(ele => {
 
@@ -6897,11 +6897,18 @@ function getMapDataLayer (mapData) {
 
 }
 
-
+function addCountryNameKey (favourites) {
+    const x = favourites.map(ele => {
+        return {country_name: ele}
+    })
+    
+    return x
+}
+const favourites = ['af', 'ca' , 'eg']
 
 
 function getAllCountriesForDropDown (mapData) {
-  const notNullISO2Countries = test.filter(ele => ele["countryInfo"]['iso2']!==null)
+  const notNullISO2Countries = mapData.filter(ele => ele["countryInfo"]['iso2']!==null)
 
   const keys = notNullISO2Countries.map(ele => {
    return {key:  ele["countryInfo"]['iso2'] , text: ele['country']}
@@ -6912,17 +6919,17 @@ function getAllCountriesForDropDown (mapData) {
    return allCountries
 }
 
-// console.log(nullISO2)
+// console.log(getAllCountriesForDropDown(mapData))
 
-const arrOfCode = ['af', 'ca' , 'eg']
+const arrOfCode = [{country_name: 'af'}, {country_name: 'ca'} , {country_name: 'eg'}]
 function getFavouritesCountriesForDropDown (arrOfCode, mapData) {
     const allCountries = getAllCountriesForDropDown (mapData)
-    const favCountries = arrOfCode.map (item => allCountries.filter(ele => {return ele['key']===item['country_name']}))
+    const favCountries = arrOfCode.map (item => allCountries.find(ele => {return ele['key']===item['country_name'] }))
     return favCountries
 }
 
-const notNullISO2Countries = test.filter(ele => ele["countryInfo"]['iso2']===null  )
-console.log(getFavouritesCountriesForDropDown(arrOfCode, test))
+//const notNullISO2Countries = test.filter(ele => ele["countryInfo"]['iso2']===null  )
+// console.log(getFavouritesCountriesForDropDown(arrOfCode, mapData))
+console.log(addCountryNameKey(favourites))
 
- export  {getMapDataLayer, getAllCountriesForDropDown, getFavouritesCountriesForDropDown};
-
+ export  {getMapDataLayer, getAllCountriesForDropDown, getFavouritesCountriesForDropDown, addCountryNameKey}

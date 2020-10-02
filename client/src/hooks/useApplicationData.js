@@ -54,7 +54,7 @@ const useApplicationData = () => {
     return axios ({ method: 'POST', url: `/api/favourites`, headers: {
       Authorization: `Bearer ${token}`}, data: {email: email, country_name: allFavouriteCountries} })
     .then((res) => {
-      console.log(res)
+      console.log('After saving favourites from userApplicationData', res)
       dispatch({ type: SET_FAVOURITES, allFavouriteCountries });
     });
   }

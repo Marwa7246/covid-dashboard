@@ -51,7 +51,7 @@ const AllCountriesSelection = ({onSave}) => {
   const state = useContext(StateContext);
 
   const countryOptions = (!state.loading) && getAllCountriesForDropDown(state.mapData)
-  console.log(countryOptions)
+  // console.log(countryOptions)
 
   const classes = useStyles();
 
@@ -79,14 +79,14 @@ const AllCountriesSelection = ({onSave}) => {
     onSave(allFavouriteCountries);
   };
 
-  console.log(allFavouriteCountries)
+  // console.log(allFavouriteCountries)
 
   return (
     <div>
 
     <GridContainer>
 
-    <GridItem xs={12} sm={12} md={4}>
+    <GridItem xs={12} sm={12} md={12}>
       <Card>
         <CardHeader color="primary">
           <h4 className={classes.cardTitleWhite}>List of Countries</h4>
