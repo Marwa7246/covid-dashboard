@@ -23,8 +23,8 @@ export default function Dashboard({ state }) {
   const globalHistorical = state.globalHistorical;
 
   useEffect(() => {
-    const user = JSON.stringify(localStorage.getItem("user"));
-    console.log("Dashboard user email", user);
+    const userEmail = JSON.stringify(localStorage.getItem("userEmail"));
+    console.log("Dashboard user email2", userEmail);
   }, []);
 
   let days = [];

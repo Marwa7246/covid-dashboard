@@ -17,6 +17,7 @@ export default function Login(props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [user, setUser] = useState({});
 
   const history = useHistory();
 
@@ -33,22 +34,53 @@ export default function Login(props) {
     axios
       .post(`/login`, { email, password })
       .then((res) => {
-        console.log(res.data);
-        localStorage.setItem("user", res.data.user.email);
-        console.log("login user is", res.data.user, res.data.jwt );
+        localStorage.setItem("user", res.data.user);
+        localStorage.setItem("userEmail", res.data.user.email);
         localStorage.setItem("token", res.data.jwt);
-        //props.handleLogin(res.data.user);
-        history.push("/dashboard");
-        //console.log(history.location);
+        handleLogin(res.data.user);
       })
       .catch((err) => {
         console.log(err);
         setError("Incorrect Email or Password!");
-        localStorage.setItem("user", null);
-        localStorage.setItem("token", null);
       });
     setEmail("");
     setPassword("");
+  };
+
+  const handleLogin = (user) => {
+    setUser(user);
+    const token = localStorage.getItem("token");
+
+    if (token) {
+      axios
+        .get(`/auto_login`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((res) => {
+          setUser(res.data);
+          handleAuthClick();
+        });
+    }
+  };
+
+  const handleAuthClick = () => {
+    setError("");
+    const token = localStorage.getItem("token");
+    axios
+      .get(`/user_is_authed`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        history.push("/dashboard");
+      })
+      .catch((err) => {
+        console.log(err);
+        setError("Incorrect Email or Password!");
+      });
   };
 
   return (
