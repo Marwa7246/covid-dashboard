@@ -5,13 +5,19 @@ import GridContainer from "components/Grid/GridContainer.js";
 import { useHistory } from "react-router-dom";
 
 export default function Logout() {
-  const history = useHistory();
-    localStorage.setItem("user", null);
-    localStorage.setItem("token", null);
 
-  const handleLogout = () => {
+  const history = useHistory();
+
+    // localStorage.setItem("user", null);
+    // localStorage.setItem("userEmail", null);
+    localStorage.removeItem('userEmail')
+    localStorage.removeItem('user')
+    localStorage.removeItem('token')
     console.log("Logging out");
     history.push("/dashboard");
+    // localStorage.setItem("token", null);
+const handleLogout = () => {
+
   };
 
   return (

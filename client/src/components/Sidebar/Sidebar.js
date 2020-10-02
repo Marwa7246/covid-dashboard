@@ -6,6 +6,16 @@ import { NavLink } from "react-router-dom";
 import { Redirect } from "react-router-dom";
 import routes from "../../routes";
 
+import DashboardIcon from "@material-ui/icons/Dashboard";
+
+import VpnKey from "@material-ui/icons/VpnKey";
+import Create from "@material-ui/icons/Create";
+import Stars from "@material-ui/icons/Stars";
+import ExitToApp from "@material-ui/icons/ExitToApp";
+import LibraryBooks from "@material-ui/icons/LibraryBooks";
+
+import LocationOn from "@material-ui/icons/LocationOn";
+
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
@@ -25,6 +35,11 @@ export default function Sidebar(props) {
   console.log(props.user);
   const user = props.user;
   const [route, setRoutes] = useState(routes);
+  // const [email, setEmail] = useState('');
+
+  const email = localStorage.getItem("userEmail");
+
+  console.log('from sidebar email', email, 'end')
 
   const newRoutes = (routes) => {
     let new_routes2 = [];
@@ -47,7 +62,12 @@ export default function Sidebar(props) {
     return new_routes2;
   };
 
+
   React.useEffect(() => {
+    // setEmail(localStorage.getItem("userEmail"));
+    // console.log('from sidebar email', email, 'end')
+
+
     let loggedUser = localStorage.getItem("user");
     console.log(`loggedUser: ${JSON.stringify(loggedUser)}`);
     if (loggedUser !== "null") {
@@ -63,21 +83,22 @@ export default function Sidebar(props) {
     return window.location.href.indexOf(routeName) > -1 ? true : false;
   }
   const { color, logo, image, logoText } = props;
+
   var links = (
     <List className={classes.list}>
       {route.map((prop, key) => {
-        var activePro = " ";
+        // var activePro = " ";
         var listItemClasses;
-        if (prop.path === "/upgrade-to-pro") {
-          activePro = classes.activePro + " ";
-          listItemClasses = classNames({
-            [" " + classes[color]]: true,
-          });
-        } else {
+        // if (prop.path === "/upgrade-to-pro") {
+        //   activePro = classes.activePro + " ";
+        //   listItemClasses = classNames({
+        //     [" " + classes[color]]: true,
+        //   });
+        // } else {
           listItemClasses = classNames({
             [" " + classes[color]]: activeRoute(prop.path),
           });
-        }
+        // }
         const whiteFontClasses = classNames({
           [" " + classes.whiteFont]: activeRoute(prop.path),
         });
@@ -85,7 +106,7 @@ export default function Sidebar(props) {
           <>
             <NavLink
               to={prop.path}
-              className={activePro + classes.item}
+              className={classes.item}
               activeClassName="active"
               key={key}
             >
@@ -113,7 +134,88 @@ export default function Sidebar(props) {
       })}
     </List>
   );
-  var brand = (
+//////////////////////////////////////////////////////////////
+  const listItemClasses0 = classNames({
+    [" " + classes[color]]: activeRoute(route[0].path),
+  });
+const whiteFontClasses0 = classNames({
+  [" " + classes.whiteFont]: activeRoute(route[0].path),
+});
+const listItemClasses4 = classNames({
+  [" " + classes[color]]: activeRoute(route[4].path),
+});
+const whiteFontClasses4 = classNames({
+[" " + classes.whiteFont]: activeRoute(route[4].path),
+});
+// ////////////////////////////////////////////////////////////////////////
+  const newLinksToUpdate = <List className={classes.list}>
+  
+    
+      <>
+      {<NavLink
+          to={route[0].path}
+          className={classes.item}
+          activeClassName="active"
+          key={route[0].path}
+        >
+          <ListItem button className={classes.itemLink + listItemClasses0}>
+            {/* {typeof route[0].icon === "string" ? (
+              <Icon
+                className={classNames(classes.itemIcon, whiteFontClasses)}
+              >
+                {prop.icon}
+              </Icon>
+            ) : (
+              <prop.icon
+                className={classNames(classes.itemIcon, whiteFontClasses)}
+              />
+            )} */}
+            <DashboardIcon
+                className={classNames(classes.itemIcon, whiteFontClasses0)}
+              />
+            <ListItemText
+              primary={route[0].name}
+              className={classNames(classes.itemText, whiteFontClasses0)}
+              disableTypography={true}
+            />
+          </ListItem>
+        </NavLink>}
+      </>
+      <>
+      {email && <NavLink
+          to={route[4].path}
+          className={classes.item}
+          activeClassName="active"
+          key={route[4].path}
+        >
+          <ListItem button className={classes.itemLink + listItemClasses4}>
+            {/* {typeof route[4].icon === "string" ? (
+              <Icon
+                className={classNames(classes.itemIcon, whiteFontClasses)}
+              >
+                {prop.icon}
+              </Icon>
+            ) : (
+              <prop.icon
+                className={classNames(classes.itemIcon, whiteFontClasses)}
+              />
+            )} */}
+            <ListItemText
+              primary={route[4].name}
+              className={classNames(classes.itemText, whiteFontClasses4)}
+              disableTypography={true}
+            />
+          </ListItem>
+        </NavLink>}
+      </>
+    );
+  {/* })} */}
+</List>
+
+// //////////////////////////////////////////////////////////////////////////
+  
+
+var brand = (
     <div className={classes.logo}>
       <span className={classNames(classes.logoLink)} target="_blank">
         <div className={classes.logoImage}>
@@ -124,7 +226,11 @@ export default function Sidebar(props) {
     </div>
   );
   return (
-    <div>
+<div>
+
+
+
+    <div>            
       <Hidden mdUp implementation="css">
         <Drawer
           variant="temporary"
@@ -142,6 +248,7 @@ export default function Sidebar(props) {
           <div className={classes.sidebarWrapper}>
             {<AdminNavbarLinks />}
             {links}
+            {newLinksToUpdate}
           </div>
           {image !== undefined ? (
             <div
@@ -161,7 +268,10 @@ export default function Sidebar(props) {
           }}
         >
           {brand}
+
+ 
           <div className={classes.sidebarWrapper}>{links}</div>
+          <div className={classes.sidebarWrapper}>{newLinksToUpdate}</div>
           {image !== undefined ? (
             <div
               className={classes.background}
@@ -170,7 +280,8 @@ export default function Sidebar(props) {
           ) : null}
         </Drawer>
       </Hidden>
-    </div>
+      </div>
+      </div>
   );
 }
 
