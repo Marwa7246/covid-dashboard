@@ -35,6 +35,7 @@ import Icons from "views/Icons/Icons.js";
 import Maps from "../Maps/Maps";
 import Login from "views/Login";
 import Signup from "views/Signup";
+import Logout from "views/Logout";
 import { isPropertySignature } from "typescript";
 import { getMapDataLayer } from "../../helpers/helpers";
 
@@ -60,7 +61,7 @@ const useStyles = makeStyles(styles);
 
 export default function Application({ ...rest }) {
   const { state, dispatch, saveFavourites } = useApplicationData();
-  const [user, setUser] = useState('')
+  const [user, setUser] = useState("");
   // const [new_routes, setNewRoutes] = useState([])
   let mapData = [];
   if (!state.loading) mapData = getMapDataLayer(state.mapData);
@@ -75,7 +76,6 @@ export default function Application({ ...rest }) {
   //   }
   //   return new_routes2
   // }
-
 
   // React.useEffect(() => {
   //   const user = JSON.stringify(localStorage.getItem("user"));
@@ -94,11 +94,14 @@ export default function Application({ ...rest }) {
       {routes.map((prop, key) => {
         // console.log("PROPS are: ", prop);
         const Component = prop.component;
-        if (Component === 'Favourites' && user) console.log('from application')
+        if (Component === "Favourites" && user) console.log("from application");
         return (
           <Route key={key} path={prop.path}>
-            
-            <Component state={state} saveFavourites={saveFavourites} user={user} />
+            <Component
+              state={state}
+              saveFavourites={saveFavourites}
+              user={user}
+            />
           </Route>
         );
       })}

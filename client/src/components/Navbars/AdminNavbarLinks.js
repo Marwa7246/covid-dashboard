@@ -20,6 +20,7 @@ import Button from "components/CustomButtons/Button.js";
 
 import Login from "views/Login";
 import Signup from "views/Signup";
+import Logout from "views/Logout";
 import axios from "axios";
 import ReactDOM from "react-dom";
 import { Router, Route, Switch, Redirect } from "react-router-dom";
