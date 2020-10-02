@@ -11,7 +11,7 @@ class Api::UsersController < ApplicationController
   def show
     puts params
     user = User.find_by(email: params[:email])
-    favourites = Favourite.where(user_id: user.id)
+    favourites = Favourite.where(user_email: user.email)
     render json: favourites
 
   end
@@ -37,6 +37,6 @@ class Api::UsersController < ApplicationController
   def user_params
     puts 'helllllllllllllllllloooooooooooooo'
     puts params
-    params.require.permit(:first_name, :last_name, :email, :password, :mobile)
+    params.require(:user).permit(:first_name, :last_name, :email, :password, :mobile)
   end
 end

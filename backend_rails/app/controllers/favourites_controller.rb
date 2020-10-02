@@ -9,9 +9,9 @@ class Api::FavouritesController < ApplicationController
   end
 
   def create
-    # byebug
     # @favourite = Favourite.new(favourite_params)
-    @favourite = Favourite.new(user_id: params[:user_id], country_name: params[:country_name])
+    user = User.find_by(email: params[:email])
+    @favourite = Favourite.new(user_id: user.id, country_name: params[:country_name])
 
     if @favourite.save
       render json: {favourite: @favourite}, notice: 'Favourite created!'

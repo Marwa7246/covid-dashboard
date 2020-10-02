@@ -44,12 +44,15 @@ const useApplicationData = () => {
 
   function saveFavourites(allFavouriteCountries) {
     const id=1;
+    const email = localStorage.getItem("userEmail");
+    console.log(email)
     const token = localStorage.getItem("token");
 
 
-    console.log('from saveFavourites', {user_id: id, country_name: allFavouriteCountries[0]})
-    return axios ({ method: 'GET', url: `/api/favourites`, headers: {
-      Authorization: `Bearer ${token}`}, data: {user_id: id, country_name: allFavouriteCountries[0]} })
+    //console.log('from saveFavourites', {user_email: "test2@gmail.com", country_name: allFavouriteCountries[0]})
+
+    return axios ({ method: 'POST', url: `/api/favourites`, headers: {
+      Authorization: `Bearer ${token}`}, data: {email: email, country_name: allFavouriteCountries} })
     .then((res) => {
       console.log(res)
       dispatch({ type: SET_FAVOURITES, allFavouriteCountries });

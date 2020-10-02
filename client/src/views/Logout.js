@@ -6,10 +6,10 @@ import { useHistory } from "react-router-dom";
 
 export default function Logout() {
   const history = useHistory();
-
-  const handleLogout = () => {
     localStorage.setItem("user", null);
     localStorage.setItem("token", null);
+
+  const handleLogout = () => {
     console.log("Logging out");
     history.push("/dashboard");
   };
