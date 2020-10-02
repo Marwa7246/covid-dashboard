@@ -5,9 +5,14 @@ class Api::UsersController < ApplicationController
     render json: users
   end
 
-  skip_before_action :require_login, only: [:create, :show]
+  #skip_before_action :require_login, only: [:create, :show]
 
   def show
+    puts params
+    user = User.find_by(email: params[:email])
+    favourites = Favourite.where(user_id: user.id)
+    render json: favourites
+
   end
 
   def create

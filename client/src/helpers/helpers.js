@@ -6899,7 +6899,6 @@ function getMapDataLayer (mapData) {
 
 
 
-const arr=['HELLO', 'WORLD', 'AGAIN']
 
 function getAllCountriesForDropDown (mapData) {
   const notNullISO2Countries = test.filter(ele => ele["countryInfo"]['iso2']!==null)
@@ -6913,7 +6912,17 @@ function getAllCountriesForDropDown (mapData) {
    return allCountries
 }
 
-const notNullISO2Countries = test.filter(ele => ele["countryInfo"]['iso2']===null  )
 // console.log(nullISO2)
 
-export  {getMapDataLayer, getAllCountriesForDropDown};
+const arrOfCode = ['af', 'ca' , 'eg']
+function getFavouritesCountriesForDropDown (arrOfCode, mapData) {
+    const allCountries = getAllCountriesForDropDown (mapData)
+    const favCountries = arrOfCode.map (item => allCountries.filter(ele => {return ele['key']===item['country_name']}))
+    return favCountries
+}
+
+const notNullISO2Countries = test.filter(ele => ele["countryInfo"]['iso2']===null  )
+console.log(getFavouritesCountriesForDropDown(arrOfCode, test))
+
+ export  {getMapDataLayer, getAllCountriesForDropDown, getFavouritesCountriesForDropDown};
+

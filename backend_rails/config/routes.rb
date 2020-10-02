@@ -5,6 +5,8 @@ Rails.application.routes.draw do
     resource :users
     resources :data
     resources :favourites
+    get '/users/:email', to: 'users#show'
+    get '/users', to: 'users#index'
   end
 
   get 'api/news' => 'news#index'
