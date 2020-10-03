@@ -61,13 +61,16 @@ const countryOptionsFavourites = [
 
 ]
 
-const periodicTime = [{key:10, text: 10, value: 10}, {key:20, text: 20, value: 20}, {key:30, text: 30, value: 30}];
+const periodicTime = [
+  {key:'10', text: '10 days', value: '10'}, 
+  {key:'20', text: '20 days', value: '20'}, 
+  {key:'30', text: '30 days', value: '30'}];
 
 const useStyles = makeStyles(styles);
 
 export default function Favourites({state, saveFavourites, getHistoricalCountry}) {
 
-  const [country, setCountry] = useState({countryName: '', period: '', error: ''});
+  const [country, setCountry] = useState({countryName: '', period: '10', error: '', firstSelection: false});
 
   const [user, setUser] = useState('');
   const [favouritesFinal, setFavouritesFinal] = useState([]);
@@ -124,17 +127,21 @@ export default function Favourites({state, saveFavourites, getHistoricalCountry}
   }
 
   const handleChange = (e: any, data?: any) => {
-    e.preventDefault()
+    // e.preventDefault()    
     console.log('handleChange',  e.target, data.value)
-    setCountry(prev=>({...prev, countryName: data.value, error: '', period: 0}))
+    getHistoricalCountry(data.value,  country.period)
+    .then(()=>setCountry(prev=>({...prev, countryName: data.value})))
+    .catch(() => {
+      setCountry(prev=>({...prev, countryName: data.value, error: 'This country does not have historical data'}));
+      console.log('state.loadingFavouriteHistorical',state.loadingFavouriteHistorical)
+    })
 
   }
 
   const handleChangeTime = (e: any, data?: any) => {
     console.log('country.countryName',data.value)
     getHistoricalCountry(country.countryName, data.value)
-    .then(()=>setCountry(prev=>({...prev, period: data.value})))
-    .then(() =>console.log('state.loadingFavouriteHistorical',state.loadingFavouriteHistorical))
+    .then(()=>setCountry(prev=>({...prev, period: data.value, firstSelection: true})))
     .catch(() => {
       setCountry(prev=>({...prev, period: data.value, error: 'This country does not have historical data'}));
       console.log('state.loadingFavouriteHistorical',state.loadingFavouriteHistorical)
@@ -179,7 +186,7 @@ const favouritesForDropDown = favouritesFinal.length > 0 && !state.loading && ge
 
 
       {favouritesFinal.length > 0 && !state.loading && 
-      <GridItem xs={12} sm={12} md={5}>
+      <GridItem xs={12} sm={12} md={4}>
           <Card>
             <CardHeader color="primary">
             <h4 className={classes.cardTitleWhite}>List of Your Favourites Countries</h4>
@@ -207,7 +214,7 @@ const favouritesForDropDown = favouritesFinal.length > 0 && !state.loading && ge
           </Card>
         </GridItem> }     
 
-      {country.countryName && !state.loading &&
+       
       <GridItem xs={12} sm={12} md={2}>
           <Card>
             <CardHeader color="primary">
@@ -217,7 +224,7 @@ const favouritesForDropDown = favouritesFinal.length > 0 && !state.loading && ge
             <CardBody>
               <GridContainer>  
               <GridItem xs={12} sm={12} md={12}>
-                <h4> Time in days</h4>  
+                <h4> Choose one</h4>  
      
                 </GridItem>            
 
@@ -226,7 +233,7 @@ const favouritesForDropDown = favouritesFinal.length > 0 && !state.loading && ge
                     placeholder='Select one'
                     fluid
                     selection
-                    defaultValue='10'
+                    defaultValue=''
                     closeOnEscape
                     onChange={handleChangeTime}
                     options={periodicTime}
@@ -236,10 +243,10 @@ const favouritesForDropDown = favouritesFinal.length > 0 && !state.loading && ge
             </CardBody>
  
           </Card>
-        </GridItem> }       
-        <GridItem xs={12} sm={12} md={5}>
+        </GridItem>      
+        <GridItem xs={12} sm={12} md={6}>
 
-         { country.countryName && 
+         { country.countryName && country.firstSelection &&
          <CardCountry
           mapData={mapData}
           countryName={country.countryName}         
@@ -249,7 +256,7 @@ const favouritesForDropDown = favouritesFinal.length > 0 && !state.loading && ge
 
       </GridContainer>
             
-      { country.countryName && !country.error && country.period &&    
+      { country.countryName && !country.error && country.firstSelection &&    
       <>
       <GridContainer>
 
