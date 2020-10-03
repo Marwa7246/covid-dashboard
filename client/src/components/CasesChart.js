@@ -108,7 +108,7 @@ return (
               />
               </CardHeader>
             <CardBody>
-              {days && <h4 className={classes.cardTitle}>Number of {title} cases in the last {days.length} days (in {multiple})</h4>}
+              {days && <h4 className={classes.cardTitle}>Number of {title} in the last {days.length} days (in {multiple})</h4>}
 
               {series && <p className={classes.cardCategory}>
                                

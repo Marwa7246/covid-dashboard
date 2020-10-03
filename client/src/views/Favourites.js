@@ -284,7 +284,7 @@ const favouritesForDropDown = favouritesFinal.length > 0 && !state.loading && ge
         <GridItem xs={12} sm={12} md={6}>
         <CasesChart
               color="info"
-              title="new"
+              title="accumulated cases"
               days={days}
               series={cases}
               multiple='Thousands'
