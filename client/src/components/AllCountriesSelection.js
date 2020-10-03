@@ -1,10 +1,9 @@
-import React, { useState, useContext } from 'react';
-import { Dropdown } from 'semantic-ui-react';
+import React, { useState, useContext } from "react";
+import { Dropdown } from "semantic-ui-react";
 import { makeStyles } from "@material-ui/core/styles";
 
-
-import StateContext from '../StateContext';
-import {getAllCountriesForDropDown} from '../helpers/helpers'
+import StateContext from "../StateContext";
+import { getAllCountriesForDropDown } from "../helpers/helpers";
 
 import GridItem from "components/Grid/GridItem.js";
 import GridContainer from "components/Grid/GridContainer.js";
@@ -20,7 +19,6 @@ import CardNews from "components/CardNews.js";
 import { getMapDataLayer } from "../helpers/helpers";
 import CardCountry from "components/CardCountry.js";
 
-
 const MAX_COUNTRIES_SELECTION = 3;
 
 const styles = {
@@ -29,7 +27,7 @@ const styles = {
     margin: "0",
     fontSize: "14px",
     marginTop: "0",
-    marginBottom: "0"
+    marginBottom: "0",
   },
   cardTitleWhite: {
     color: "#FFFFFF",
@@ -38,38 +36,35 @@ const styles = {
     fontWeight: "300",
     fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
     marginBottom: "3px",
-    textDecoration: "none"
-  }
+    textDecoration: "none",
+  },
 };
 
 const useStyles = makeStyles(styles);
 
-const AllCountriesSelection = ({onSave}) => {
-  
+const AllCountriesSelection = ({ onSave }) => {
   const [error, setError] = useState("");
   const [allFavouriteCountries, setAllFavouriteCountries] = useState([]);
   const state = useContext(StateContext);
 
-  const countryOptions = (!state.loading) && getAllCountriesForDropDown(state.mapData)
+  const countryOptions =
+    !state.loading && getAllCountriesForDropDown(state.mapData);
   // console.log(countryOptions)
 
   const classes = useStyles();
-
 
   // const countryOptions = [
   //   { key: 'af', value: 'af', flag: 'af', text: 'Afghanistan' },
   //   { key: 'ca', value: 'ca', flag: 'ca', text: 'Canada' },
   //   { key: 'al', value: 'al', flag: 'al', text: 'Albania' },
-  
-  // ]
-  
 
-  const handleAllCountriesChange= (e: any, data?: any) => {
+  // ]
+
+  const handleAllCountriesChange = (e: any, data?: any) => {
     // if (data.value.length <= MAX_COUNTRIES_SELECTION) {
     //   setAllFavouriteCountries(data.value);
-    // }      
+    // }
     setAllFavouriteCountries(data.value);
-
   };
 
   const validate = function () {
@@ -85,59 +80,44 @@ const AllCountriesSelection = ({onSave}) => {
 
   return (
     <div>
+      <GridContainer>
+        <GridItem xs={12} sm={12} md={12}>
+          <Card>
+            <CardHeader color="primary">
+              <h4 className={classes.cardTitleWhite}>List of Countries</h4>
+            </CardHeader>
+            <CardBody>
+              <GridContainer>
+                <GridItem xs={12} sm={12} md={12}>
+                  <h4>Add countries to your favourites list</h4>
+                </GridItem>
 
-    <GridContainer>
+                <GridItem xs={12} sm={12} md={12}>
+                  <Dropdown
+                    placeholder="Enter atleast 3 letters for a quick search"
+                    onChange={handleAllCountriesChange}
+                    value={allFavouriteCountries}
+                    fluid
+                    multiple
+                    selectOnNavigation={false}
+                    search
+                    selection
+                    options={countryOptions}
+                  />
+                </GridItem>
+              </GridContainer>
+            </CardBody>
+            <CardFooter>
+              <Button variant="contained" color="primary" onClick={validate}>
+                SELECT
+              </Button>
+            </CardFooter>
+          </Card>
+        </GridItem>
+      </GridContainer>
 
-    <GridItem xs={12} sm={12} md={12}>
-      <Card>
-        <CardHeader color="primary">
-          <h4 className={classes.cardTitleWhite}>List of Countries</h4>
-
-        </CardHeader>
-        <CardBody>
-          <GridContainer>  
-          <GridItem xs={12} sm={12} md={12}>
-            <h4>Add up to 3 countries to your favourite list</h4>  
- 
-            </GridItem>            
-        
-            <GridItem xs={12} sm={12} md={12}>
-
-
-            <Dropdown
-              placeholder="Select Up to 3 Countries"
-              onChange={handleAllCountriesChange}
-              value={allFavouriteCountries}
-              fluid
-              multiple
-              selectOnNavigation={false}
-              search
-              selection
-              options={countryOptions}
-            />
-
-
-            </GridItem>
-          </GridContainer>
-        </CardBody>
-        <CardFooter>
-          <Button variant="contained" color="primary" onClick={validate}>
-            SELECT
-          </Button>
-        </CardFooter>
-
-      </Card>
-    </GridItem>
-
-
-    
-
-</GridContainer>
-
-<GridContainer>
-
-</GridContainer>
-</div>
+      <GridContainer></GridContainer>
+    </div>
   );
 };
 export default AllCountriesSelection;
