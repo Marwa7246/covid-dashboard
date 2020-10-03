@@ -64,7 +64,8 @@ const countryOptionsFavourites = [
 const periodicTime = [
   {key:'10', text: '10 days', value: '10'}, 
   {key:'20', text: '20 days', value: '20'}, 
-  {key:'30', text: '30 days', value: '30'}];
+  {key:'30', text: '30 days', value: '30'},
+  {key:'60', text: '60 days', value: '60'}];
 
 const useStyles = makeStyles(styles);
 
@@ -74,6 +75,7 @@ export default function Favourites({state, saveFavourites, getHistoricalCountry}
 
   const [user, setUser] = useState('');
   const [favouritesFinal, setFavouritesFinal] = useState([]);
+  console.log (state)
 
 
 
@@ -86,10 +88,10 @@ export default function Favourites({state, saveFavourites, getHistoricalCountry}
   const classes = useStyles();
 
   const favouriteCountryHistorical = state.favouriteCountryHistorical;
-  const worldCovidNews = state.worldCovidNews;
+  const favouriteCountryNews = state.favouriteCountryNews;
 
-  const newsList = !state.loading &&
-    worldCovidNews.articles.map((item, index) => {
+  const newsList = !state.loadingFavouriteCountry &&
+    favouriteCountryNews.articles.map((item, index) => {
       let publishedTime = moment.utc(item.publishedAt).toDate();
       let localTime = moment(publishedTime)
         .local()
@@ -114,7 +116,7 @@ export default function Favourites({state, saveFavourites, getHistoricalCountry}
   let cases = [];
   let deaths = [];
 
-  if (!state.loadingFavouriteHistorical) {
+  if (!state.loadingFavouriteCountry) {
     const casesObject = favouriteCountryHistorical.timeline.cases;
 
     days = Object.keys(casesObject);
@@ -133,7 +135,7 @@ export default function Favourites({state, saveFavourites, getHistoricalCountry}
     .then(()=>setCountry(prev=>({...prev, countryName: data.value})))
     .catch(() => {
       setCountry(prev=>({...prev, countryName: data.value, error: 'This country does not have historical data'}));
-      console.log('state.loadingFavouriteHistorical',state.loadingFavouriteHistorical)
+      console.log('state.loadingFavouriteCountry',state.loadingFavouriteCountry)
     })
 
   }
@@ -144,7 +146,7 @@ export default function Favourites({state, saveFavourites, getHistoricalCountry}
     .then(()=>setCountry(prev=>({...prev, period: data.value, firstSelection: true})))
     .catch(() => {
       setCountry(prev=>({...prev, period: data.value, error: 'This country does not have historical data'}));
-      console.log('state.loadingFavouriteHistorical',state.loadingFavouriteHistorical)
+      console.log('state.loadingFavouriteCountry',state.loadingFavouriteCountry)
     })
 
 
@@ -166,9 +168,13 @@ const favouritesForDropDown = favouritesFinal.length > 0 && !state.loading && ge
 
   return (
     <div>      
-      
-    {country.error && <GridContainer>{country.error} {!state.loadingFavouriteHistorical && 'hello'}
+      {/* Containter of error */}
+    {country.error && 
+    <GridContainer>{country.error} {!state.loadingFavouriteCountry && 'hello'}
     </GridContainer>}
+
+
+      {/* Containter of dropdown menus and card country */}
 
 {favouritesFinal.length === 0 && !state.loading &&  
       <GridContainer>
@@ -185,8 +191,8 @@ const favouritesForDropDown = favouritesFinal.length > 0 && !state.loading && ge
       <GridContainer>
 
 
-      {favouritesFinal.length > 0 && !state.loading && 
-      <GridItem xs={12} sm={12} md={4}>
+        {favouritesFinal.length > 0 && !state.loading && 
+        <GridItem xs={12} sm={12} md={4}>
           <Card>
             <CardHeader color="primary">
             <h4 className={classes.cardTitleWhite}>List of Your Favourites Countries</h4>
@@ -215,7 +221,7 @@ const favouritesForDropDown = favouritesFinal.length > 0 && !state.loading && ge
         </GridItem> }     
 
        
-      <GridItem xs={12} sm={12} md={2}>
+        <GridItem xs={12} sm={12} md={2}>
           <Card>
             <CardHeader color="primary">
             <h4 className={classes.cardTitleWhite}>Time interval</h4>
@@ -255,13 +261,24 @@ const favouritesForDropDown = favouritesFinal.length > 0 && !state.loading && ge
         </GridItem>
 
       </GridContainer>
-            
+                  {/* Containter of charts */}
+
       { country.countryName && !country.error && country.firstSelection &&    
       <>
       <GridContainer>
+                  {/* GridItem of 1st charts */}
 
         <GridItem xs={12} sm={12} md={6}>
-            {newsList[0]}
+        <CasesChart
+            color="danger"
+            title="deaths"
+            days={days}
+            series={deaths}
+            multiple='Thousands'
+            type="Bar"
+            warning="warning"
+            />
+
         </GridItem>
 
         <GridItem xs={12} sm={12} md={6}>
@@ -284,21 +301,14 @@ const favouritesForDropDown = favouritesFinal.length > 0 && !state.loading && ge
       <GridContainer>
 
         <GridItem xs={12} sm={12} md={6}>
-        {newsList[1]}
+        {newsList[0]}
 
         </GridItem>
 
 
         <GridItem xs={12} sm={12} md={6}>
-        <CasesChart
-            color="danger"
-            title="deaths"
-            days={days}
-            series={deaths}
-            multiple='Thousands'
-            type="Bar"
-            warning="warning"
-            />
+            {newsList[1]}
+
         </GridItem>
       </GridContainer>
 </>

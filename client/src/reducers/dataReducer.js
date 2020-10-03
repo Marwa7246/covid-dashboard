@@ -1,16 +1,10 @@
 export const SET_USER = "SET_USER";
 export const SET_APPLICATION_DATA = "SET_APPLICATION_DATA";
 export const SET_FAVOURITES = "SET_FAVOURITES";
-export const SET_FAVOURITE_COUNTRY_HISTORICAL = 'SET_FAVOURITE_COUNTRY_HISTORICAL'
+export const SET_FAVOURITE_COUNTRY_DATA = 'SET_FAVOURITE_COUNTRY_DATA'
 
 const dataReducer = (state, action) => {
-  // const actions = {
-  //   SET_USERS: {
-  //     ...state,
-  //     users: action.users,
-  //     loading: false,
-  //   },
-  // };
+
 
   switch (action.type) {
     case SET_USER: {
@@ -35,11 +29,11 @@ const dataReducer = (state, action) => {
       };
     }
 
-    case SET_FAVOURITE_COUNTRY_HISTORICAL: {
+    case SET_FAVOURITE_COUNTRY_DATA: {
       return {
         ...state,
-        favouriteCountryHistorical: action.favouriteCountryHistorical,
-        loadingFavouriteHistorical: false,
+        favouriteCountryHistorical: action.favouriteCountryHistorical, favouriteCountryNews: action.favouriteCountryNews,
+        loadingFavouriteCountry: false,
 
       };
     }
