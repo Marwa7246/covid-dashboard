@@ -23,7 +23,7 @@ import Create from "@material-ui/icons/Create";
 import Stars from "@material-ui/icons/Stars";
 import ExitToApp from "@material-ui/icons/ExitToApp";
 import LibraryBooks from "@material-ui/icons/LibraryBooks";
-import Settings from "@material-ui/icons/Settings";
+import SettingsIcon from "@material-ui/icons/Settings";
 
 import LocationOn from "@material-ui/icons/LocationOn";
 
@@ -35,6 +35,7 @@ import Maps from "./components/Maps/Maps";
 import Login from "views/Login";
 import Signup from "views/Signup";
 import Logout from "views/Logout";
+import Settings from "views/Settings";
 
 const dashboardRoutes = [
   {
@@ -87,7 +88,7 @@ const dashboardRoutes = [
   {
     path: "/settings",
     name: "Settings",
-    icon: Settings,
+    icon: SettingsIcon,
     component: Settings,
   },
 
