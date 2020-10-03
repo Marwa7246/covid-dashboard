@@ -27,20 +27,6 @@ export default function CasesChart({color, days, series, title, type, warning, s
 
   
 
-  // const globalHistorical =state.globalHistorical 
-
-  // let days =[]
-  // let series = []
-
-  //   if (globalHistorical.series) {
-  //     // console.log(globalHistorical)
-  //     const seriesObject = globalHistorical.series;      
-  //    days = Object.keys(seriesObject)
-  //    series = Object.values(seriesObject).map(e => Number(e)  / 1000000 )
-
-
-  //   }
-    // console.log(series)
 
     const delays = 80,
     durations = 500;
@@ -61,8 +47,8 @@ export default function CasesChart({color, days, series, title, type, warning, s
             return index % 2 === 0 ? value : null;
           }
         },
-        low: Math.max(...series)-5,
-        high: Math.max(...series)+5, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
+        low: Math.min(...series),
+        high: Math.max(...series), 
         chartPadding: {
           top: 0,
           right: 0,
@@ -128,9 +114,9 @@ return (
                                
                 <span className={classColorText}>
                 {warning && <i className="fa fa-exclamation-triangle"></i>}
-                <ArrowUpward className={classes.upArrowCardCategory} /> {Math.floor(Math.max(...series)- Math.max(...series) / Math.max(...series) )}
+                <ArrowUpward className={classes.upArrowCardCategory} /> {Math.ceil(Math.max(...series)- Math.max(...series) / Math.max(...series) )}
                 </span>{" "}
-                increase.
+                % increase.
               </p>}
             </CardBody>
             <CardFooter chart>

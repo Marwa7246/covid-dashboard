@@ -76,11 +76,11 @@ const useApplicationData = () => {
     });
   }
 
-  function getHistoricalCountry(countryName) {
-    const url = `https://disease.sh/v3/covid-19/historical/${countryName}?lastdays=30`
+  function getHistoricalCountry(countryName, period) {
+    const url = `https://disease.sh/v3/covid-19/historical/${countryName}?lastdays=${period}`
     console.log(countryName, url)
 
-    return axios.get(`https://disease.sh/v3/covid-19/historical/${countryName}?lastdays=30`)
+    return axios.get(`https://disease.sh/v3/covid-19/historical/${countryName}?lastdays=${period}`)
     .then((res) => {
       console.log('after axios get', res.data)
       dispatch({ type: SET_FAVOURITE_COUNTRY_HISTORICAL, favouriteCountryHistorical: res.data });

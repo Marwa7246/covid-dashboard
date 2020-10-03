@@ -134,6 +134,7 @@ export default function Dashboard({ state }) {
             days={days}
             series={casesRecovered}
             type="Line"
+            period='20'
           />
         </GridItem>
 
@@ -145,10 +146,12 @@ export default function Dashboard({ state }) {
           <CasesChart
             color="danger"
             title="new"
+            multiple='Millions'
             days={days}
             series={cases}
             type="Bar"
             warning="warning"
+            period='20'
           />
         </GridItem>
       </GridContainer>

@@ -61,13 +61,13 @@ const countryOptionsFavourites = [
 
 ]
 
-
+const periodicTime = [{key:10, text: 10, value: 10}, {key:20, text: 20, value: 20}, {key:30, text: 30, value: 30}];
 
 const useStyles = makeStyles(styles);
 
 export default function Favourites({state, saveFavourites, getHistoricalCountry}) {
 
-  const [countryName, setCountryName] = useState('');
+  const [country, setCountry] = useState({countryName: '', period: '', error: ''});
 
   const [user, setUser] = useState('');
   const [favouritesFinal, setFavouritesFinal] = useState([]);
@@ -75,33 +75,15 @@ export default function Favourites({state, saveFavourites, getHistoricalCountry}
 
 
   
-  // console.log(state.allFavouriteCountries)
-
-
   useEffect(() => {
-    // const favourites = JSON.parse(localStorage.getItem("favourites"));
-    
-    // !state.loading && console.log("favourites inside useffects after local storage", getFavouritesCountriesForDropDown(favourites, state.mapData));
-
     setFavouritesFinal(JSON.parse(localStorage.getItem("favourites")))
-
-    // !state.loading && setFavouritesFinal(getFavouritesCountriesForDropDown(favourites, state.mapData))
-    // // console.log("favourites inside useffects after set", favourites);
-
-
   }, []);
 
-    // console.log("favourites from outside useEffect", favourites);
-    // !state.loading && state.mapData.map(ele=>console.log(ele))
-  // const [allCountries, setAllCountries] = useState([]);
-
-  // const allFavouriteCountries = favourites.length > 0 && !state.loading && getFavouritesCountriesForDropDown(favourites, state.mapData);
   
   const classes = useStyles();
 
   const favouriteCountryHistorical = state.favouriteCountryHistorical;
   const worldCovidNews = state.worldCovidNews;
-  // console.log(allFavouriteCountries, state.loadingFavourites)
 
   const newsList = !state.loading &&
     worldCovidNews.articles.map((item, index) => {
@@ -120,7 +102,6 @@ export default function Favourites({state, saveFavourites, getHistoricalCountry}
       );
     })
 
-  // favourites.length > 0 && console.log('allFavouriteCountries', allFavouriteCountries)
     
   const mapData = getMapDataLayer(state.mapData)
   !state.loading && console.log(mapData[0])
@@ -128,7 +109,7 @@ export default function Favourites({state, saveFavourites, getHistoricalCountry}
   
   let days = [];
   let cases = [];
-  let casesRecovered = [];
+  let deaths = [];
 
   if (!state.loadingFavouriteHistorical) {
     const casesObject = favouriteCountryHistorical.timeline.cases;
@@ -136,57 +117,69 @@ export default function Favourites({state, saveFavourites, getHistoricalCountry}
     days = Object.keys(casesObject);
     cases = Object.values(casesObject).map((e) => Number(e) / 1000);
 
-    const casesRecoveredObject = favouriteCountryHistorical.timeline.recovered;
-    casesRecovered = Object.values(casesRecoveredObject).map(
+    const deathsObject = favouriteCountryHistorical.timeline.deaths;
+    deaths = Object.values(deathsObject).map(
       (e) => Number(e) / 1000
     );
   }
 
   const handleChange = (e: any, data?: any) => {
-    console.log('handleChange',  e.target.innerText.includes('\n'))
-    // if (e.target.innerText.includes('\n')) return
-    // setCountryName(data.value)    
-    console.log('countryName',countryName)
-    getHistoricalCountry(data.value)
-    .then(()=> setCountryName(data.value))
-    .then(() =>console.log('countryName after',countryName))
+    e.preventDefault()
+    console.log('handleChange',  e.target, data.value)
+    setCountry(prev=>({...prev, countryName: data.value, error: '', period: 0}))
+
+  }
+
+  const handleChangeTime = (e: any, data?: any) => {
+    console.log('country.countryName',data.value)
+    getHistoricalCountry(country.countryName, data.value)
+    .then(()=>setCountry(prev=>({...prev, period: data.value})))
+    .then(() =>console.log('state.loadingFavouriteHistorical',state.loadingFavouriteHistorical))
+    .catch(() => {
+      setCountry(prev=>({...prev, period: data.value, error: 'This country does not have historical data'}));
+      console.log('state.loadingFavouriteHistorical',state.loadingFavouriteHistorical)
+    })
 
 
   }
 
+
+
+
   const onSave = (favourites) => {
     console.log(favourites)
     saveFavourites(favourites)
-    .then(()=> console.log(getFavouritesCountriesForDropDown(favourites, state.mapData)))
-    .then(()=> console.log(favourites.length, !state.loading))
-
     .then(()=> console.log((addCountryNameKey(favourites))))
     .then(()=> localStorage.setItem("favourites", JSON.stringify(addCountryNameKey(favourites))))
     .then(()=> setFavouritesFinal(addCountryNameKey(favourites)))
-    //  .then(()=> setFavouritesFinal(getFavouritesCountriesForDropDown(addCountryNameKey(favourites), state.mapData)))
-
-
   }
 
 const favouritesForDropDown = favouritesFinal.length > 0 && !state.loading && getFavouritesCountriesForDropDown(favouritesFinal, state.mapData)
 
 
   return (
-    <div>
+    <div>      
+      
+    {country.error && <GridContainer>{country.error} {!state.loadingFavouriteHistorical && 'hello'}
+    </GridContainer>}
+
 {favouritesFinal.length === 0 && !state.loading &&  
       <GridContainer>
       <GridItem xs={12} sm={12} md={12}>
       {<AllCountriesSelection onSave={onSave} />}
+      
 
       </GridItem >
+
 
       </GridContainer>}
 
 
       <GridContainer>
 
+
       {favouritesFinal.length > 0 && !state.loading && 
-      <GridItem xs={12} sm={12} md={6}>
+      <GridItem xs={12} sm={12} md={5}>
           <Card>
             <CardHeader color="primary">
             <h4 className={classes.cardTitleWhite}>List of Your Favourites Countries</h4>
@@ -212,20 +205,51 @@ const favouritesForDropDown = favouritesFinal.length > 0 && !state.loading && ge
             </CardBody>
  
           </Card>
-        </GridItem> }       
-        <GridItem xs={12} sm={12} md={6}>
+        </GridItem> }     
 
-         { !state.loadingFavouriteHistorical && countryName && 
+      {country.countryName && !state.loading &&
+      <GridItem xs={12} sm={12} md={2}>
+          <Card>
+            <CardHeader color="primary">
+            <h4 className={classes.cardTitleWhite}>Time interval</h4>
+
+            </CardHeader>
+            <CardBody>
+              <GridContainer>  
+              <GridItem xs={12} sm={12} md={12}>
+                <h4> Time in days</h4>  
+     
+                </GridItem>            
+
+                <GridItem xs={12} sm={12} md={12}>
+                   <Dropdown
+                    placeholder='Select one'
+                    fluid
+                    selection
+                    defaultValue='10'
+                    closeOnEscape
+                    onChange={handleChangeTime}
+                    options={periodicTime}
+                  />   
+                </GridItem>
+              </GridContainer>
+            </CardBody>
+ 
+          </Card>
+        </GridItem> }       
+        <GridItem xs={12} sm={12} md={5}>
+
+         { country.countryName && 
          <CardCountry
           mapData={mapData}
-          countryName={countryName}         
+          countryName={country.countryName}         
          />
         }
         </GridItem>
 
       </GridContainer>
             
-      { !state.loadingFavouriteHistorical && countryName &&     
+      { country.countryName && !country.error && country.period &&    
       <>
       <GridContainer>
 
@@ -235,10 +259,12 @@ const favouritesForDropDown = favouritesFinal.length > 0 && !state.loading && ge
 
         <GridItem xs={12} sm={12} md={6}>
         <CasesChart
-              color="success"
-              title="recovered"
+              color="info"
+              title="new"
               days={days}
-              series={casesRecovered}
+              series={cases}
+              multiple='Thousands'
+
               type="Line"
 
           /> 
@@ -259,9 +285,9 @@ const favouritesForDropDown = favouritesFinal.length > 0 && !state.loading && ge
         <GridItem xs={12} sm={12} md={6}>
         <CasesChart
             color="danger"
-            title="new"
+            title="deaths"
             days={days}
-            series={cases}
+            series={deaths}
             multiple='Thousands'
             type="Bar"
             warning="warning"
