@@ -8,6 +8,7 @@ import '../../assets/css/InfoWindow.scss'
 
 function InfoWindowName(props) {
   const {country, cases, onClick, flag, deaths, recovered, updated} = props
+  console.log(props)
 
   return (
     <div className='InfoWindow' >
@@ -21,7 +22,7 @@ function InfoWindowName(props) {
     <div><strong>Deaths:</strong>{deaths} </div>
     <div><strong>Recovered:</strong>{recovered} </div>
     <div><strong>Last Updated:</strong>{updated} </div>
-    <div ><i className="fa fa-bell fa-spin fa-2x "></i></div>
+    {/* <div ><i className="fa fa-bell fa-spin fa-2x "></i></div> */}
   </div>
   );
 }
