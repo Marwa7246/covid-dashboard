@@ -14,6 +14,7 @@ import Stars from "@material-ui/icons/Stars";
 import ExitToApp from "@material-ui/icons/ExitToApp";
 import LibraryBooks from "@material-ui/icons/LibraryBooks";
 import PersonPin from "@material-ui/icons/PersonPin";
+import Settings from "@material-ui/icons/Settings";
 
 import LocationOn from "@material-ui/icons/LocationOn";
 
@@ -177,6 +178,12 @@ export default function Sidebar(props) {
   const whiteFontClasses6 = classNames({
     [" " + classes.whiteFont]: activeRoute(route[6].path),
   });
+  const listItemClasses7 = classNames({
+    [" " + classes[color]]: activeRoute(route[7].path),
+  });
+  const whiteFontClasses7 = classNames({
+    [" " + classes.whiteFont]: activeRoute(route[7].path),
+  });
 
   // ////////////////////////////////////////////////////////////////////////
   const newLinksToUpdate = (
@@ -315,6 +322,27 @@ export default function Sidebar(props) {
               <ListItemText
                 primary={route[5].name}
                 className={classNames(classes.itemText, whiteFontClasses5)}
+                disableTypography={true}
+              />
+            </ListItem>
+          </NavLink>
+        )}
+      </>
+      <>
+        {email && (
+          <NavLink
+            to={route[7].path}
+            className={classes.item}
+            activeClassName="active"
+            key={route[7].path}
+          >
+            <ListItem button className={classes.itemLink + listItemClasses7}>
+              <Settings
+                className={classNames(classes.itemIcon, whiteFontClasses7)}
+              />
+              <ListItemText
+                primary={route[7].name}
+                className={classNames(classes.itemText, whiteFontClasses7)}
                 disableTypography={true}
               />
             </ListItem>
