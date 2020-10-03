@@ -113,28 +113,7 @@ export default function Settings({
     }));
   };
 
-  const handleChangeTime = (e: any, data?: any) => {
-    console.log("country.countryName", data.value);
-    getHistoricalCountry(country.countryName, data.value)
-      .then(() => setCountry((prev) => ({ ...prev, period: data.value })))
-      .then(() =>
-        console.log(
-          "state.loadingFavouriteHistorical",
-          state.loadingFavouriteHistorical
-        )
-      )
-      .catch(() => {
-        setCountry((prev) => ({
-          ...prev,
-          period: data.value,
-          error: "This country does not have historical data",
-        }));
-        console.log(
-          "state.loadingFavouriteHistorical",
-          state.loadingFavouriteHistorical
-        );
-      });
-  };
+
 
   const onSave = (favourites) => {
     console.log(favourites);
@@ -161,7 +140,8 @@ export default function Settings({
       {!state.loading && (
         <GridContainer>
           <GridItem xs={12} sm={12} md={12}>
-            {<AllCountriesSelection onSave={onSave} />}
+            {<AllCountriesSelection onSave={onSave} defaultValue={favouritesFinal}
+            />}
           </GridItem>
         </GridContainer>
       )}
@@ -178,7 +158,7 @@ export default function Settings({
               <CardBody>
                 <GridContainer>
                   <GridItem xs={12} sm={12} md={12}>
-                    <h4> Select a country to see more information</h4>
+                    <h4> You can add or remove countries from your list</h4>
                   </GridItem>
 
                   <GridItem xs={12} sm={12} md={12}>

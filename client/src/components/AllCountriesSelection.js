@@ -44,7 +44,9 @@ const styles = {
 
 const useStyles = makeStyles(styles);
 
-const AllCountriesSelection = ({onSave}) => {
+const AllCountriesSelection = (props) => {
+  console.log(props)
+  const {onSave, defaultValue} =props
   
   const [error, setError] = useState("");
   const [allFavouriteCountries, setAllFavouriteCountries] = useState([]);
@@ -97,7 +99,7 @@ const AllCountriesSelection = ({onSave}) => {
         <CardBody>
           <GridContainer>  
           <GridItem xs={12} sm={12} md={12}>
-            <h4>Add up to 3 countries to your favourite list</h4>  
+            <h4>Add countries to your favourite list</h4>  
  
             </GridItem>            
         
@@ -105,9 +107,10 @@ const AllCountriesSelection = ({onSave}) => {
 
 
             <Dropdown
-              placeholder="Select Up to 3 Countries"
+              placeholder="Select Countries"
               onChange={handleAllCountriesChange}
               value={allFavouriteCountries}
+              defaultValue={defaultValue}
               fluid
               multiple
               selectOnNavigation={false}
