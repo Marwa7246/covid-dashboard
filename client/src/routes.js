@@ -23,6 +23,7 @@ import Create from "@material-ui/icons/Create";
 import Stars from "@material-ui/icons/Stars";
 import ExitToApp from "@material-ui/icons/ExitToApp";
 import LibraryBooks from "@material-ui/icons/LibraryBooks";
+import Settings from "@material-ui/icons/Settings";
 
 import LocationOn from "@material-ui/icons/LocationOn";
 
@@ -81,6 +82,13 @@ const dashboardRoutes = [
     name: "Logout",
     icon: ExitToApp,
     component: Logout,
+  },
+
+  {
+    path: "/settings",
+    name: "Settings",
+    icon: Settings,
+    component: Settings,
   },
 
   // {
