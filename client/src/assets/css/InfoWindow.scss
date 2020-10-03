@@ -4,18 +4,22 @@
 
 
 .InfoWindow-image {
-  width: 50px;
-  height: 25px;
+  width: 5em;
+  height: 2em;
 }
 
 
 .InfoWindow span {
-  font-size: 25px;
+  font-size: 1.2em;
   font-weight: bolder;
 }
 
 .InfoWindow .fa {
   color: blue
+}
+
+.InfoWindow-description {
+  font-size: 0.8em;
 }
 
 
@@ -43,6 +47,3 @@ h1, p {
 }
 
 
-.description {
-  font-size: 1.4em;
-}

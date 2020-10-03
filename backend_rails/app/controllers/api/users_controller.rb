@@ -11,7 +11,7 @@ class Api::UsersController < ApplicationController
   def show
     puts params
     user = User.find_by(email: params[:email])
-    favourites = Favourite.where(user_email: user.email)
+    favourites = Favourite.where(user_email: user.email).order(country_name: :desc)
     render json: favourites
 
   end

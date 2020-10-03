@@ -55,7 +55,7 @@ const customMarkerMap2 = this.props.mapData.map(elem=>{
           key={elem.country}
           position={elem.position}
           onClick={this.onMarkerClick}
-          name={<InfoWindowsName country={elem.country} updated={elem.updated} cases={elem.cases} image={elem.flag} deaths={elem.deaths} recovered={elem.recovered} onClick={()=> console.log('from infowindow')}/>}
+          name={<InfoWindowsName country={elem.country} updated={elem.updated} cases={elem.cases} flag={elem.flag} deaths={elem.deaths} recovered={elem.recovered} onClick={()=> console.log('from infowindow')}/>}
         />
 
   )
@@ -66,12 +66,12 @@ const customMarkerMap2 = this.props.mapData.map(elem=>{
     return (
       <Map
         google={this.props.google}
-        zoom={4}
+        zoom={3}
         // style={mapStyles}
         initialCenter={
           {
-            lat: 20.2884,
-            lng: 36.8233
+            lat: 30.2884,
+            lng: -6.8233
           }
         }
       >
