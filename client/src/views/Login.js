@@ -10,22 +10,18 @@ import CardHeader from "components/Card/CardHeader.js";
 import CardBody from "components/Card/CardBody.js";
 import CardFooter from "components/Card/CardFooter.js";
 import TextField from "@material-ui/core/TextField";
-
-
+import Alert from "@material-ui/lab/Alert";
 
 import axios from "axios";
 
-import {getFavouritesCountriesForDropDown} from '../helpers/helpers'
+import { getFavouritesCountriesForDropDown } from "../helpers/helpers";
 
-
-
-export default function Login({state}) {
+export default function Login({ state }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [user, setUser] = useState({});
   const [favouritesFinal, setFavouritesFinal] = useState([]);
-
 
   const history = useHistory();
 
@@ -39,6 +35,16 @@ export default function Login({state}) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (!email && !password) {
+      setError("All fields required!");
+      return;
+    } else if (!email) {
+      setError("Email is required!");
+      return;
+    } else if (!password) {
+      setError("Password is required!");
+      return;
+    }
     axios
       .post(`/login`, { email, password })
       .then((res) => {
@@ -46,12 +52,10 @@ export default function Login({state}) {
         localStorage.setItem("userEmail", res.data.user.email);
         localStorage.setItem("userFirstName", res.data.user.first_name);
         localStorage.setItem("token", res.data.jwt);
-        localStorage.setItem("favourites", (JSON.stringify(res.data.favourites)))
+        localStorage.setItem("favourites", JSON.stringify(res.data.favourites));
         // console.log("favourites", getFavouritesCountriesForDropDown(res.data.favourites));
         // dispatch({ type: SET_FAVOURITES, allFavouriteCountries: res.data.favourites })
         // setFavouritesFinal(getFavouritesCountriesForDropDown(res.data.favourites))
-        
-
 
         handleLogin(res.data.user);
       })
@@ -103,9 +107,13 @@ export default function Login({state}) {
     <div>
       <GridContainer>
         <GridItem xs={12} sm={12} md={12}>
-          <Card>
-            <h2 style={{ color: "red" }}>{error && <p>{error}</p>}</h2>
-          </Card>
+          <div>
+            {error && (
+              <Alert severity="error">
+                <b>{error && <p>{error}</p>}</b>
+              </Alert>
+            )}
+          </div>
           <Card>
             <form onSubmit={handleSubmit}>
               <CardHeader color="primary" style={{ color: "white" }}>

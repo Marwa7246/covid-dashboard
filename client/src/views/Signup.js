@@ -10,6 +10,7 @@ import CardHeader from "components/Card/CardHeader.js";
 import CardBody from "components/Card/CardBody.js";
 import CardFooter from "components/Card/CardFooter.js";
 import TextField from "@material-ui/core/TextField";
+import Alert from "@material-ui/lab/Alert";
 
 import axios from "axios";
 
@@ -22,7 +23,6 @@ export default function Signup(props) {
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
   const [user, setUser] = useState({});
-
 
   const history = useHistory();
 
@@ -49,19 +49,26 @@ export default function Signup(props) {
   const handleSubmit = (e) => {
     e.preventDefault();
     setError("");
-    const user = { first_name, last_name, email, password, mobile }
+    setMessage("");
+    if (!first_name || !last_name || !email || !mobile || !password) {
+      setError("All fields required!");
+      setFirstName("");
+      setLastName("");
+      setMobile("");
+      setEmail("");
+      setPassword("");
+      return;
+    }
+    const user = { first_name, last_name, email, password, mobile };
     axios
       .post(`/api/users`, { user })
       .then((res) => {
-        // localStorage.setItem("user", res.data.user.email);
-        // localStorage.setItem("token", res.data.jwt);
-        console.log(res.data.user)
-        // handleLogin(res.data.user)
+        console.log(res.data.user);
         setMessage("Registration Successful! Please login to proceed...");
       })
       .catch((err) => {
         console.log(err);
-        setError("All Fields Required!");
+        setError("Email Already Exists!");
       });
 
     setFirstName("");
@@ -71,17 +78,24 @@ export default function Signup(props) {
     setPassword("");
   };
 
-
   return (
     <div>
       <GridContainer>
         <GridItem xs={12} sm={12} md={12}>
-          <Card>
-            <h2 style={{ color: "red" }}>{error && <p>{error}</p>}</h2>
-          </Card>
-          <Card>
-            <h2 style={{ color: "green" }}>{message && <p>{message}</p>}</h2>
-          </Card>
+          <div>
+            {error && (
+              <Alert severity="error">
+                <b>{error && <p>{error}</p>}</b>
+              </Alert>
+            )}
+          </div>
+          <div>
+            {message && (
+              <Alert severity="success">
+                <b>{message && <p>{message}</p>}</b>
+              </Alert>
+            )}
+          </div>
           <Card>
             <form onSubmit={handleSubmit}>
               <CardHeader color="primary" style={{ color: "white" }}>
