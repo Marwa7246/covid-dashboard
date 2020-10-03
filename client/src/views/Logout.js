@@ -13,6 +13,7 @@ export default function Logout() {
   localStorage.removeItem("userFirstName");
   localStorage.removeItem("user");
   localStorage.removeItem("token");
+  localStorage.removeItem('favourites')
   console.log("Logging out");
   history.push("/dashboard");
   // localStorage.setItem("token", null);

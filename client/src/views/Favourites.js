@@ -73,26 +73,23 @@ export default function Favourites({state, saveFavourites}) {
   const [favouritesFinal, setFavouritesFinal] = useState([]);
 
 
-  
+
   
   // console.log(state.allFavouriteCountries)
 
 
-  // let user = ''
-  // useEffect(() => {
-  //   const user = JSON.parse(JSON.stringify(localStorage.getItem("user")));
-  //   const favourites = JSON.parse(localStorage.getItem("favourites"));
-  //   console.log("favourites inside useffects after local storage", favourites);
+  useEffect(() => {
+    // const favourites = JSON.parse(localStorage.getItem("favourites"));
+    
+    // !state.loading && console.log("favourites inside useffects after local storage", getFavouritesCountriesForDropDown(favourites, state.mapData));
 
-  // const allFavouriteCountries = getFavouritesCountriesForDropDown(favourites, state.mapData);
-  // console.log("allFavouriteCountries inside useffects after function", allFavouriteCountries);
+    setFavouritesFinal(JSON.parse(localStorage.getItem("favourites")))
 
-  //   setUser(user)
-  //   setFavourites(favourites)
-  //   console.log("favourites inside useffects after set", favourites);
+    // !state.loading && setFavouritesFinal(getFavouritesCountriesForDropDown(favourites, state.mapData))
+    // // console.log("favourites inside useffects after set", favourites);
 
 
-  // }, []);
+  }, []);
 
     // console.log("favourites from outside useEffect", favourites);
     // !state.loading && state.mapData.map(ele=>console.log(ele))
@@ -145,7 +142,8 @@ export default function Favourites({state, saveFavourites}) {
   }
 
   const handleChange = (e) => {
-    console.log('handleChange', e)
+    console.log('handleChange',  e.target.innerText.includes('\n'))
+    if (e.target.innerText.includes('\n')) return
     setCountryName(e.target.innerText)
     // setAllCountries([...allCountries, e.target.innerText])
     // setTheArray([...theArray, newElement]);
@@ -159,22 +157,24 @@ export default function Favourites({state, saveFavourites}) {
     .then(()=> console.log(getFavouritesCountriesForDropDown(favourites, state.mapData)))
     .then(()=> console.log(favourites.length, !state.loading))
 
-    .then(()=> console.log(getFavouritesCountriesForDropDown(addCountryNameKey(favourites), state.mapData)))
-    // .then(()=> setFavouritesFinal([1,2,3]))
-     .then(()=> setFavouritesFinal(getFavouritesCountriesForDropDown(addCountryNameKey(favourites), state.mapData)))
+    .then(()=> console.log((addCountryNameKey(favourites))))
+    .then(()=> localStorage.setItem("favourites", JSON.stringify(addCountryNameKey(favourites))))
+    .then(()=> setFavouritesFinal(addCountryNameKey(favourites)))
+    //  .then(()=> setFavouritesFinal(getFavouritesCountriesForDropDown(addCountryNameKey(favourites), state.mapData)))
 
 
   }
 
-
+const favouritesForDropDown = favouritesFinal.length > 0 && !state.loading && getFavouritesCountriesForDropDown(favouritesFinal, state.mapData)
 
 
   return (
     <div>
-{favouritesFinal.length === 0 &&  
+{favouritesFinal.length === 0 && !state.loading &&  
       <GridContainer>
       <GridItem xs={12} sm={12} md={12}>
-      {!state.loading && <AllCountriesSelection onSave={onSave} />}
+      {favouritesFinal.length}
+      {<AllCountriesSelection onSave={onSave} />}
 
       </GridItem >
 
@@ -183,14 +183,14 @@ export default function Favourites({state, saveFavourites}) {
 
       <GridContainer>
 
-      {favouritesFinal.length > 0 &&  
+      {favouritesFinal.length > 0 && !state.loading && 
       <GridItem xs={12} sm={12} md={6}>
         <Card>
             <h2 style={{ color: "red" }}>{user && <p>{user}</p>}</h2>
           </Card>
           <Card>
             <CardHeader color="primary">
-            <h4 className={classes.cardTitleWhite}>List of Your Favourites Countries</h4>
+            <h4 className={classes.cardTitleWhite}>{favouritesFinal.length} List of Your Favourites Countries</h4>
 
             </CardHeader>
             <CardBody>
@@ -206,7 +206,7 @@ export default function Favourites({state, saveFavourites}) {
                     fluid
                     selection
                     onChange={handleChange}
-                    options={favouritesFinal}
+                    options={favouritesForDropDown}
                   />   
                 </GridItem>
               </GridContainer>

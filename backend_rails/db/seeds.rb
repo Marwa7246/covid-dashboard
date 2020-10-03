@@ -1,4 +1,6 @@
 require('faker')
+Favourite.destroy_all
+
 
 1.times do
   User.create(first_name: 'test', last_name: 'userone', email: 'test1@gmail.com', password: 'test1', mobile: '9111111111')
@@ -13,11 +15,10 @@ Datum.create(key: 'yesterday_all', value: '[{"updated":1601051259604,"country":"
 
 user1 = User.find_or_create_by! email: '123'
 puts "Re-creating Favourites ..."
-Favourite.destroy_all
-Favourite.create(user_id: 4, country_name: 'ca')
-Favourite.create(user_id: 4, country_name: 'eg')
-Favourite.create(user_id: 4, country_name: 'af')
-Favourite.create(user_id: 4, country_name: 'el')
+Favourite.create(user_id: 1, country_name: 'ca')
+Favourite.create(user_id: 1, country_name: 'eg')
+Favourite.create(user_id: 1, country_name: 'af')
+Favourite.create(user_id: 1, country_name: 'al')
 
 Favourite.create(user_id: 2, country_name: 'af')
 Favourite.create(user_id: 2, country_name: 'ca')

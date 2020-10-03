@@ -11,13 +11,21 @@ import CardBody from "components/Card/CardBody.js";
 import CardFooter from "components/Card/CardFooter.js";
 import TextField from "@material-ui/core/TextField";
 
+
+
 import axios from "axios";
 
-export default function Login(props) {
+import {getFavouritesCountriesForDropDown} from '../helpers/helpers'
+
+
+
+export default function Login({state}) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [user, setUser] = useState({});
+  const [favouritesFinal, setFavouritesFinal] = useState([]);
+
 
   const history = useHistory();
 
@@ -38,8 +46,12 @@ export default function Login(props) {
         localStorage.setItem("userEmail", res.data.user.email);
         localStorage.setItem("userFirstName", res.data.user.first_name);
         localStorage.setItem("token", res.data.jwt);
-        localStorage.setItem("favourites", JSON.stringify(res.data.favourites));
-        console.log("favourites", JSON.stringify(res.data.favourites));
+        localStorage.setItem("favourites", (JSON.stringify(res.data.favourites)))
+        // console.log("favourites", getFavouritesCountriesForDropDown(res.data.favourites));
+        // dispatch({ type: SET_FAVOURITES, allFavouriteCountries: res.data.favourites })
+        // setFavouritesFinal(getFavouritesCountriesForDropDown(res.data.favourites))
+        
+
 
         handleLogin(res.data.user);
       })
