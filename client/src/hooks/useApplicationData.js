@@ -4,9 +4,11 @@ import dataReducer, {
   SET_USER,
   SET_APPLICATION_DATA,
   SET_FAVOURITES,
-  SET_FAVOURITE_COUNTRY_HISTORICAL,
+  SET_FAVOURITE_COUNTRY_DATA,
 } from "../reducers/dataReducer";
 require("dotenv").config();
+
+
 
 const newsUrl = `http://newsapi.org/v2/top-headlines?apiKey=${process.env.REACT_APP_NEWS_API_KEY}&language=en&q=covid&sortby=publishedAt`;
 
@@ -19,10 +21,12 @@ const useApplicationData = () => {
     mapData: [],
     worldCovidNews: {},
     allFavouriteCountries: [], 
-    SET_FAVOURITE_COUNTRY_HISTORICAL: {},    
+    favouriteCountryHistorical: {},  
+    favouriteCountryNews: {},  
+
     loading: true,
     loadingFavourites: true,
-    loadingFavouriteHistorical: true,
+    loadingFavouriteCountry: true,
   });
 
   useEffect(() => {
@@ -76,15 +80,35 @@ const useApplicationData = () => {
     });
   }
 
-  function getHistoricalCountry(countryName, period) {
-    const url = `https://disease.sh/v3/covid-19/historical/${countryName}?lastdays=${period}`
-    console.log(countryName, url)
 
-    return axios.get(`https://disease.sh/v3/covid-19/historical/${countryName}?lastdays=${period}`)
-    .then((res) => {
-      console.log('after axios get', res.data)
-      dispatch({ type: SET_FAVOURITE_COUNTRY_HISTORICAL, favouriteCountryHistorical: res.data });
-    });
+
+  function getHistoricalCountry(countryName, period) {
+    const historicalCountryUrl = `https://disease.sh/v3/covid-19/historical/${countryName}?lastdays=${period}`
+    console.log(countryName, historicalCountryUrl)
+
+
+    const newsUrlCountry = `http://newsapi.org/v2/top-headlines?apiKey=${process.env.REACT_APP_NEWS_API_KEY}&lang=en&country=${countryName}&q=covid`
+
+    return (
+      Promise.all([
+          axios.get(historicalCountryUrl),
+          axios.get(newsUrlCountry),
+        ]).then((all) => {
+          console.log('after axios get', all[0].data)
+          console.log('after axios get', all[1].data);
+          dispatch({
+            type: SET_FAVOURITE_COUNTRY_DATA,
+            favouriteCountryHistorical: all[0].data,
+            favouriteCountryNews: all[1].data,
+
+          });
+
+        
+        })
+    )
+    
+
+ 
   }
 
   
