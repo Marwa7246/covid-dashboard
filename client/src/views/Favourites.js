@@ -190,7 +190,7 @@ const favouritesForDropDown = favouritesFinal.length > 0 && !state.loading && ge
           </Card>
           <Card>
             <CardHeader color="primary">
-            <h4 className={classes.cardTitleWhite}>{favouritesFinal.length} List of Your Favourites Countries</h4>
+            <h4 className={classes.cardTitleWhite}>List of Your Favourites Countries</h4>
 
             </CardHeader>
             <CardBody>
