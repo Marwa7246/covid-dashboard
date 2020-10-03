@@ -42,7 +42,14 @@ const styles = {
 
 const useStyles = makeStyles(styles);
 
+<<<<<<< HEAD
 const AllCountriesSelection = ({ onSave }) => {
+=======
+const AllCountriesSelection = (props) => {
+  console.log(props)
+  const {onSave, defaultValue} =props
+  
+>>>>>>> 49a54ca3ee168095fdcf6d4bcff836aa069567fb
   const [error, setError] = useState("");
   const [allFavouriteCountries, setAllFavouriteCountries] = useState([]);
   const state = useContext(StateContext);
@@ -80,44 +87,60 @@ const AllCountriesSelection = ({ onSave }) => {
 
   return (
     <div>
-      <GridContainer>
-        <GridItem xs={12} sm={12} md={12}>
-          <Card>
-            <CardHeader color="primary">
-              <h4 className={classes.cardTitleWhite}>List of Countries</h4>
-            </CardHeader>
-            <CardBody>
-              <GridContainer>
-                <GridItem xs={12} sm={12} md={12}>
-                  <h4>Add countries to your favourites list</h4>
-                </GridItem>
 
-                <GridItem xs={12} sm={12} md={12}>
-                  <Dropdown
-                    placeholder="Enter atleast 3 letters for a quick search"
-                    onChange={handleAllCountriesChange}
-                    value={allFavouriteCountries}
-                    fluid
-                    multiple
-                    selectOnNavigation={false}
-                    search
-                    selection
-                    options={countryOptions}
-                  />
-                </GridItem>
-              </GridContainer>
-            </CardBody>
-            <CardFooter>
-              <Button variant="contained" color="primary" onClick={validate}>
-                SELECT
-              </Button>
-            </CardFooter>
-          </Card>
-        </GridItem>
-      </GridContainer>
+    <GridContainer>
 
-      <GridContainer></GridContainer>
-    </div>
+    <GridItem xs={12} sm={12} md={12}>
+      <Card>
+        <CardHeader color="primary">
+          <h4 className={classes.cardTitleWhite}>List of Countries</h4>
+
+        </CardHeader>
+        <CardBody>
+          <GridContainer>  
+          <GridItem xs={12} sm={12} md={12}>
+            <h4>Add countries to your favourite list</h4>  
+ 
+            </GridItem>            
+        
+            <GridItem xs={12} sm={12} md={12}>
+
+
+            <Dropdown
+              placeholder="Select Countries"
+              onChange={handleAllCountriesChange}
+              value={allFavouriteCountries}
+              defaultValue={defaultValue}
+              fluid
+              multiple
+              selectOnNavigation={false}
+              search
+              selection
+              options={countryOptions}
+            />
+
+
+            </GridItem>
+          </GridContainer>
+        </CardBody>
+        <CardFooter>
+          <Button variant="contained" color="primary" onClick={validate}>
+            SELECT
+          </Button>
+        </CardFooter>
+
+      </Card>
+    </GridItem>
+
+
+    
+
+</GridContainer>
+
+<GridContainer>
+
+</GridContainer>
+</div>
   );
 };
 export default AllCountriesSelection;

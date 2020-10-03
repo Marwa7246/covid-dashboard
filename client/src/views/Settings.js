@@ -81,6 +81,8 @@ export default function Settings({
     error: "",
   });
 
+  console.log('hellooooooooooooooooooooooo')
+
   const [user, setUser] = useState("");
   const [favouritesFinal, setFavouritesFinal] = useState([]);
 
@@ -90,41 +92,15 @@ export default function Settings({
 
   const classes = useStyles();
 
-  const favouriteCountryHistorical = state.favouriteCountryHistorical;
-  const worldCovidNews = state.worldCovidNews;
 
-  const newsList =
-    !state.loading &&
-    worldCovidNews.articles.map((item, index) => {
-      let publishedTime = moment.utc(item.publishedAt).toDate();
-      let localTime = moment(publishedTime).local().format("YYYY-MM-DD HH:mm");
-      let timeFormat = moment(localTime).fromNow();
-      return (
-        <CardNews
-          newsTitle={item.title}
-          newsDescription={item.description}
-          newsURL={item.url}
-          newsPublishedAt={timeFormat}
-        />
-      );
-    });
+
 
   const mapData = getMapDataLayer(state.mapData);
   !state.loading && console.log(mapData[0]);
 
-  let days = [];
-  let cases = [];
-  let deaths = [];
 
-  if (!state.loadingFavouriteHistorical) {
-    const casesObject = favouriteCountryHistorical.timeline.cases;
 
-    days = Object.keys(casesObject);
-    cases = Object.values(casesObject).map((e) => Number(e) / 1000);
 
-    const deathsObject = favouriteCountryHistorical.timeline.deaths;
-    deaths = Object.values(deathsObject).map((e) => Number(e) / 1000);
-  }
 
   const handleChange = (e: any, data?: any) => {
     e.preventDefault();
@@ -137,28 +113,7 @@ export default function Settings({
     }));
   };
 
-  const handleChangeTime = (e: any, data?: any) => {
-    console.log("country.countryName", data.value);
-    getHistoricalCountry(country.countryName, data.value)
-      .then(() => setCountry((prev) => ({ ...prev, period: data.value })))
-      .then(() =>
-        console.log(
-          "state.loadingFavouriteHistorical",
-          state.loadingFavouriteHistorical
-        )
-      )
-      .catch(() => {
-        setCountry((prev) => ({
-          ...prev,
-          period: data.value,
-          error: "This country does not have historical data",
-        }));
-        console.log(
-          "state.loadingFavouriteHistorical",
-          state.loadingFavouriteHistorical
-        );
-      });
-  };
+
 
   const onSave = (favourites) => {
     console.log(favourites);
@@ -180,16 +135,13 @@ export default function Settings({
 
   return (
     <div>
-      {country.error && (
-        <GridContainer>
-          {country.error} {!state.loadingFavouriteHistorical && "hello"}
-        </GridContainer>
-      )}
 
-      {favouritesFinal.length === 0 && !state.loading && (
+
+      {!state.loading && (
         <GridContainer>
           <GridItem xs={12} sm={12} md={12}>
-            {<AllCountriesSelection onSave={onSave} />}
+            {<AllCountriesSelection onSave={onSave} defaultValue={favouritesFinal}
+            />}
           </GridItem>
         </GridContainer>
       )}
@@ -206,7 +158,7 @@ export default function Settings({
               <CardBody>
                 <GridContainer>
                   <GridItem xs={12} sm={12} md={12}>
-                    <h4> Select a country to see more information</h4>
+                    <h4> You can add or remove countries from your list</h4>
                   </GridItem>
 
                   <GridItem xs={12} sm={12} md={12}>
@@ -224,79 +176,11 @@ export default function Settings({
           </GridItem>
         )}
 
-        {country.countryName && !state.loading && (
-          <GridItem xs={12} sm={12} md={2}>
-            <Card>
-              <CardHeader color="primary">
-                <h4 className={classes.cardTitleWhite}>Time interval</h4>
-              </CardHeader>
-              <CardBody>
-                <GridContainer>
-                  <GridItem xs={12} sm={12} md={12}>
-                    <h4> Time in days</h4>
-                  </GridItem>
 
-                  <GridItem xs={12} sm={12} md={12}>
-                    <Dropdown
-                      placeholder="Select one"
-                      fluid
-                      selection
-                      defaultValue="10"
-                      closeOnEscape
-                      onChange={handleChangeTime}
-                      options={periodicTime}
-                    />
-                  </GridItem>
-                </GridContainer>
-              </CardBody>
-            </Card>
-          </GridItem>
-        )}
-        <GridItem xs={12} sm={12} md={5}>
-          {country.countryName && (
-            <CardCountry mapData={mapData} countryName={country.countryName} />
-          )}
-        </GridItem>
+
       </GridContainer>
 
-      {country.countryName && !country.error && country.period && (
-        <>
-          <GridContainer>
-            <GridItem xs={12} sm={12} md={6}>
-              {newsList[0]}
-            </GridItem>
 
-            <GridItem xs={12} sm={12} md={6}>
-              <CasesChart
-                color="info"
-                title="new"
-                days={days}
-                series={cases}
-                multiple="Thousands"
-                type="Line"
-              />
-            </GridItem>
-          </GridContainer>
-
-          <GridContainer>
-            <GridItem xs={12} sm={12} md={6}>
-              {newsList[1]}
-            </GridItem>
-
-            <GridItem xs={12} sm={12} md={6}>
-              <CasesChart
-                color="danger"
-                title="deaths"
-                days={days}
-                series={deaths}
-                multiple="Thousands"
-                type="Bar"
-                warning="warning"
-              />
-            </GridItem>
-          </GridContainer>
-        </>
-      )}
     </div>
   );
 }

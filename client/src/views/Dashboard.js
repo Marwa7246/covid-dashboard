@@ -145,7 +145,7 @@ export default function Dashboard({ state }) {
         <GridItem xs={12} sm={12} md={4}>
           <CasesChart
             color="danger"
-            title="new"
+            title="accumulated cases"
             multiple='Millions'
             days={days}
             series={cases}
