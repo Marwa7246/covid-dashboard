@@ -11,8 +11,8 @@ class AuthController < ApplicationController
         payload = {user_id: user.id}
         token = encode_token(payload)
         puts params
-            # byebug
-        favourites = Favourite.where(user_id: user.id)
+        favourites = Favourite.where(user_id: user.id).order(country_name: :asc)
+        byebug
         render json: {user: user, jwt: token, favourites: favourites, success: "Welcome back, #{user.email}"}
     else
         render json: {failure: "Log in failed! Email or password invalid!"}
