@@ -60,13 +60,15 @@ const useApplicationData = () => {
   }
 
   function getFavourites(userEmail) {
-    const email="test2@gmail.com";
+    const email = localStorage.getItem("userEmail");
+
+    // const email="test2@gmail.com";
     console.log('from getFavourites', userEmail)
 
 
     return axios.get(`/api/users/${email}`)
     .then((res) => {
-      console.log(res)
+      console.log('after axios get', res.data)
       dispatch({ type: SET_FAVOURITES, allFavouriteCountries: res.data });
     });
   }
