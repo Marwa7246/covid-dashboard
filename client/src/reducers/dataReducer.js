@@ -1,6 +1,7 @@
 export const SET_USER = "SET_USER";
 export const SET_APPLICATION_DATA = "SET_APPLICATION_DATA";
-export const SET_FAVOURITES = "SET_FAVOURITES"
+export const SET_FAVOURITES = "SET_FAVOURITES";
+export const SET_FAVOURITE_COUNTRY_HISTORICAL = 'SET_FAVOURITE_COUNTRY_HISTORICAL'
 
 const dataReducer = (state, action) => {
   // const actions = {
@@ -29,8 +30,17 @@ const dataReducer = (state, action) => {
         yesterdayGlobal: action.yesterdayGlobal,
         mapData: action.mapData,
         worldCovidNews: action.worldCovidNews,
-
+        
         loading: false,
+      };
+    }
+
+    case SET_FAVOURITE_COUNTRY_HISTORICAL: {
+      return {
+        ...state,
+        favouriteCountryHistorical: action.favouriteCountryHistorical,
+        loadingFavouriteHistorical: false,
+
       };
     }
 
@@ -42,6 +52,7 @@ const dataReducer = (state, action) => {
 
       };
     }
+
 
     default:
       throw new Error(

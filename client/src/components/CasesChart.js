@@ -23,7 +23,7 @@ import styles from "assets/jss/material-dashboard-react/views/dashboardStyle.js"
 const useStyles = makeStyles(styles);
 
 
-export default function CasesChart({color, days, series, title, type, warning, state}) {
+export default function CasesChart({color, days, series, title, type, warning, state, multiple}) {
 
   
 
@@ -122,7 +122,7 @@ return (
               />
               </CardHeader>
             <CardBody>
-              {days && <h4 className={classes.cardTitle}>Number of {title} cases in the last {days.length} days (in Millions)</h4>}
+              {days && <h4 className={classes.cardTitle}>Number of {title} cases in the last {days.length} days (in {multiple})</h4>}
 
               {series && <p className={classes.cardCategory}>
                                

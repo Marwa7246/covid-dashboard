@@ -20,7 +20,7 @@ export default function CardCountry(props) {
   const { mapData, countryName } = props;
   // console.log(props)
 
-  const selectedCountry = mapData.find(ele=>ele.country===countryName)
+  const selectedCountry = mapData.find(ele=>ele.iso2===countryName)
   // console.log(mapData, countryName, selectedCountry)
 
   const classes = useStyles();

@@ -6,8 +6,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import DropdownButton from 'react-bootstrap/DropdownButton'
 import SplitButton from 'react-bootstrap/SplitButton'
 import ButtonGroup from 'react-bootstrap/ButtonGroup'
-import AllCountriesSelection from '../components/AllCountriesSelection'
-import {getFavouritesCountriesForDropDown, addCountryNameKey} from '../helpers/helpers'
 
  
 
@@ -27,9 +25,10 @@ import CardBody from "components/Card/CardBody.js";
 import CardFooter from "components/Card/CardFooter.js";
 import CasesChart from "components/CasesChart.js";
 import CardNews from "components/CardNews.js";
-import { getMapDataLayer } from "../helpers/helpers";
 import CardCountry from "components/CardCountry.js";
-
+import {getFavouritesCountriesForDropDown, addCountryNameKey, getMapDataLayer} from '../helpers/helpers'
+import AllCountriesSelection from '../components/AllCountriesSelection'
+import {getHistoricalCountry} from '../hooks/useApplicationData'
 
 import avatar from "assets/img/faces/marc.jpg";
 import { isConstructSignatureDeclaration } from "typescript";
@@ -66,9 +65,10 @@ const countryOptionsFavourites = [
 
 const useStyles = makeStyles(styles);
 
-export default function Favourites({state, saveFavourites}) {
+export default function Favourites({state, saveFavourites, getHistoricalCountry}) {
 
   const [countryName, setCountryName] = useState('');
+
   const [user, setUser] = useState('');
   const [favouritesFinal, setFavouritesFinal] = useState([]);
 
@@ -99,7 +99,7 @@ export default function Favourites({state, saveFavourites}) {
   
   const classes = useStyles();
 
-  const globalHistorical = state.globalHistorical;
+  const favouriteCountryHistorical = state.favouriteCountryHistorical;
   const worldCovidNews = state.worldCovidNews;
   // console.log(allFavouriteCountries, state.loadingFavourites)
 
@@ -123,31 +123,34 @@ export default function Favourites({state, saveFavourites}) {
   // favourites.length > 0 && console.log('allFavouriteCountries', allFavouriteCountries)
     
   const mapData = getMapDataLayer(state.mapData)
+  !state.loading && console.log(mapData[0])
 
   
   let days = [];
   let cases = [];
   let casesRecovered = [];
 
-  if (!state.loading) {
-    const casesObject = globalHistorical.cases;
+  if (!state.loadingFavouriteHistorical) {
+    const casesObject = favouriteCountryHistorical.timeline.cases;
 
     days = Object.keys(casesObject);
-    cases = Object.values(casesObject).map((e) => Number(e) / 1000000);
+    cases = Object.values(casesObject).map((e) => Number(e) / 1000);
 
-    const casesRecoveredObject = globalHistorical.recovered;
+    const casesRecoveredObject = favouriteCountryHistorical.timeline.recovered;
     casesRecovered = Object.values(casesRecoveredObject).map(
-      (e) => Number(e) / 1000000
+      (e) => Number(e) / 1000
     );
   }
 
-  const handleChange = (e) => {
+  const handleChange = (e: any, data?: any) => {
     console.log('handleChange',  e.target.innerText.includes('\n'))
-    if (e.target.innerText.includes('\n')) return
-    setCountryName(e.target.innerText)
-    // setAllCountries([...allCountries, e.target.innerText])
-    // setTheArray([...theArray, newElement]);
+    // if (e.target.innerText.includes('\n')) return
+    // setCountryName(data.value)    
     console.log('countryName',countryName)
+    getHistoricalCountry(data.value)
+    .then(()=> setCountryName(data.value))
+    .then(() =>console.log('countryName after',countryName))
+
 
   }
 
@@ -173,7 +176,6 @@ const favouritesForDropDown = favouritesFinal.length > 0 && !state.loading && ge
 {favouritesFinal.length === 0 && !state.loading &&  
       <GridContainer>
       <GridItem xs={12} sm={12} md={12}>
-      {favouritesFinal.length}
       {<AllCountriesSelection onSave={onSave} />}
 
       </GridItem >
@@ -185,9 +187,6 @@ const favouritesForDropDown = favouritesFinal.length > 0 && !state.loading && ge
 
       {favouritesFinal.length > 0 && !state.loading && 
       <GridItem xs={12} sm={12} md={6}>
-        <Card>
-            <h2 style={{ color: "red" }}>{user && <p>{user}</p>}</h2>
-          </Card>
           <Card>
             <CardHeader color="primary">
             <h4 className={classes.cardTitleWhite}>List of Your Favourites Countries</h4>
@@ -196,7 +195,7 @@ const favouritesForDropDown = favouritesFinal.length > 0 && !state.loading && ge
             <CardBody>
               <GridContainer>  
               <GridItem xs={12} sm={12} md={12}>
-                <h4>{countryName} Select a country to see more information</h4>  
+                <h4> Select a country to see more information</h4>  
      
                 </GridItem>            
 
@@ -216,7 +215,7 @@ const favouritesForDropDown = favouritesFinal.length > 0 && !state.loading && ge
         </GridItem> }       
         <GridItem xs={12} sm={12} md={6}>
 
-         { !state.loading && countryName && 
+         { !state.loadingFavouriteHistorical && countryName && 
          <CardCountry
           mapData={mapData}
           countryName={countryName}         
@@ -226,7 +225,7 @@ const favouritesForDropDown = favouritesFinal.length > 0 && !state.loading && ge
 
       </GridContainer>
             
-      { !state.loading && countryName &&     
+      { !state.loadingFavouriteHistorical && countryName &&     
       <>
       <GridContainer>
 
@@ -263,6 +262,7 @@ const favouritesForDropDown = favouritesFinal.length > 0 && !state.loading && ge
             title="new"
             days={days}
             series={cases}
+            multiple='Thousands'
             type="Bar"
             warning="warning"
             />

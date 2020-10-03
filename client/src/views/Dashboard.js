@@ -130,6 +130,7 @@ export default function Dashboard({ state }) {
           <CasesChart
             color="success"
             title="recovered"
+            multiple='Millions'
             days={days}
             series={casesRecovered}
             type="Line"

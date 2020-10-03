@@ -6890,7 +6890,7 @@ function getMapDataLayer (mapData) {
   return (
       {cases: ele.cases, recovered: ele.recovered, 
         deaths: ele.deaths,  updated: ele.updated, 
-        country: ele.country, flag: ele.countryInfo.flag, 
+        country: ele.country, flag: ele.countryInfo.flag,  iso2: ele.countryInfo.iso2.toLowerCase(),
         position: {lat: ele.countryInfo.lat , lng:ele.countryInfo.long}})
 })
   return dataLayer   

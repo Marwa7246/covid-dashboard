@@ -65,9 +65,11 @@ const AllCountriesSelection = ({onSave}) => {
   
 
   const handleAllCountriesChange= (e: any, data?: any) => {
-    if (data.value.length <= MAX_COUNTRIES_SELECTION) {
-      setAllFavouriteCountries(data.value);
-    }
+    // if (data.value.length <= MAX_COUNTRIES_SELECTION) {
+    //   setAllFavouriteCountries(data.value);
+    // }      
+    setAllFavouriteCountries(data.value);
+
   };
 
   const validate = function () {

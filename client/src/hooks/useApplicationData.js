@@ -4,6 +4,7 @@ import dataReducer, {
   SET_USER,
   SET_APPLICATION_DATA,
   SET_FAVOURITES,
+  SET_FAVOURITE_COUNTRY_HISTORICAL,
 } from "../reducers/dataReducer";
 require("dotenv").config();
 
@@ -17,9 +18,11 @@ const useApplicationData = () => {
     yesterdayGlobal: {},
     mapData: [],
     worldCovidNews: {},
-    allFavouriteCountries: [],    
+    allFavouriteCountries: [], 
+    SET_FAVOURITE_COUNTRY_HISTORICAL: {},    
     loading: true,
     loadingFavourites: true,
+    loadingFavouriteHistorical: true,
   });
 
   useEffect(() => {
@@ -73,10 +76,22 @@ const useApplicationData = () => {
     });
   }
 
+  function getHistoricalCountry(countryName) {
+    const url = `https://disease.sh/v3/covid-19/historical/${countryName}?lastdays=30`
+    console.log(countryName, url)
+
+    return axios.get(`https://disease.sh/v3/covid-19/historical/${countryName}?lastdays=30`)
+    .then((res) => {
+      console.log('after axios get', res.data)
+      dispatch({ type: SET_FAVOURITE_COUNTRY_HISTORICAL, favouriteCountryHistorical: res.data });
+    });
+  }
+
+  
 
   return {
     state,
-    dispatch, saveFavourites, getFavourites
+    dispatch, saveFavourites, getFavourites, getHistoricalCountry
   };
 };
 
