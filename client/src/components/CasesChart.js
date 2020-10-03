@@ -114,9 +114,9 @@ return (
                                
                 <span className={classColorText}>
                 {warning && <i className="fa fa-exclamation-triangle"></i>}
-                <ArrowUpward className={classes.upArrowCardCategory} /> {Math.ceil(Math.max(...series)- Math.max(...series) / Math.max(...series) )}
+                <ArrowUpward className={classes.upArrowCardCategory} /> {Math.ceil((Math.max(...series)- Math.min(...series)) / Math.max(...series )*100)} 
                 </span>{" "}
-                % increase.
+                % increase. 
               </p>}
             </CardBody>
             <CardFooter chart>
