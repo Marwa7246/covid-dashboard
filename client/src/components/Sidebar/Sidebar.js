@@ -190,13 +190,13 @@ export default function Sidebar(props) {
     <List className={classes.list}>
       <>
         {email && (
-          <ListItem button className={classes.itemLink + listItemClasses6}>
+          <ListItem className={classes.itemLink}>
             <PersonPin
-              className={classNames(classes.itemIcon, whiteFontClasses6)}
+              className={classNames(classes.itemIcon, classes.userDisplay)}
             />
             <ListItemText
               primary={userString}
-              className={classNames(classes.itemText, whiteFontClasses6)}
+              className={classNames(classes.itemText, classes.userDisplay)}
               disableTypography={true}
             />
           </ListItem>
