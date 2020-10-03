@@ -66,12 +66,12 @@ const customMarkerMap2 = this.props.mapData.map(elem=>{
     return (
       <Map
         google={this.props.google}
-        zoom={4}
+        zoom={3}
         // style={mapStyles}
         initialCenter={
           {
-            lat: 20.2884,
-            lng: 36.8233
+            lat: 30.2884,
+            lng: -6.8233
           }
         }
       >
