@@ -11,6 +11,8 @@ import GridContainer from "components/Grid/GridContainer.js";
 import CasesChart from "components/CasesChart.js";
 import ChartPie from "components/ChartPie.js";
 import CardDashboard from "components/CardDashboard.js";
+import Popup from "components/Popup.js";
+//import ZoomComponent from "components/ZoomComponent.js";
 
 import styles from "assets/jss/material-dashboard-react/views/dashboardStyle.js";
 
@@ -130,11 +132,11 @@ export default function Dashboard({ state }) {
           <CasesChart
             color="success"
             title="recovered"
-            multiple='Millions'
+            multiple="Millions"
             days={days}
             series={casesRecovered}
             type="Line"
-            period='20'
+            period="20"
           />
         </GridItem>
 
@@ -146,12 +148,12 @@ export default function Dashboard({ state }) {
           <CasesChart
             color="danger"
             title="accumulated cases"
-            multiple='Millions'
+            multiple="Millions"
             days={days}
             series={cases}
             type="Bar"
             warning="warning"
-            period='20'
+            period="20"
           />
         </GridItem>
       </GridContainer>
