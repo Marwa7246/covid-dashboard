@@ -23,6 +23,7 @@ const dataReducer = (state, action) => {
         worldCovidNews: action.worldCovidNews,
         currentGlobalData: action.currentGlobalData,
         currentCanadaData: action.currentCanadaData,
+        historicalCanadaData: action.historicalCanadaData,
 
         loading: false,
       };

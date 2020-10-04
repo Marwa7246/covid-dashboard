@@ -23,6 +23,7 @@ const useApplicationData = () => {
     favouriteCountryNews: {},
     currentGlobalData: {},
     currentCanadaData: {},
+    historicalCanadaData: {},
 
     loading: true,
     loadingFavourites: true,
@@ -32,12 +33,15 @@ const useApplicationData = () => {
   useEffect(() => {
     Promise.all([
       axios.get(" https://disease.sh/v3/covid-19/continents"),
-      axios.get(" https://disease.sh/v3/covid-19/historical/all?lastdays=20"),
+      axios.get(" https://disease.sh/v3/covid-19/historical/all"),
       axios.get(" https://disease.sh/v3/covid-19/all"),
       axios.get(" https://disease.sh/v3/covid-19/countries"),
       axios.get(newsUrl),
       axios.get(" https://disease.sh/v3/covid-19/all"),
       axios.get(" https://disease.sh/v3/covid-19/countries/canada?strict=true"),
+      axios.get(
+        " https://disease.sh/v3/covid-19/historical/canada?lastdays=30"
+      ),
     ]).then((all) => {
       // update the state with the result
       dispatch({
@@ -49,6 +53,7 @@ const useApplicationData = () => {
         worldCovidNews: all[4].data,
         currentGlobalData: all[5].data,
         currentCanadaData: all[6].data,
+        historicalCanadaData: all[7].data,
       });
     });
   }, []);
