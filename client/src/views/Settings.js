@@ -118,9 +118,7 @@ export default function Settings({
   const onSave = (favourites) => {
     console.log(favourites);
     saveFavourites(favourites)
-      .then(() => console.log(localStorage.getItem("favourites"))
- 
-       )
+      .then(() => console.log(localStorage.getItem("favourites"))       )
       .then(() => setFavouritesFinal(JSON.parse(localStorage.getItem("favourites"))));
   };
 

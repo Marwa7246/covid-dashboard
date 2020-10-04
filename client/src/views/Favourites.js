@@ -142,7 +142,7 @@ export default function Favourites({state, saveFavourites, getHistoricalCountry}
 
   const handleChangeTime = (e: any, data?: any) => {
     console.log('country.countryName',data.value)
-    getHistoricalCountry(country.countryName, data.value)
+    country.countryName && getHistoricalCountry(country.countryName, data.value)
     .then(()=>setCountry(prev=>({...prev, period: data.value, firstSelection: true})))
     .catch(() => {
       setCountry(prev=>({...prev, period: data.value, error: 'This country does not have historical data'}));
@@ -159,7 +159,6 @@ export default function Favourites({state, saveFavourites, getHistoricalCountry}
     console.log(favourites)
     saveFavourites(favourites)
     .then(()=> console.log((addCountryNameKey(favourites))))
-    .then(()=> localStorage.setItem("favourites", JSON.stringify(addCountryNameKey(favourites))))
     .then(()=> setFavouritesFinal(JSON.parse(localStorage.getItem("favourites"))))
   }
 
@@ -224,7 +223,7 @@ const favouritesForDropDown = favouritesFinal.length > 0 && !state.loading && ge
         <GridItem xs={12} sm={12} md={2}>
           <Card>
             <CardHeader color="primary">
-            <h4 className={classes.cardTitleWhite}>Time interval</h4>
+            <h4 className={classes.cardTitleWhite}>Time Interval</h4>
 
             </CardHeader>
             <CardBody>
@@ -233,7 +232,7 @@ const favouritesForDropDown = favouritesFinal.length > 0 && !state.loading && ge
                 <h4> Choose one</h4>  
      
                 </GridItem>            
-                { country.countryName && 
+ 
                 <GridItem xs={12} sm={12} md={12}>
                    <Dropdown
                     placeholder='Select one'
@@ -244,14 +243,17 @@ const favouritesForDropDown = favouritesFinal.length > 0 && !state.loading && ge
                     onChange={handleChangeTime}
                     options={periodicTime}
                   />   
-                </GridItem>}
+                </GridItem>
               </GridContainer>
             </CardBody>
  
           </Card>
         </GridItem>      
-        <GridItem xs={12} sm={12} md={6}>
 
+
+                          {/* Containter of country card */}
+
+        <GridItem xs={12} sm={12} md={6}>
          { country.countryName && country.firstSelection &&
          <CardCountry
           mapData={mapData}
