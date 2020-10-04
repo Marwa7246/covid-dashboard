@@ -59,12 +59,9 @@ const useApplicationData = () => {
   }, []);
 
   function saveFavourites(allFavouriteCountries) {
-    const id = 1;
     const email = localStorage.getItem("userEmail");
     console.log(email);
     const token = localStorage.getItem("token");
-
-    //console.log('from saveFavourites', {user_email: "test2@gmail.com", country_name: allFavouriteCountries[0]})
 
     return axios({
       method: "POST",
@@ -76,7 +73,35 @@ const useApplicationData = () => {
     }).then((res) => {
       console.log("After saving favourites from userApplicationData", res.data);
       localStorage.setItem("favourites", JSON.stringify(res.data.favourites));
-      dispatch({ type: SET_FAVOURITES, allFavouriteCountries });
+      dispatch({
+        type: SET_FAVOURITES,
+        allFavouriteCountries: res.data.favourites,
+      });
+    });
+  }
+
+  function deleteFavourites(countryName) {
+    const email = localStorage.getItem("userEmail");
+    console.log(email);
+    const token = localStorage.getItem("token");
+
+    return axios({
+      method: "DELETE",
+      url: `/api/favourites/${email}`,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      data: { email: email, country_name: countryName },
+    }).then((res) => {
+      console.log(
+        "After deleting favourite from userApplicationData",
+        res.data
+      );
+      localStorage.setItem("favourites", JSON.stringify(res.data.favourites));
+      dispatch({
+        type: SET_FAVOURITES,
+        allFavouriteCountries: res.data.favourites,
+      });
     });
   }
 
@@ -118,6 +143,7 @@ const useApplicationData = () => {
     saveFavourites,
     getFavourites,
     getHistoricalCountry,
+    deleteFavourites,
   };
 };
 

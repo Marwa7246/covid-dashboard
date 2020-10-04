@@ -10,6 +10,7 @@ import ButtonGroup from 'react-bootstrap/ButtonGroup'
  
 
 import InputLabel from "@material-ui/core/InputLabel";
+import { RadioGroup, FormControlLabel, Radio, FormControl, FormLabel } from '@material-ui/core';
 
 import moment from "moment";
 
@@ -26,7 +27,7 @@ import CardFooter from "components/Card/CardFooter.js";
 import CasesChart from "components/CasesChart.js";
 import CardNews from "components/CardNews.js";
 import CardCountry from "components/CardCountry.js";
-import {getFavouritesCountriesForDropDown, addCountryNameKey, getMapDataLayer} from '../helpers/helpers'
+import {getFavouritesCountriesForDropDown, addCountryNameKey, getMapDataLayer, getArrofNameFromIso, getAllCountriesForDropDown} from '../helpers/helpers'
 import AllCountriesSelection from '../components/AllCountriesSelection'
 import {getHistoricalCountry} from '../hooks/useApplicationData'
 
@@ -54,12 +55,14 @@ const styles = {
   }
 };
 
-const countryOptionsFavourites = [
-  { key: 'af', value: 'af', flag: 'af', text: 'Afghanistan' },
-  { key: 'ca', value: 'ca', flag: 'ca', text: 'Canada' },
-  { key: 'al', value: 'al', flag: 'al', text: 'Albania' },
+// const countryOptionsFavourites = [
+//   { key: 'af', value: 'af', flag: 'af', text: 'Afghanistan' },
+//   { key: 'ca', value: 'ca', flag: 'ca', text: 'Canada' },
+//   { key: 'al', value: 'al', flag: 'al', text: 'Albania' },
 
-]
+// ]
+
+
 
 const periodicTime = [
   {key:'10', text: '10 days', value: '10'}, 
@@ -71,12 +74,11 @@ const useStyles = makeStyles(styles);
 
 export default function Favourites({state, saveFavourites, getHistoricalCountry}) {
 
-  const [country, setCountry] = useState({countryName: '', period: '10', error: '', firstSelection: false});
+  const [country, setCountry] = useState({countryName: '', period: '20', error: ''});
 
   const [user, setUser] = useState('');
   const [favouritesFinal, setFavouritesFinal] = useState([]);
   console.log (state)
-
 
 
   
@@ -132,7 +134,7 @@ export default function Favourites({state, saveFavourites, getHistoricalCountry}
     // e.preventDefault()    
     console.log('handleChange',  e.target, data.value)
     getHistoricalCountry(data.value,  country.period)
-    .then(()=>setCountry(prev=>({...prev, countryName: data.value})))
+    .then(()=>setCountry(prev=>({...prev, countryName: data.value, error:''})))
     .catch(() => {
       setCountry(prev=>({...prev, countryName: data.value, error: 'This country does not have historical data'}));
       console.log('state.loadingFavouriteCountry',state.loadingFavouriteCountry)
@@ -140,12 +142,15 @@ export default function Favourites({state, saveFavourites, getHistoricalCountry}
 
   }
 
-  const handleChangeTime = (e: any, data?: any) => {
-    console.log('country.countryName',data.value)
-    getHistoricalCountry(country.countryName, data.value)
-    .then(()=>setCountry(prev=>({...prev, period: data.value, firstSelection: true})))
+
+
+  const handleChangeTimeRadio = (e) => {
+    console.log('time',e.target.value)
+    setCountry(prev=>({...prev, period: e.target.value}))
+    country.countryName && getHistoricalCountry(country.countryName, e.target.value)
+    // .then(()=>setCountry(prev=>({...prev, period: e.target.value})))
     .catch(() => {
-      setCountry(prev=>({...prev, period: data.value, error: 'This country does not have historical data'}));
+      setCountry(prev=>({...prev, period: e.target.value, error: 'This country does not have historical data'}));
       console.log('state.loadingFavouriteCountry',state.loadingFavouriteCountry)
     })
 
@@ -155,44 +160,22 @@ export default function Favourites({state, saveFavourites, getHistoricalCountry}
 
 
 
-  const onSave = (favourites) => {
-    console.log(favourites)
-    saveFavourites(favourites)
-    .then(()=> console.log((addCountryNameKey(favourites))))
-    .then(()=> localStorage.setItem("favourites", JSON.stringify(addCountryNameKey(favourites))))
-    .then(()=> setFavouritesFinal(JSON.parse(localStorage.getItem("favourites"))))
-  }
-
 const favouritesForDropDown = favouritesFinal.length > 0 && !state.loading && getFavouritesCountriesForDropDown(favouritesFinal, state.mapData)
 
 
   return (
     <div>      
-      {/* Containter of error */}
-    {country.error && 
-    <GridContainer>{country.error} {!state.loadingFavouriteCountry && 'hello'}
-    </GridContainer>}
 
 
-      {/* Containter of dropdown menus and card country */}
 
-{favouritesFinal.length === 0 && !state.loading &&  
-      <GridContainer>
-      <GridItem xs={12} sm={12} md={12}>
-      {<AllCountriesSelection onSave={onSave} />}
-      
-
-      </GridItem >
-
-
-      </GridContainer>}
 
 
       <GridContainer>
 
 
-        {favouritesFinal.length > 0 && !state.loading && 
-        <GridItem xs={12} sm={12} md={4}>
+             {/* FAvourite countries dropdown menu */}
+
+        <GridItem xs={12} sm={12} md={6}>
           <Card>
             <CardHeader color="primary">
             <h4 className={classes.cardTitleWhite}>List of Your Favourites Countries</h4>
@@ -200,11 +183,15 @@ const favouritesForDropDown = favouritesFinal.length > 0 && !state.loading && ge
             </CardHeader>
             <CardBody>
               <GridContainer>  
+
               <GridItem xs={12} sm={12} md={12}>
                 <h4> Select a country to see more information</h4>  
      
-                </GridItem>            
+                </GridItem> 
 
+
+
+ { !state.loading && 
                 <GridItem xs={12} sm={12} md={12}>
                    <Dropdown
                     placeholder='Select Country'
@@ -213,46 +200,69 @@ const favouritesForDropDown = favouritesFinal.length > 0 && !state.loading && ge
                     onChange={handleChange}
                     options={favouritesForDropDown}
                   />   
-                </GridItem>
-              </GridContainer>
-            </CardBody>
- 
-          </Card>
-        </GridItem> }     
+                </GridItem> } 
+                      {/* Containter of error if no country added */}
 
-       
-        <GridItem xs={12} sm={12} md={2}>
-          <Card>
-            <CardHeader color="primary">
-            <h4 className={classes.cardTitleWhite}>Time interval</h4>
-
-            </CardHeader>
-            <CardBody>
-              <GridContainer>  
-              <GridItem xs={12} sm={12} md={12}>
-                <h4> Choose one</h4>  
-     
-                </GridItem>            
-                { country.countryName && 
+              {favouritesFinal.length === 0 && !state.loading &&  
+                
                 <GridItem xs={12} sm={12} md={12}>
-                   <Dropdown
-                    placeholder='Select one'
-                    fluid
-                    selection
-                    defaultValue=''
-                    closeOnEscape
-                    onChange={handleChangeTime}
-                    options={periodicTime}
-                  />   
-                </GridItem>}
+                <h4> No countries in you favourite list. Please go to the settings page first.</h4>
+              
+                </GridItem >
+
+
+      }
               </GridContainer>
             </CardBody>
  
           </Card>
-        </GridItem>      
-        <GridItem xs={12} sm={12} md={6}>
+        </GridItem>    
 
-         { country.countryName && country.firstSelection &&
+        {/* /////////////////////////////////Radio Button//////////////// */}
+
+              {/* Containter of error */}
+    {country.error && 
+    <GridItem xs={12} sm={12} md={6}>
+    <h4>{country.error}</h4>
+    </GridItem>}
+
+        {!country.error  && country.countryName && 
+        <GridItem xs={12} sm={12} md={6}>
+          <Card>
+
+            <CardBody>
+ 
+
+                <FormControl component="fieldset">
+                  <FormLabel component="legend"><strong>Select A time Interval</strong></FormLabel>
+                  <RadioGroup row aria-label="time" name="time" value={country.period} onChange={handleChangeTimeRadio} >
+                    <FormControlLabel value="10" control={<Radio />} label="10 days" />
+                    <FormControlLabel value="20" control={<Radio />} label="20 days" />
+                    <FormControlLabel value="30" control={<Radio />} label="30 days" />
+                    <FormControlLabel value="60" control={<Radio />} label="60 days" />
+                    <FormControlLabel value="120" control={<Radio />} label="120 days" />
+
+
+                  </RadioGroup>
+                </FormControl>
+
+            </CardBody>
+ 
+          </Card>
+        </GridItem>  } 
+    
+
+
+
+
+        
+
+      </GridContainer>
+      <GridContainer>
+                                  {/* Containter of country card */}
+
+        <GridItem xs={12} sm={12} md={12}>
+         { country.countryName && 
          <CardCountry
           mapData={mapData}
           countryName={country.countryName}         
@@ -261,9 +271,11 @@ const favouritesForDropDown = favouritesFinal.length > 0 && !state.loading && ge
         </GridItem>
 
       </GridContainer>
+
+
                   {/* Containter of charts */}
 
-      { country.countryName && !country.error && country.firstSelection &&    
+      { country.countryName && !country.error &&    
       <>
       <GridContainer>
                   {/* GridItem of 1st charts */}

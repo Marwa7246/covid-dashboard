@@ -15,13 +15,13 @@ Datum.create(key: 'yesterday_all', value: '[{"updated":1601051259604,"country":"
 
 user1 = User.find_or_create_by! email: '123'
 puts "Re-creating Favourites ..."
-Favourite.create(user_id: 1, country_name: 'ca')
-Favourite.create(user_id: 1, country_name: 'eg')
-Favourite.create(user_id: 1, country_name: 'af')
-Favourite.create(user_id: 1, country_name: 'al')
+Favourite.create(user_id: 1, country_name: 'Canada')
+Favourite.create(user_id: 1, country_name: 'Egypt')
+Favourite.create(user_id: 1, country_name: 'France')
+Favourite.create(user_id: 1, country_name: 'Algeria')
 
-Favourite.create(user_id: 2, country_name: 'af')
-Favourite.create(user_id: 2, country_name: 'ca')
+Favourite.create(user_id: 2, country_name: 'Albania')
+Favourite.create(user_id: 2, country_name: 'Afghanistan')
 
 
 

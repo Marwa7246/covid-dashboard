@@ -10,6 +10,7 @@ import CardIcon from "components/Card/CardIcon.js";
 import CardFooter from "components/Card/CardFooter.js";
 import CardAvatar from "components/Card/CardAvatar.js";
 import CardBody from "components/Card/CardBody.js";
+import Table from "components/Table/Table.js"
 
 
 import styles from "assets/jss/material-dashboard-react/views/dashboardStyle.js";
@@ -32,15 +33,25 @@ export default function CardCountry(props) {
             </CardAvatar>
             <CardBody profile>
               <h4 className={classes.cardTitle}>{selectedCountry.country}</h4>
-              <div className='Country'>
-                <div><strong>Cases:</strong>  {selectedCountry.cases} </div>
-                <div><strong>Deaths:</strong>{selectedCountry.deaths} </div>
-                <div><strong>Recovered:</strong>{selectedCountry.recovered} </div>
-                <div><strong>Last Updated:</strong>{selectedCountry.updated} </div>
-              </div>
+              {/* <ul className='Country'>
+                <li><strong>Cases:</strong>  {selectedCountry.cases} </li>
+                <li><strong>Deaths:</strong>{selectedCountry.deaths} </li>
+                <li><strong>Recovered:</strong>{selectedCountry.recovered} </li>
+                <li><strong>Last Updated:</strong>{selectedCountry.updated} </li>
+              </ul> */}
+                        <Table
+                            tableHeaderColor="primary"
+                            tableHead={['Cases','Deaths','Recovered','Last Updated']}
+                            tableData={[
+                                [ selectedCountry.cases , selectedCountry.deaths , selectedCountry.recovered , selectedCountry.updated ] ,
+
+                            ]}
+                        />
 
             </CardBody>
           </Card>
+
+
     </div>
   );
 }

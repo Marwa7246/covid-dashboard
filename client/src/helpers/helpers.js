@@ -6923,7 +6923,7 @@ function getAllCountriesForDropDown (mapData) {
 const arrOfCode = [{country_name: 'af'}, {country_name: 'ca'} , {country_name: 'eg'}]
 function getFavouritesCountriesForDropDown (arrOfCode, mapData) {
     const allCountries = getAllCountriesForDropDown (mapData)
-    const favCountries = arrOfCode.map (item => allCountries.find(ele => {return ele['key']===item['country_name'] }))
+    const favCountries = arrOfCode.map (item => allCountries.find(ele => {return ele['text']===item['country_name'] }))
     return favCountries
 }
 
@@ -6932,13 +6932,50 @@ function getFavouritesCountriesForDropDown (arrOfCode, mapData) {
 
 
 ////////////////////////////////////////////////////get array of names to be saved into the db from arr of iso2
-function getArrofNameFromIso (arrOfIso, mapData) {
-    const allCountries = getAllCountriesForDropDown (mapData)
-    console.log(allCountries[0])
+function getArrofNameFromIso (arrOfIso, arrOfObjectOfDropDown) {
     console.log(arrOfIso)
-    const favNamesArr = arrOfIso.map (item => allCountries.find(ele => ele['key']===item).text) 
+    console.log(arrOfObjectOfDropDown)
+    const favNamesArr = arrOfIso.map (item => arrOfObjectOfDropDown.find(ele => ele['key']===item).text) 
     return favNamesArr
 }
+
+
+
+const countryOptions = [
+    {key: "af", text: "Afghanistan", value: "af", flag: "af"},
+{key: "al", text: "Albania", value: "al", flag: "al"},
+{key: "dz", text: "Algeria", value: "dz", flag: "dz"},
+{key: "ad", text: "Andorra", value: "ad", flag: "ad"},
+{key: "ao", text: "Angola", value: "ao", flag: "ao"},
+{key: "ai", text: "Anguilla", value: "ai", flag: "ai"},
+{key: "ag", text: "Antigua and Barbuda", value: "ag", flag: "ag"},
+{key: "ar", text: "Argentina", value: "ar", flag: "ar"},
+{key: "am", text: "Armenia", value: "am", flag: "am"},
+{key: "aw", text: "Aruba", value: "aw", flag: "aw"},
+ {key: "au", text: "Australia", value: "au", flag: "au"},
+ {key: "at", text: "Austria", value: "at", flag: "at"},
+ {key: "az", text: "Azerbaijan", value: "az", flag: "az"},
+ {key: "bs", text: "Bahamas", value: "bs", flag: "bs"},
+ {key: "bh", text: "Bahrain", value: "bh", flag: "bh"},
+ {key: "bd", text: "Bangladesh", value: "bd", flag: "bd"},
+]
+
+const fav = [{key: "al", text: "Albania", value: "al", flag: "al"},{key: "af", text: "Afghanistan", value: "af", flag: "af"}]
+
+// const favNameArr=(fav.map(item=>item.text))
+// console.log(favNameArr)
+
+console.log(countryOptions.filter(ele => ele['text'] === fav.map(ele=>ele.txt)).length, countryOptions.length)
+
+    const arr= countryOptions.filter(ele => !fav.filter(item => item.text ===ele.text).length )
+    console.log(arr.length)
+
+
+
+
+
+// fav.map(ele => console.log(typeof ele['text'] ))
+
 
 // console.log(getArrofNameFromIso(favourites, mapData))
 

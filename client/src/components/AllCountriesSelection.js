@@ -44,15 +44,13 @@ const useStyles = makeStyles(styles);
 
 const AllCountriesSelection = (props) => {
   console.log(props);
-  const { onSave, defaultValue } = props;
+  const { onSave, defaultValue, countryOptions } = props;
 
   const [error, setError] = useState("");
   const [allFavouriteCountries, setAllFavouriteCountries] = useState([]);
   const state = useContext(StateContext);
 
-  const countryOptions =
-    !state.loading && getAllCountriesForDropDown(state.mapData);
-  // console.log(countryOptions)
+
 
   const classes = useStyles();
 
