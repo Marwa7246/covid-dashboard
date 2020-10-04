@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 // @material-ui/core components
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles, withStyles } from "@material-ui/core/styles";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import DropdownButton from "react-bootstrap/DropdownButton";
@@ -8,6 +8,13 @@ import SplitButton from "react-bootstrap/SplitButton";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
 
 import InputLabel from "@material-ui/core/InputLabel";
+
+import { green } from '@material-ui/core/colors';
+import FormGroup from '@material-ui/core/FormGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
+import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
+import CheckBoxIcon from '@material-ui/icons/CheckBox';
 
 import moment from "moment";
 
@@ -28,6 +35,8 @@ import {
   getFavouritesCountriesForDropDown,
   addCountryNameKey,
   getMapDataLayer,
+  getArrofNameFromIso,
+  getAllCountriesForDropDown
 } from "../helpers/helpers";
 import AllCountriesSelection from "../components/AllCountriesSelection";
 import { getHistoricalCountry } from "../hooks/useApplicationData";
@@ -68,26 +77,39 @@ const periodicTime = [
   { key: 30, text: 30, value: 30 },
 ];
 
+const GreenCheckbox = withStyles({
+  root: {
+    color: green[400],
+    '&$checked': {
+      color: green[600],
+    },
+  },
+  checked: {},
+})((props) => <Checkbox color="default" {...props} />);
+
+let array = ['1','2','3','4']
+
+
+
 const useStyles = makeStyles(styles);
 
 export default function Settings({
   state,
   saveFavourites,
-  getHistoricalCountry,
+  deleteFavourites
 }) {
   const [country, setCountry] = useState({
     countryName: "",
-    period: "",
-    error: "",
   });
-
-  console.log('hellooooooooooooooooooooooo')
-
-  const [user, setUser] = useState("");
   const [favouritesFinal, setFavouritesFinal] = useState([]);
+
+/////////////////////////////////////////////////////////////////
+  const [total, setTotal]=React.useState({country:'', variables: array})
+/////////////////////////////////////////////////////////////////
 
   useEffect(() => {
     setFavouritesFinal(JSON.parse(localStorage.getItem("favourites")));
+    console.log(JSON.parse(localStorage.getItem("favourites")))
   }, []);
 
   const classes = useStyles();
@@ -95,32 +117,22 @@ export default function Settings({
 
 
 
+
   const mapData = getMapDataLayer(state.mapData);
   !state.loading && console.log(mapData[0]);
 
+  console.log('hellooo')
+
+  const countryOptions =
+    !state.loading && getAllCountriesForDropDown(state.mapData);
 
 
-
-
-  const handleChange = (e: any, data?: any) => {
-    e.preventDefault();
-    console.log("handleChange", e.target, data.value);
-    setCountry((prev) => ({
-      ...prev,
-      countryName: data.value,
-      error: "",
-      period: 0,
-    }));
-  };
-
-
-
-  const onSave = (favourites) => {
+ const onSave = (favourites) => {
     console.log(favourites);
-    saveFavourites(favourites)
-      .then(() => console.log(localStorage.getItem("favourites"))
- 
-       )
+    const arrOfFavCountryNames = getArrofNameFromIso(favourites, countryOptions);
+    console.log(arrOfFavCountryNames, favourites)
+    saveFavourites(arrOfFavCountryNames)
+      .then(() => console.log(localStorage.getItem("favourites")))
       .then(() => setFavouritesFinal(JSON.parse(localStorage.getItem("favourites"))));
   };
 
@@ -129,6 +141,46 @@ export default function Settings({
     !state.loading &&
     getFavouritesCountriesForDropDown(favouritesFinal, state.mapData);
 
+
+
+    !state.loading && console.log(favouritesForDropDown)
+
+
+
+
+    ////////////////////////////////////////////////////////
+
+    const handleChangeRemove = (event) => {
+      const newFav = favouritesForDropDown.filter(ele => ele.text!==event.target.name )
+      setTotal({...total, country: event.target.name});
+      // console.log (countryOptions, newFav)
+
+      deleteFavourites(event.target.name)
+      .then(()=> {
+        console.log(JSON.parse(localStorage.getItem("favourites")))
+        setFavouritesFinal(JSON.parse(localStorage.getItem("favourites")))
+      })
+      
+      // console.log('zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz', newFav)
+    };
+
+    const favList = favouritesFinal.length > 0 && !state.loading &&  favouritesForDropDown.map(ele =>{
+      return (
+        <FormGroup column>
+        <FormControlLabel
+          key={ele}
+          control={<GreenCheckbox 
+          checked={true} 
+          onChange={handleChangeRemove} name={ele.text} />}
+          label={ele.text}
+        />
+      </FormGroup>
+  
+  
+      )
+    } 
+    )
+    ////////////////////////////////////////////////////////
   return (
     <div>
 
@@ -161,8 +213,10 @@ export default function Settings({
                     <Dropdown
                       placeholder="Select Country"
                       fluid
+                      multiple
+
                       selection
-                      onChange={handleChange}
+                      // onChange={handleChange}
                       options={favouritesForDropDown}
                     />
                   </GridItem>
@@ -175,6 +229,7 @@ export default function Settings({
 
 
       </GridContainer>
+      {favouritesFinal.length > 0 && !state.loading && favList}
 
 
     </div>

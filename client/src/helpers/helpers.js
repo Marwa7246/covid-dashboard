@@ -6923,7 +6923,7 @@ function getAllCountriesForDropDown (mapData) {
 const arrOfCode = [{country_name: 'af'}, {country_name: 'ca'} , {country_name: 'eg'}]
 function getFavouritesCountriesForDropDown (arrOfCode, mapData) {
     const allCountries = getAllCountriesForDropDown (mapData)
-    const favCountries = arrOfCode.map (item => allCountries.find(ele => {return ele['key']===item['country_name'] }))
+    const favCountries = arrOfCode.map (item => allCountries.find(ele => {return ele['text']===item['country_name'] }))
     return favCountries
 }
 
@@ -6932,11 +6932,9 @@ function getFavouritesCountriesForDropDown (arrOfCode, mapData) {
 
 
 ////////////////////////////////////////////////////get array of names to be saved into the db from arr of iso2
-function getArrofNameFromIso (arrOfIso, mapData) {
-    const allCountries = getAllCountriesForDropDown (mapData)
-    console.log(allCountries[0])
+function getArrofNameFromIso (arrOfIso, arrOfObjectOfDropDown) {
     console.log(arrOfIso)
-    const favNamesArr = arrOfIso.map (item => allCountries.find(ele => ele['key']===item).text) 
+    const favNamesArr = arrOfIso.map (item => arrOfObjectOfDropDown.find(ele => ele['key']===item).text) 
     return favNamesArr
 }
 

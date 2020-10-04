@@ -60,7 +60,7 @@ let ps;
 const useStyles = makeStyles(styles);
 
 export default function Application({ ...rest }) {
-  const { state, dispatch, saveFavourites, getFavourites, getHistoricalCountry } = useApplicationData();
+  const { state, dispatch, saveFavourites, getFavourites, deleteFavourites, getHistoricalCountry } = useApplicationData();
   const [user, setUser] = useState("");
   // const [new_routes, setNewRoutes] = useState([])
   let mapData = [];
@@ -100,6 +100,7 @@ export default function Application({ ...rest }) {
             <Component
               state={state}
               saveFavourites={saveFavourites}
+              deleteFavourites={deleteFavourites}
               user={user}
               getFavourites ={getFavourites}
               getHistoricalCountry = {getHistoricalCountry}
