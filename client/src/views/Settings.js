@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 // @material-ui/core components
 import { makeStyles, withStyles } from "@material-ui/core/styles";
+import { Flag, Segment } from 'semantic-ui-react'
+
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import DropdownButton from "react-bootstrap/DropdownButton";
@@ -45,6 +47,16 @@ import avatar from "assets/img/faces/marc.jpg";
 import { isConstructSignatureDeclaration } from "typescript";
 import "semantic-ui-css/semantic.min.css";
 import { Dropdown } from "semantic-ui-react";
+
+import '../assets/css/Settings.scss'
+
+
+
+
+
+
+
+
 
 const styles = {
   cardCategoryWhite: {
@@ -165,21 +177,22 @@ const onSave = (favourites) => {
         setFavouritesFinal(JSON.parse(localStorage.getItem("favourites")))
       })
       
-      // console.log('zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz', newFav)
     };
 
     const favList = favouritesFinal.length > 0 && !state.loading &&  favouritesForDropDown.map(ele =>{
       return (
         <FormGroup column>
-        <FormControlLabel
+        <FormControlLabel 
           key={ele}
-          control={<GreenCheckbox 
+          control={<Checkbox 
           checked={true} 
-          onChange={handleChangeRemove} name={ele.text} />}
-          label={ele.text}
+          onChange={handleChangeRemove} name={ele.text} 
+          color="primary"
+          />}
+          label={<a className='toBeHovered' href="#"><Flag name= {ele.key} /><strong>{ele.text}</strong> <span className='box'>DELETE</span></a>}
         />
       </FormGroup>
-  
+  // <span className='mouseHover '><Flag name= {ele.key} /><strong>{ele.text}</strong> <span className='.hoverBox'>DELETE</span></span>
   
       )
     } 
@@ -187,7 +200,7 @@ const onSave = (favourites) => {
     ////////////////////////////////////////////////////////
   return (
     <div>
-
+<a className='toBeHovered' href="#">Hover Me!<span className='box'>Hello, World!</span></a>
 
       {!state.loading && (
         <GridContainer>
@@ -205,6 +218,7 @@ const onSave = (favourites) => {
               <CardHeader color="primary">
                 <h4 className={classes.cardTitleWhite}>
                   List of Your Favourites Countries
+                  {/* <p className='mouseHover' >Hover here<span className='hoverBox'>remove</span></p> */}
                 </h4>
               </CardHeader>
               <CardBody>
@@ -216,15 +230,7 @@ const onSave = (favourites) => {
                   <GridItem xs={12} sm={12} md={12}>
                   {favouritesFinal.length > 0 && !state.loading && favList}
 
-                    {/* <Dropdown
-                      placeholder="Select Country"
-                      fluid
-                      multiple
 
-                      selection
-                      // onChange={handleChange}
-                      options={favouritesForDropDown}
-                    /> */}
                   </GridItem>
                 </GridContainer>
               </CardBody>
@@ -235,7 +241,6 @@ const onSave = (favourites) => {
 
 
       </GridContainer>
-      {/* {favouritesFinal.length > 0 && !state.loading && favList} */}
 
 
     </div>
