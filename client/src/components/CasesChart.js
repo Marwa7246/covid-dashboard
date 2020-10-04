@@ -87,12 +87,6 @@ export default function CasesChart({
     },
   };
 
-  console.log(
-    "SSSSSSSSSSSSSSSSSSSSSeries",
-    series,
-    Math.max(...series),
-    Math.min(...series)
-  );
   const classes = useStyles();
   const textColor = `${color}Text`;
   const classColorText = classes[textColor];
