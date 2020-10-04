@@ -75,6 +75,7 @@ const AllCountriesSelection = (props) => {
     }
     setError("");
     onSave(allFavouriteCountries);
+    setAllFavouriteCountries([])
   };
 
   // console.log(allFavouriteCountries)
@@ -98,7 +99,7 @@ const AllCountriesSelection = (props) => {
                     placeholder="Enter atleast 3 characters for a quick search"
                     onChange={handleAllCountriesChange}
                     value={allFavouriteCountries}
-                    defaultValue={defaultValue}
+                    defaultValue=''
                     fluid
                     multiple
                     selectOnNavigation={false}
