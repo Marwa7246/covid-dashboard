@@ -10,6 +10,7 @@ import ButtonGroup from 'react-bootstrap/ButtonGroup'
  
 
 import InputLabel from "@material-ui/core/InputLabel";
+import { RadioGroup, FormControlLabel, Radio, FormControl, FormLabel } from '@material-ui/core';
 
 import moment from "moment";
 
@@ -73,7 +74,7 @@ const useStyles = makeStyles(styles);
 
 export default function Favourites({state, saveFavourites, getHistoricalCountry}) {
 
-  const [country, setCountry] = useState({countryName: '', period: '10', error: '', firstSelection: false});
+  const [country, setCountry] = useState({countryName: '', period: '20', error: ''});
 
   const [user, setUser] = useState('');
   const [favouritesFinal, setFavouritesFinal] = useState([]);
@@ -141,17 +142,31 @@ export default function Favourites({state, saveFavourites, getHistoricalCountry}
 
   }
 
-  const handleChangeTime = (e: any, data?: any) => {
-    console.log('country.countryName',data.value)
-    country.countryName && getHistoricalCountry(country.countryName, data.value)
-    .then(()=>setCountry(prev=>({...prev, period: data.value, firstSelection: true})))
+  // const handleChangeTime = (e: any, data?: any) => {
+  //   console.log('country.countryName',data.value)
+  //   country.countryName && getHistoricalCountry(country.countryName, data.value)
+  //   .then(()=>setCountry(prev=>({...prev, period: data.value})))
+  //   .catch(() => {
+  //     setCountry(prev=>({...prev, period: data.value, error: 'This country does not have historical data'}));
+  //     console.log('state.loadingFavouriteCountry',state.loadingFavouriteCountry)
+  //   })
+
+
+  // }
+
+  const handleChangeTimeRadio = (e) => {
+    console.log('time',e.target.value)
+    setCountry(prev=>({...prev, period: e.target.value}))
+    country.countryName && getHistoricalCountry(country.countryName, e.target.value)
+    // .then(()=>setCountry(prev=>({...prev, period: e.target.value})))
     .catch(() => {
-      setCountry(prev=>({...prev, period: data.value, error: 'This country does not have historical data'}));
+      setCountry(prev=>({...prev, period: e.target.value, error: 'This country does not have historical data'}));
       console.log('state.loadingFavouriteCountry',state.loadingFavouriteCountry)
     })
 
 
   }
+
 
 
 
@@ -166,7 +181,7 @@ const favouritesForDropDown = favouritesFinal.length > 0 && !state.loading && ge
     </GridContainer>}
 
 
-      {/* Containter of dropdown menus and card country */}
+      {/* Containter of error if no country added */}
 
 {favouritesFinal.length === 0 && !state.loading &&  
       <GridContainer>
@@ -178,12 +193,14 @@ const favouritesForDropDown = favouritesFinal.length > 0 && !state.loading && ge
 
       </GridContainer>}
 
+      {/* Containter of error if no country added */}
 
       <GridContainer>
 
 
-       
-        <GridItem xs={12} sm={12} md={4}>
+             {/* FAvourite countries dropdown menu */}
+
+        <GridItem xs={12} sm={12} md={6}>
           <Card>
             <CardHeader color="primary">
             <h4 className={classes.cardTitleWhite}>List of Your Favourites Countries</h4>
@@ -212,42 +229,14 @@ const favouritesForDropDown = favouritesFinal.length > 0 && !state.loading && ge
           </Card>
         </GridItem>    
 
-        {favouritesFinal.length > 0 && !state.loading && 
-        <GridItem xs={12} sm={12} md={2}>
-          <Card>
-            <CardHeader color="primary">
-            <h4 className={classes.cardTitleWhite}>Time Interval</h4>
 
-            </CardHeader>
-            <CardBody>
-              <GridContainer>  
-              <GridItem xs={12} sm={12} md={12}>
-                <h4> Choose one</h4>  
-     
-                </GridItem>            
- 
-                <GridItem xs={12} sm={12} md={12}>
-                   <Dropdown
-                    placeholder='Select one'
-                    fluid
-                    selection
-                    defaultValue=''
-                    closeOnEscape
-                    onChange={handleChangeTime}
-                    options={periodicTime}
-                  />   
-                </GridItem>
-              </GridContainer>
-            </CardBody>
- 
-          </Card>
-        </GridItem>  }    
+    
 
 
                           {/* Containter of country card */}
 
         <GridItem xs={12} sm={12} md={6}>
-         { country.countryName && country.firstSelection &&
+         { country.countryName && 
          <CardCountry
           mapData={mapData}
           countryName={country.countryName}         
@@ -255,10 +244,39 @@ const favouritesForDropDown = favouritesFinal.length > 0 && !state.loading && ge
         }
         </GridItem>
 
+        
+
       </GridContainer>
+      <GridContainer>
+        {/* /////////////////////////////////Radio Button//////////////// */}
+        {!country.error  && country.countryName && 
+        <GridItem xs={12} sm={12} md={5}>
+          <Card>
+
+            <CardBody>
+ 
+
+                <FormControl component="fieldset">
+                  <FormLabel component="legend"></FormLabel>
+                  <RadioGroup row aria-label="time" name="time" value={country.period} onChange={handleChangeTimeRadio} >
+                    <FormControlLabel value="10" control={<Radio />} label="10 days" />
+                    <FormControlLabel value="20" control={<Radio />} label="20 days" />
+                    <FormControlLabel value="30" control={<Radio />} label="30 days" />
+                    <FormControlLabel value="60" control={<Radio />} label="60 days" />
+
+                  </RadioGroup>
+                </FormControl>
+
+            </CardBody>
+ 
+          </Card>
+        </GridItem>  } 
+      </GridContainer>
+
+
                   {/* Containter of charts */}
 
-      { country.countryName && !country.error && country.firstSelection &&    
+      { country.countryName && !country.error &&    
       <>
       <GridContainer>
                   {/* GridItem of 1st charts */}
