@@ -195,7 +195,7 @@ const favouritesForDropDown = favouritesFinal.length > 0 && !state.loading && ge
 
                 {!country.error  && country.countryName &&
                 <GridItem xs={12} sm={12} md={12}>
-                  <h4> Select a time interval</h4>  
+                  <h4> <br/> </h4>  
      
                 </GridItem> }
 
