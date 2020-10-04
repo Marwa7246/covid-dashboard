@@ -40,8 +40,7 @@ export default function Dashboard({ state }) {
     setChecked1((prev) => !prev);
   };
 
-  //
-  console.log(state.loading);
+  //console.log(state.loading);
 
   const globalHistorical = state.globalHistorical;
   const currentGlobalData = state.currentGlobalData;
@@ -60,7 +59,7 @@ export default function Dashboard({ state }) {
   let canDeaths = [];
 
   if (!state.loading) {
-    console.log(globalHistorical);
+    //console.log(globalHistorical);
     //console.log("currentGlobalData is @@@@", currentGlobalData);
     const casesObject = globalHistorical.cases;
     days = Object.keys(casesObject);
@@ -71,12 +70,12 @@ export default function Dashboard({ state }) {
       (e) => Number(e) / 1000000
     );
 
-    console.log("***************", historicalCanadaData);
+    //console.log("***************", historicalCanadaData);
     const canCasesObj = historicalCanadaData.timeline.cases;
     canCases = Object.values(canCasesObj).map((e) => Number(e) / 1000);
     const canDeathsObj = historicalCanadaData.timeline.deaths;
     canDeaths = Object.values(canDeathsObj).map((e) => Number(e) / 1000);
-    console.log("@@@@@@@@@@@@@@@@", historicalCanadaData.timeline.cases);
+    //console.log("@@@@@@@@@@@@@@@@", historicalCanadaData.timeline.cases);
   }
 
   let publishedTime_World = moment.utc(currentGlobalData.updated).toDate();
