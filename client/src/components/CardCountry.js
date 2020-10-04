@@ -27,18 +27,17 @@ export default function CardCountry(props) {
   const classes = useStyles();
   return (
     <div>
-      <Card profile>
+      <Card >
+      <CardHeader color="primary">
+              <h4 className={classes.cardTitleWhite}><strong>{selectedCountry.country}</strong></h4>
+
             <CardAvatar profile>
                 <img src={selectedCountry.flag} alt="..." />
             </CardAvatar>
-            <CardBody profile>
-              <h4 className={classes.cardTitle}>{selectedCountry.country}</h4>
-              {/* <ul className='Country'>
-                <li><strong>Cases:</strong>  {selectedCountry.cases} </li>
-                <li><strong>Deaths:</strong>{selectedCountry.deaths} </li>
-                <li><strong>Recovered:</strong>{selectedCountry.recovered} </li>
-                <li><strong>Last Updated:</strong>{selectedCountry.updated} </li>
-              </ul> */}
+            </CardHeader>
+ 
+            <CardBody >
+
                         <Table
                             tableHeaderColor="primary"
                             tableHead={['Cases','Deaths','Recovered','Last Updated']}

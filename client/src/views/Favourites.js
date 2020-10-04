@@ -83,7 +83,8 @@ export default function Favourites({state, saveFavourites, getHistoricalCountry}
 
   
   useEffect(() => {
-    setFavouritesFinal(JSON.parse(localStorage.getItem("favourites")))
+    setFavouritesFinal(JSON.parse(localStorage.getItem("favourites")));
+    console.log(JSON.parse(localStorage.getItem("favourites")))
   }, []);
 
   
@@ -157,21 +158,12 @@ export default function Favourites({state, saveFavourites, getHistoricalCountry}
 
   }
 
-
-
-
 const favouritesForDropDown = favouritesFinal.length > 0 && !state.loading && getFavouritesCountriesForDropDown(favouritesFinal, state.mapData)
-
 
   return (
     <div>      
 
-
-
-
-
       <GridContainer>
-
 
              {/* FAvourite countries dropdown menu */}
 
@@ -189,9 +181,7 @@ const favouritesForDropDown = favouritesFinal.length > 0 && !state.loading && ge
      
                 </GridItem> 
 
-
-
- { !state.loading && 
+                { !state.loading && 
                 <GridItem xs={12} sm={12} md={12}>
                    <Dropdown
                     placeholder='Select Country'
@@ -201,10 +191,40 @@ const favouritesForDropDown = favouritesFinal.length > 0 && !state.loading && ge
                     options={favouritesForDropDown}
                   />   
                 </GridItem> } 
+
+
+                {!country.error  && country.countryName &&
+                <GridItem xs={12} sm={12} md={12}>
+                  <h4> Select a time interval</h4>  
+     
+                </GridItem> }
+
+
+                        {/* /////////////////////////////////Radio Button//////////////// */}
+
+                <GridItem xs={12} sm={12} md={12}>
+          {!country.error  && country.countryName && 
+                <FormControl component="fieldset">
+                  <FormLabel component="legend"><strong>Select A time Interval</strong></FormLabel>
+                  <RadioGroup row aria-label="time" name="time" value={country.period} onChange={handleChangeTimeRadio} >
+                    <FormControlLabel value="10" control={<Radio />} label="10 days" />
+                    <FormControlLabel value="20" control={<Radio />} label="20 days" />
+                    <FormControlLabel value="30" control={<Radio />} label="30 days" />
+                    <FormControlLabel value="60" control={<Radio />} label="60 days" />
+                    <FormControlLabel value="120" control={<Radio />} label="120 days" />
+
+
+                  </RadioGroup>
+                </FormControl> 
+              }    
+                </GridItem> 
+
+
+
                       {/* Containter of error if no country added */}
 
               {favouritesFinal.length === 0 && !state.loading &&  
-                
+
                 <GridItem xs={12} sm={12} md={12}>
                 <h4> No countries in you favourite list. Please go to the settings page first.</h4>
               
@@ -218,7 +238,6 @@ const favouritesForDropDown = favouritesFinal.length > 0 && !state.loading && ge
           </Card>
         </GridItem>    
 
-        {/* /////////////////////////////////Radio Button//////////////// */}
 
               {/* Containter of error */}
     {country.error && 
@@ -226,30 +245,7 @@ const favouritesForDropDown = favouritesFinal.length > 0 && !state.loading && ge
     <h4>{country.error}</h4>
     </GridItem>}
 
-        {!country.error  && country.countryName && 
-        <GridItem xs={12} sm={12} md={6}>
-          <Card>
-
-            <CardBody>
  
-
-                <FormControl component="fieldset">
-                  <FormLabel component="legend"><strong>Select A time Interval</strong></FormLabel>
-                  <RadioGroup row aria-label="time" name="time" value={country.period} onChange={handleChangeTimeRadio} >
-                    <FormControlLabel value="10" control={<Radio />} label="10 days" />
-                    <FormControlLabel value="20" control={<Radio />} label="20 days" />
-                    <FormControlLabel value="30" control={<Radio />} label="30 days" />
-                    <FormControlLabel value="60" control={<Radio />} label="60 days" />
-                    <FormControlLabel value="120" control={<Radio />} label="120 days" />
-
-
-                  </RadioGroup>
-                </FormControl>
-
-            </CardBody>
- 
-          </Card>
-        </GridItem>  } 
     
 
 
@@ -257,11 +253,10 @@ const favouritesForDropDown = favouritesFinal.length > 0 && !state.loading && ge
 
         
 
-      </GridContainer>
-      <GridContainer>
                                   {/* Containter of country card */}
 
-        <GridItem xs={12} sm={12} md={12}>
+        <GridItem xs={12} sm={12} md={6}>
+
          { country.countryName && 
          <CardCountry
           mapData={mapData}
