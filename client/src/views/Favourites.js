@@ -54,12 +54,12 @@ const styles = {
   }
 };
 
-const countryOptionsFavourites = [
-  { key: 'af', value: 'af', flag: 'af', text: 'Afghanistan' },
-  { key: 'ca', value: 'ca', flag: 'ca', text: 'Canada' },
-  { key: 'al', value: 'al', flag: 'al', text: 'Albania' },
+// const countryOptionsFavourites = [
+//   { key: 'af', value: 'af', flag: 'af', text: 'Afghanistan' },
+//   { key: 'ca', value: 'ca', flag: 'ca', text: 'Canada' },
+//   { key: 'al', value: 'al', flag: 'al', text: 'Albania' },
 
-]
+// ]
 
 
 
@@ -78,10 +78,6 @@ export default function Favourites({state, saveFavourites, getHistoricalCountry}
   const [user, setUser] = useState('');
   const [favouritesFinal, setFavouritesFinal] = useState([]);
   console.log (state)
-
-  const countryOptions =
-  !state.loading && getAllCountriesForDropDown(state.mapData);
-
 
 
   
@@ -158,14 +154,6 @@ export default function Favourites({state, saveFavourites, getHistoricalCountry}
   }
 
 
-  const onSave = (favourites) => {
-    console.log(favourites);
-    const arrOfFavCountryNames = getArrofNameFromIso(favourites, countryOptions);
-    console.log(arrOfFavCountryNames, favourites)
-    saveFavourites(arrOfFavCountryNames)
-      .then(() => console.log(localStorage.getItem("favourites")))
-      .then(() => setFavouritesFinal(JSON.parse(localStorage.getItem("favourites"))));
-  };
 
 const favouritesForDropDown = favouritesFinal.length > 0 && !state.loading && getFavouritesCountriesForDropDown(favouritesFinal, state.mapData)
 
@@ -183,8 +171,7 @@ const favouritesForDropDown = favouritesFinal.length > 0 && !state.loading && ge
 {favouritesFinal.length === 0 && !state.loading &&  
       <GridContainer>
       <GridItem xs={12} sm={12} md={12}>
-      {<AllCountriesSelection onSave={onSave} countryOptions={countryOptions} />}
-      
+      <h4> No countries in you favourite list. Please go to settings page first.</h4>
 
       </GridItem >
 
@@ -195,7 +182,7 @@ const favouritesForDropDown = favouritesFinal.length > 0 && !state.loading && ge
       <GridContainer>
 
 
-        {favouritesFinal.length > 0 && !state.loading && 
+       
         <GridItem xs={12} sm={12} md={4}>
           <Card>
             <CardHeader color="primary">
@@ -204,11 +191,12 @@ const favouritesForDropDown = favouritesFinal.length > 0 && !state.loading && ge
             </CardHeader>
             <CardBody>
               <GridContainer>  
+
               <GridItem xs={12} sm={12} md={12}>
                 <h4> Select a country to see more information</h4>  
      
                 </GridItem>            
-
+ { !state.loading && 
                 <GridItem xs={12} sm={12} md={12}>
                    <Dropdown
                     placeholder='Select Country'
@@ -217,14 +205,14 @@ const favouritesForDropDown = favouritesFinal.length > 0 && !state.loading && ge
                     onChange={handleChange}
                     options={favouritesForDropDown}
                   />   
-                </GridItem>
+                </GridItem> } 
               </GridContainer>
             </CardBody>
  
           </Card>
-        </GridItem> }     
+        </GridItem>    
 
-       
+        {favouritesFinal.length > 0 && !state.loading && 
         <GridItem xs={12} sm={12} md={2}>
           <Card>
             <CardHeader color="primary">
@@ -253,7 +241,7 @@ const favouritesForDropDown = favouritesFinal.length > 0 && !state.loading && ge
             </CardBody>
  
           </Card>
-        </GridItem>      
+        </GridItem>  }    
 
 
                           {/* Containter of country card */}
