@@ -34,7 +34,7 @@ import styles from "assets/jss/material-dashboard-react/components/sidebarStyle.
 const useStyles = makeStyles(styles);
 
 export default function Sidebar(props) {
-  console.log(props.user);
+  //console.log(props.user);
   const user = props.user;
   const [route, setRoutes] = useState(routes);
 
