@@ -1,18 +1,15 @@
 export const SET_USER = "SET_USER";
 export const SET_APPLICATION_DATA = "SET_APPLICATION_DATA";
 export const SET_FAVOURITES = "SET_FAVOURITES";
-export const SET_FAVOURITE_COUNTRY_DATA = 'SET_FAVOURITE_COUNTRY_DATA'
+export const SET_FAVOURITE_COUNTRY_DATA = "SET_FAVOURITE_COUNTRY_DATA";
 
 const dataReducer = (state, action) => {
-
-
   switch (action.type) {
     case SET_USER: {
       return {
         ...state,
         user: action.user,
         loading: false,
-
       };
     }
 
@@ -24,7 +21,10 @@ const dataReducer = (state, action) => {
         yesterdayGlobal: action.yesterdayGlobal,
         mapData: action.mapData,
         worldCovidNews: action.worldCovidNews,
-        
+        currentGlobalData: action.currentGlobalData,
+        currentCanadaData: action.currentCanadaData,
+        historicalCanadaData: action.historicalCanadaData,
+
         loading: false,
       };
     }
@@ -32,9 +32,9 @@ const dataReducer = (state, action) => {
     case SET_FAVOURITE_COUNTRY_DATA: {
       return {
         ...state,
-        favouriteCountryHistorical: action.favouriteCountryHistorical, favouriteCountryNews: action.favouriteCountryNews,
+        favouriteCountryHistorical: action.favouriteCountryHistorical,
+        favouriteCountryNews: action.favouriteCountryNews,
         loadingFavouriteCountry: false,
-
       };
     }
 
@@ -43,10 +43,8 @@ const dataReducer = (state, action) => {
         ...state,
         allFavouriteCountries: action.allFavouriteCountries,
         loadingFavourites: false,
-
       };
     }
-
 
     default:
       throw new Error(
