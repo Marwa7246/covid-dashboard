@@ -8,8 +8,6 @@ import dataReducer, {
 } from "../reducers/dataReducer";
 require("dotenv").config();
 
-
-
 const newsUrl = `http://newsapi.org/v2/top-headlines?apiKey=${process.env.REACT_APP_NEWS_API_KEY}&language=en&q=covid&sortby=publishedAt`;
 
 const useApplicationData = () => {
@@ -20,9 +18,11 @@ const useApplicationData = () => {
     yesterdayGlobal: {},
     mapData: [],
     worldCovidNews: {},
-    allFavouriteCountries: [], 
-    favouriteCountryHistorical: {},  
-    favouriteCountryNews: {},  
+    allFavouriteCountries: [],
+    favouriteCountryHistorical: {},
+    favouriteCountryNews: {},
+    currentGlobalData: {},
+    currentCanadaData: {},
 
     loading: true,
     loadingFavourites: true,
@@ -36,6 +36,8 @@ const useApplicationData = () => {
       axios.get(" https://disease.sh/v3/covid-19/all"),
       axios.get(" https://disease.sh/v3/covid-19/countries"),
       axios.get(newsUrl),
+      axios.get(" https://disease.sh/v3/covid-19/all"),
+      axios.get(" https://disease.sh/v3/covid-19/countries/canada?strict=true"),
     ]).then((all) => {
       // update the state with the result
       dispatch({
@@ -45,23 +47,29 @@ const useApplicationData = () => {
         yesterdayGlobal: all[2].data,
         mapData: all[3].data,
         worldCovidNews: all[4].data,
+        currentGlobalData: all[5].data,
+        currentCanadaData: all[6].data,
       });
     });
   }, []);
 
   function saveFavourites(allFavouriteCountries) {
-    const id=1;
+    const id = 1;
     const email = localStorage.getItem("userEmail");
-    console.log(email)
+    console.log(email);
     const token = localStorage.getItem("token");
-
 
     //console.log('from saveFavourites', {user_email: "test2@gmail.com", country_name: allFavouriteCountries[0]})
 
-    return axios ({ method: 'POST', url: `/api/favourites`, headers: {
-      Authorization: `Bearer ${token}`}, data: {email: email, country_name: allFavouriteCountries} })
-    .then((res) => {
-      console.log('After saving favourites from userApplicationData', res.data)
+    return axios({
+      method: "POST",
+      url: `/api/favourites`,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      data: { email: email, country_name: allFavouriteCountries },
+    }).then((res) => {
+      console.log("After saving favourites from userApplicationData", res.data);
       localStorage.setItem("favourites", JSON.stringify(res.data.favourites));
       dispatch({ type: SET_FAVOURITES, allFavouriteCountries });
     });
@@ -71,52 +79,40 @@ const useApplicationData = () => {
     const email = localStorage.getItem("userEmail");
 
     // const email="test2@gmail.com";
-    console.log('from getFavourites', userEmail)
+    console.log("from getFavourites", userEmail);
 
-
-    return axios.get(`/api/users/${email}`)
-    .then((res) => {
-      console.log('after axios get', res.data)
+    return axios.get(`/api/users/${email}`).then((res) => {
+      console.log("after axios get", res.data);
       dispatch({ type: SET_FAVOURITES, allFavouriteCountries: res.data });
     });
   }
 
-
-
   function getHistoricalCountry(countryName, period) {
-    const historicalCountryUrl = `https://disease.sh/v3/covid-19/historical/${countryName}?lastdays=${period}`
-    console.log(countryName, historicalCountryUrl)
+    const historicalCountryUrl = `https://disease.sh/v3/covid-19/historical/${countryName}?lastdays=${period}`;
+    console.log(countryName, historicalCountryUrl);
 
+    const newsUrlCountry = `http://newsapi.org/v2/top-headlines?apiKey=${process.env.REACT_APP_NEWS_API_KEY}&lang=en&country=${countryName}&q=covid`;
 
-    const newsUrlCountry = `http://newsapi.org/v2/top-headlines?apiKey=${process.env.REACT_APP_NEWS_API_KEY}&lang=en&country=${countryName}&q=covid`
-
-    return (
-      Promise.all([
-          axios.get(historicalCountryUrl),
-          axios.get(newsUrlCountry),
-        ]).then((all) => {
-          console.log('after axios get', all[0].data)
-          console.log('after axios get', all[1].data);
-          dispatch({
-            type: SET_FAVOURITE_COUNTRY_DATA,
-            favouriteCountryHistorical: all[0].data,
-            favouriteCountryNews: all[1].data,
-
-          });
-
-        
-        })
-    )
-    
-
- 
+    return Promise.all([
+      axios.get(historicalCountryUrl),
+      axios.get(newsUrlCountry),
+    ]).then((all) => {
+      console.log("after axios get", all[0].data);
+      console.log("after axios get", all[1].data);
+      dispatch({
+        type: SET_FAVOURITE_COUNTRY_DATA,
+        favouriteCountryHistorical: all[0].data,
+        favouriteCountryNews: all[1].data,
+      });
+    });
   }
-
-  
 
   return {
     state,
-    dispatch, saveFavourites, getFavourites, getHistoricalCountry
+    dispatch,
+    saveFavourites,
+    getFavourites,
+    getHistoricalCountry,
   };
 };
 
