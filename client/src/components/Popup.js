@@ -18,6 +18,8 @@ import CasesChart from "components/CasesChart.js";
 import GridItem from "components/Grid/GridItem.js";
 import Dashboard from "views/Dashboard";
 import imagine1 from "assets/img/sidebar-1.jpg";
+import CardDashboard from "components/CardDashboard.js";
+import state from "hooks/useApplicationData";
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -33,12 +35,14 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default function Popup() {
+export default function Popup({ state }) {
   const classes = useStyles();
 
   const [open, setOpen] = React.useState(false);
 
   //const globalHistorical = state.globalHistorical;
+
+  // console.log(state);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -53,15 +57,15 @@ export default function Popup() {
   let casesRecovered = [];
 
   // if (!state.loading) {
-  //   // console.log(globalHistorical)
-  //   const casesObject = globalHistorical.cases;
-  //   days = Object.keys(casesObject);
-  //   cases = Object.values(casesObject).map((e) => Number(e) / 1000000);
+  // console.log(globalHistorical)
+  // const casesObject = globalHistorical.cases;
+  // days = Object.keys(casesObject);
+  // cases = Object.values(casesObject).map((e) => Number(e) / 1000000);
 
-  //   const casesRecoveredObject = globalHistorical.recovered;
-  //   casesRecovered = Object.values(casesRecoveredObject).map(
-  //     (e) => Number(e) / 1000000
-  //   );
+  // const casesRecoveredObject = globalHistorical.recovered;
+  // casesRecovered = Object.values(casesRecoveredObject).map(
+  //   (e) => Number(e) / 1000000
+  // );
   // }
 
   return (
@@ -92,14 +96,24 @@ export default function Popup() {
         </AppBar>
         <GridItem xs={12} sm={12} md={4}>
           {/* <CasesChart
-          // color="success"
-          // title="recovered"
-          // multiple="Millions"
-          // days={days}
-          // //series={casesRecovered}
-          // type="Line"
-          // period="20"
+            color="success"
+            title="recovered"
+            multiple="Millions"
+            days={days}
+            series={casesRecovered}
+            type="Line"
+            period="20"
           /> */}
+          <CardDashboard
+            statType={"Total Recovered"}
+            // value={
+            //   state.yesterdayGlobal.updated &&
+            //   state.yesterdayGlobal["recoveredPerOneMillion"]
+            // }
+            statColor={"success"}
+            statIcon={"accessibility_new_outlines"}
+            //updated={state.yesterdayGlobal.updated}
+          />
           <h3>Display chart here</h3>
           <img src={imagine1} alt="..." />
         </GridItem>

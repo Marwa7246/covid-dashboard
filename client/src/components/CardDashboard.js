@@ -8,7 +8,7 @@ import Card from "components/Card/Card.js";
 import CardHeader from "components/Card/CardHeader.js";
 import CardIcon from "components/Card/CardIcon.js";
 import CardFooter from "components/Card/CardFooter.js";
-
+import Popup from "components/Popup.js";
 import styles from "assets/jss/material-dashboard-react/views/dashboardStyle.js";
 
 const useStyles = makeStyles(styles);
@@ -30,9 +30,7 @@ export default function CardDashboard(props) {
             {value} <small>per one Million</small>
           </h3>
         </CardHeader>
-        <CardFooter stats>
-
-        </CardFooter>
+        <CardFooter stats>{/* <Popup /> */}</CardFooter>
       </Card>
     </div>
   );

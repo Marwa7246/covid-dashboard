@@ -21,7 +21,7 @@ import "../App.scss";
 const useStyles = makeStyles(styles);
 
 export default function Dashboard({ state }) {
-  console.log(state.loading);
+  console.log(state);
   const globalHistorical = state.globalHistorical;
 
   useEffect(() => {

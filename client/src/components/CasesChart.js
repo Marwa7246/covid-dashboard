@@ -131,9 +131,9 @@ export default function CasesChart({
           <div className={classes.stats}>
             <AccessTime /> updated 4 minutes ago
           </div>
-          <div>
+          {/* <div>
             <Popup />
-          </div>
+          </div> */}
         </CardFooter>
       </Card>
     </div>
