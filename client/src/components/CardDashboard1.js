@@ -9,13 +9,21 @@ import Card from "components/Card/Card.js";
 import CardHeader from "components/Card/CardHeader.js";
 import CardIcon from "components/Card/CardIcon.js";
 import CardFooter from "components/Card/CardFooter.js";
+import AccessTime from "@material-ui/icons/AccessTime";
 
 import styles from "assets/jss/material-dashboard-react/views/dashboardStyle.js";
 
 const useStyles = makeStyles(styles);
 
 export default function CardDashboard1(props) {
-  const { statType, value, statColor, statIcon, PublishedAt } = props;
+  const {
+    statType,
+    value,
+    statColor,
+    statIcon,
+    footerTitle,
+    footerValue,
+  } = props;
   // console.log(props)
 
   const classes = useStyles();
@@ -40,7 +48,16 @@ export default function CardDashboard1(props) {
             />
           </h3>
         </CardHeader>
-        <CardFooter stats></CardFooter>
+        <CardFooter stats>
+          <div className={classes.stats}>
+            <b>{footerTitle}:&nbsp; </b>
+            <NumberFormat
+              value={footerValue}
+              displayType={"text"}
+              thousandSeparator={true}
+            />
+          </div>
+        </CardFooter>
       </Card>
     </div>
   );
