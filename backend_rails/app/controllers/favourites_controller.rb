@@ -32,7 +32,7 @@ class Api::FavouritesController < ApplicationController
     user = User.find_by(email: params[:email])
     favourites_all = Favourite.where(user_id: user.id)
     favourite = favourites_all.find_by(country_name: params[:country_name])
-    byebug
+    # byebug
     if favourite
       favourite.destroy
       favourites_all = Favourite.where(user_id: user.id).order(country_name: :asc).distinct
