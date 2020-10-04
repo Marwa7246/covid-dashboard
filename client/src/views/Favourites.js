@@ -183,7 +183,7 @@ const favouritesForDropDown = favouritesFinal.length > 0 && !state.loading && ge
 {favouritesFinal.length === 0 && !state.loading &&  
       <GridContainer>
       <GridItem xs={12} sm={12} md={12}>
-      {<AllCountriesSelection onSave={onSave} />}
+      {<AllCountriesSelection onSave={onSave} countryOptions={countryOptions} />}
       
 
       </GridItem >

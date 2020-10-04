@@ -71,11 +71,7 @@ const countryOptionsFavourites = [
   { key: "al", value: "al", flag: "al", text: "Albania" },
 ];
 
-const periodicTime = [
-  { key: 10, text: 10, value: 10 },
-  { key: 20, text: 20, value: 20 },
-  { key: 30, text: 30, value: 30 },
-];
+
 
 const GreenCheckbox = withStyles({
   root: {
@@ -87,7 +83,7 @@ const GreenCheckbox = withStyles({
   checked: {},
 })((props) => <Checkbox color="default" {...props} />);
 
-let array = ['1','2','3','4']
+// let array = ['1','2','3','4']
 
 
 
@@ -102,15 +98,33 @@ export default function Settings({
     countryName: "",
   });
   const [favouritesFinal, setFavouritesFinal] = useState([]);
+  // const[countryOptions, setCountryOptions] = useState([]);
 
 /////////////////////////////////////////////////////////////////
-  const [total, setTotal]=React.useState({country:'', variables: array})
+  const [total, setTotal]=useState({country:''})
 /////////////////////////////////////////////////////////////////
+
+// let favouritesForDropDown= []
 
   useEffect(() => {
     setFavouritesFinal(JSON.parse(localStorage.getItem("favourites")));
-    console.log(JSON.parse(localStorage.getItem("favourites")))
-  }, []);
+    console.log(JSON.parse(localStorage.getItem("favourites")));
+ }, []);
+  const favouritesForDropDown =    
+    getFavouritesCountriesForDropDown(favouritesFinal, state.mapData);
+
+    console.log(favouritesForDropDown)
+
+   const countryOptionsAll = getAllCountriesForDropDown(state.mapData);
+
+  const countryOptions = countryOptionsAll.filter(ele =>  !favouritesForDropDown.filter(item=>item.text === ele.text).length )
+
+   !state.loading && console.log('test', favouritesForDropDown, countryOptions.length, countryOptionsAll.length )
+
+  //  setCountryOptions(updatedCountryOptions)
+
+    
+ 
 
   const classes = useStyles();
 
@@ -121,13 +135,12 @@ export default function Settings({
   const mapData = getMapDataLayer(state.mapData);
   !state.loading && console.log(mapData[0]);
 
-  console.log('hellooo')
 
-  const countryOptions =
-    !state.loading && getAllCountriesForDropDown(state.mapData);
+  
 
 
- const onSave = (favourites) => {
+
+const onSave = (favourites) => {
     console.log(favourites);
     const arrOfFavCountryNames = getArrofNameFromIso(favourites, countryOptions);
     console.log(arrOfFavCountryNames, favourites)
@@ -135,15 +148,6 @@ export default function Settings({
       .then(() => console.log(localStorage.getItem("favourites")))
       .then(() => setFavouritesFinal(JSON.parse(localStorage.getItem("favourites"))));
   };
-
-  const favouritesForDropDown =
-    favouritesFinal.length > 0 &&
-    !state.loading &&
-    getFavouritesCountriesForDropDown(favouritesFinal, state.mapData);
-
-
-
-    !state.loading && console.log(favouritesForDropDown)
 
 
 
@@ -153,7 +157,7 @@ export default function Settings({
     const handleChangeRemove = (event) => {
       const newFav = favouritesForDropDown.filter(ele => ele.text!==event.target.name )
       setTotal({...total, country: event.target.name});
-      // console.log (countryOptions, newFav)
+      console.log (event.target, newFav)
 
       deleteFavourites(event.target.name)
       .then(()=> {
@@ -188,7 +192,7 @@ export default function Settings({
       {!state.loading && (
         <GridContainer>
           <GridItem xs={12} sm={12} md={12}>
-            {<AllCountriesSelection onSave={onSave} defaultValue={favouritesFinal}
+            {<AllCountriesSelection onSave={onSave} defaultValue={favouritesFinal} countryOptions={countryOptions}
             />}
           </GridItem>
         </GridContainer>
@@ -206,11 +210,13 @@ export default function Settings({
               <CardBody>
                 <GridContainer>
                   <GridItem xs={12} sm={12} md={12}>
-                    <h4> You can add or remove countries from your list</h4>
+                    <h4> You can remove countries from your list by unchecking the CheckBox</h4>
                   </GridItem>
 
                   <GridItem xs={12} sm={12} md={12}>
-                    <Dropdown
+                  {favouritesFinal.length > 0 && !state.loading && favList}
+
+                    {/* <Dropdown
                       placeholder="Select Country"
                       fluid
                       multiple
@@ -218,7 +224,7 @@ export default function Settings({
                       selection
                       // onChange={handleChange}
                       options={favouritesForDropDown}
-                    />
+                    /> */}
                   </GridItem>
                 </GridContainer>
               </CardBody>
@@ -229,7 +235,7 @@ export default function Settings({
 
 
       </GridContainer>
-      {favouritesFinal.length > 0 && !state.loading && favList}
+      {/* {favouritesFinal.length > 0 && !state.loading && favList} */}
 
 
     </div>
