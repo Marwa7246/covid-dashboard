@@ -31,7 +31,6 @@ export default function Dashboard({ state }) {
   const classes123 = useStyles();
   const [checked, setChecked] = React.useState(true);
   const [checked1, setChecked1] = React.useState(true);
-  const [checked2, setChecked2] = React.useState(true);
 
   const handleChange = () => {
     setChecked((prev) => !prev);
@@ -41,16 +40,13 @@ export default function Dashboard({ state }) {
     setChecked1((prev) => !prev);
   };
 
-  const handleChange2 = () => {
-    setChecked2((prev) => !prev);
-  };
-
   //
   console.log(state.loading);
 
   const globalHistorical = state.globalHistorical;
   const currentGlobalData = state.currentGlobalData;
   const currentCanadaData = state.currentCanadaData;
+  const historicalCanadaData = state.historicalCanadaData;
 
   useEffect(() => {
     const userEmail = JSON.stringify(localStorage.getItem("userEmail"));
@@ -60,6 +56,8 @@ export default function Dashboard({ state }) {
   let days = [];
   let cases = [];
   let casesRecovered = [];
+  let canCases = [];
+  let canDeaths = [];
 
   if (!state.loading) {
     console.log(globalHistorical);
@@ -72,6 +70,13 @@ export default function Dashboard({ state }) {
     casesRecovered = Object.values(casesRecoveredObject).map(
       (e) => Number(e) / 1000000
     );
+
+    console.log("***************", historicalCanadaData);
+    const canCasesObj = historicalCanadaData.timeline.cases;
+    canCases = Object.values(canCasesObj).map((e) => Number(e) / 1000);
+    const canDeathsObj = historicalCanadaData.timeline.deaths;
+    canDeaths = Object.values(canDeathsObj).map((e) => Number(e) / 1000);
+    console.log("@@@@@@@@@@@@@@@@", historicalCanadaData.timeline.cases);
   }
 
   let publishedTime_World = moment.utc(currentGlobalData.updated).toDate();
@@ -90,18 +95,20 @@ export default function Dashboard({ state }) {
   return (
     <div>
       <div className={classes.root}>
-        <h3 style={{ fontWeight: "bold" }}>Worldwide Statistics</h3>
-        <FormControlLabel
-          control={<Switch checked={checked} onChange={handleChange} />}
-          label="Show"
-        />
+        <GridContainer>
+          <GridItem>
+            <h3 style={{ fontWeight: "bold" }}>World Statistics</h3>
+          </GridItem>
+          <GridItem>
+            <FormControlLabel
+              control={<Switch checked={checked} onChange={handleChange} />}
+              label="Show"
+            />
+          </GridItem>
+        </GridContainer>
+
         <div className={classes.container}>
           <Collapse in={checked}>
-            <div>
-              <a style={{ fontWeight: "bold", fontStyle: "italic" }}>
-                Updated: {timeFormat_World}, Source: Worldometers {}
-              </a>
-            </div>
             <GridContainer>
               <GridItem xs={12} sm={6} md={4}>
                 <CardDashboard1
@@ -109,6 +116,8 @@ export default function Dashboard({ state }) {
                   value={currentGlobalData.cases}
                   statColor={"primary"}
                   statIcon={"add_alert_outlined"}
+                  footerTitle={"New Cases Today"}
+                  footerValue={currentGlobalData.todayCases}
                 />
               </GridItem>
               <GridItem xs={12} sm={6} md={4}>
@@ -117,6 +126,8 @@ export default function Dashboard({ state }) {
                   value={currentGlobalData.deaths}
                   statColor={"danger"}
                   statIcon={"warning"}
+                  footerTitle={"New Deaths Today"}
+                  footerValue={currentGlobalData.todayDeaths}
                 />
               </GridItem>
               <GridItem xs={12} sm={6} md={4}>
@@ -125,6 +136,8 @@ export default function Dashboard({ state }) {
                   value={currentGlobalData.recovered}
                   statColor={"success"}
                   statIcon={"accessibility_new_outlines"}
+                  footerTitle={"Recovered Cases Today"}
+                  footerValue={currentGlobalData.todayRecovered}
                 />
               </GridItem>
               <GridItem xs={12} sm={6} md={4}>
@@ -152,7 +165,7 @@ export default function Dashboard({ state }) {
                 />
               </GridItem>
             </GridContainer>
-            <GridContainer>
+            {/* <GridContainer>
               <GridItem xs={12} sm={6} md={4}>
                 <CardDashboard1
                   statType={"Cases Today"}
@@ -177,24 +190,63 @@ export default function Dashboard({ state }) {
                   statIcon={"accessibility_new_outlines"}
                 />
               </GridItem>
+            </GridContainer> */}
+            <GridContainer>
+              <GridItem xs={12} sm={12} md={6}>
+                <CasesChart
+                  color="info"
+                  title="registered cases (in Millions)"
+                  multiple="Millions"
+                  days={days}
+                  series={cases}
+                  type="Bar"
+                  period="20"
+                />
+              </GridItem>
+              <GridItem xs={12} sm={12} md={6}>
+                <CasesChart
+                  color="success"
+                  title="recovered cases (in Millions)"
+                  multiple="Millions"
+                  days={days}
+                  series={casesRecovered}
+                  type="Line"
+                  period="20"
+                />
+              </GridItem>
             </GridContainer>
+            <div>
+              <a
+                style={{
+                  fontStyle: "italic",
+                  color: "blue",
+                  paddingLeft: "580px",
+                }}
+              >
+                <b>Updated:</b> {timeFormat_World}; <b>Sources:</b>{" "}
+                Worldometers, JHUCSSE {}
+              </a>
+            </div>
           </Collapse>
         </div>
       </div>
+      <br />
 
       <div className={classes.root}>
-        <h3 style={{ fontWeight: "bold" }}>Canada Statistics</h3>
-        <FormControlLabel
-          control={<Switch checked={checked1} onChange={handleChange1} />}
-          label="Show"
-        />
+        <GridContainer>
+          <GridItem>
+            <h3 style={{ fontWeight: "bold" }}>Canada Statistics</h3>
+          </GridItem>
+          <GridItem>
+            <FormControlLabel
+              control={<Switch checked={checked1} onChange={handleChange1} />}
+              label="Show"
+            />
+          </GridItem>
+        </GridContainer>
+
         <div className={classes.container}>
           <Collapse in={checked1}>
-            <div>
-              <a style={{ fontWeight: "bold", fontStyle: "italic" }}>
-                Updated: {timeFormat_Canada}, Source: Worldometers {}
-              </a>
-            </div>
             <GridContainer>
               <GridItem xs={12} sm={6} md={4}>
                 <CardDashboard1
@@ -202,6 +254,8 @@ export default function Dashboard({ state }) {
                   value={currentCanadaData.cases}
                   statColor={"primary"}
                   statIcon={"add_alert_outlined"}
+                  footerTitle={"New Cases Today"}
+                  footerValue={currentCanadaData.todayCases}
                 />
               </GridItem>
               <GridItem xs={12} sm={6} md={4}>
@@ -210,6 +264,8 @@ export default function Dashboard({ state }) {
                   value={currentCanadaData.deaths}
                   statColor={"danger"}
                   statIcon={"warning"}
+                  footerTitle={"New Deaths Today"}
+                  footerValue={currentCanadaData.todayDeaths}
                 />
               </GridItem>
 
@@ -222,23 +278,7 @@ export default function Dashboard({ state }) {
                 />
               </GridItem>
             </GridContainer>
-            <GridContainer>
-              <GridItem xs={12} sm={6} md={4}>
-                <CardDashboard1
-                  statType={"Cases Today"}
-                  value={currentCanadaData.todayCases}
-                  statColor={"primary"}
-                  statIcon={"add_alert_outlined"}
-                />
-              </GridItem>
-              <GridItem xs={12} sm={6} md={4}>
-                <CardDashboard1
-                  statType={"Deaths Today"}
-                  value={currentCanadaData.todayDeaths}
-                  statColor={"danger"}
-                  statIcon={"warning"}
-                />
-              </GridItem>
+            {/* <GridContainer>
               <GridItem xs={12} sm={6} md={4}>
                 <CardDashboard1
                   statType={"Recovered Today"}
@@ -247,52 +287,71 @@ export default function Dashboard({ state }) {
                   statIcon={"accessibility_new_outlines"}
                 />
               </GridItem>
-            </GridContainer>
-          </Collapse>
-        </div>
-      </div>
-
-      <div className={classes.root}>
-        <h3 style={{ fontWeight: "bold" }}>Charts</h3>
-        <FormControlLabel
-          control={<Switch checked={checked2} onChange={handleChange2} />}
-          label="Show"
-        />
-        <div className={classes.container}>
-          <Collapse in={checked2}>
+            </GridContainer> */}
             <GridContainer>
-              <GridItem xs={12} sm={12} md={4}>
+              <GridItem xs={12} sm={12} md={6}>
                 <CasesChart
-                  color="success"
-                  title="recovered"
-                  multiple="Millions"
+                  color="info"
+                  title="registered cases (in Thousands)"
+                  multiple="Thousands"
                   days={days}
-                  series={casesRecovered}
+                  series={canCases}
+                  type="Bar"
+                  period="20"
+                />
+              </GridItem>
+              <GridItem xs={12} sm={12} md={6}>
+                <CasesChart
+                  color="warning"
+                  title="deaths (in Thousands)"
+                  multiple="Thousands"
+                  days={days}
+                  series={canDeaths}
                   type="Line"
                   period="20"
                 />
               </GridItem>
+            </GridContainer>
+            <div>
+              <a
+                style={{
+                  fontStyle: "italic",
+                  color: "blue",
+                  paddingLeft: "580px",
+                }}
+              >
+                <b>Updated:</b> {timeFormat_Canada}; <b>Sources:</b>{" "}
+                Worldometers, JHUCSSE {}
+              </a>
+            </div>
+          </Collapse>
+        </div>
+      </div>
+      <br />
 
-              <GridItem xs={12} sm={12} md={4}>
+      {/* <div className={classes.root}>
+        <GridContainer>
+          <GridItem>
+            <h3 style={{ fontWeight: "bold" }}>Charts</h3>
+          </GridItem>
+          <GridItem>
+            <FormControlLabel
+              control={<Switch checked={checked2} onChange={handleChange2} />}
+              label="Show"
+            />
+          </GridItem>
+        </GridContainer>
+
+        <div className={classes.container}>
+          <Collapse in={checked2}>
+            <GridContainer>
+              <GridItem xs={12} sm={12} md={6}>
                 <ChartPie state={state} />
-              </GridItem>
-
-              <GridItem xs={12} sm={12} md={4}>
-                <CasesChart
-                  color="danger"
-                  title="accumulated cases"
-                  multiple="Millions"
-                  days={days}
-                  series={cases}
-                  type="Bar"
-                  warning="warning"
-                  period="20"
-                />
               </GridItem>
             </GridContainer>
           </Collapse>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }
