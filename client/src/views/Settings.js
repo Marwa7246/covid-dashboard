@@ -129,11 +129,10 @@ export default function Settings({
 
  const onSave = (favourites) => {
     console.log(favourites);
-    // console.log (countryOptions, favourites)
     const arrOfFavCountryNames = getArrofNameFromIso(favourites, countryOptions);
     console.log(arrOfFavCountryNames, favourites)
     saveFavourites(arrOfFavCountryNames)
-      .then(() => console.log(localStorage.getItem("favourites"))       )
+      .then(() => console.log(localStorage.getItem("favourites")))
       .then(() => setFavouritesFinal(JSON.parse(localStorage.getItem("favourites"))));
   };
 
@@ -152,7 +151,6 @@ export default function Settings({
     ////////////////////////////////////////////////////////
 
     const handleChangeRemove = (event) => {
-      console.log('mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm',favouritesForDropDown[0].text, event.target.name)
       const newFav = favouritesForDropDown.filter(ele => ele.text!==event.target.name )
       setTotal({...total, country: event.target.name});
       // console.log (countryOptions, newFav)
@@ -166,7 +164,7 @@ export default function Settings({
       // console.log('zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz', newFav)
     };
 
-    const favList =  !state.loading &&  favouritesForDropDown.map(ele =>{
+    const favList = favouritesFinal.length > 0 && !state.loading &&  favouritesForDropDown.map(ele =>{
       return (
         <FormGroup column>
         <FormControlLabel

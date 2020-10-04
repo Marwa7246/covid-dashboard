@@ -26,7 +26,7 @@ import CardFooter from "components/Card/CardFooter.js";
 import CasesChart from "components/CasesChart.js";
 import CardNews from "components/CardNews.js";
 import CardCountry from "components/CardCountry.js";
-import {getFavouritesCountriesForDropDown, addCountryNameKey, getMapDataLayer} from '../helpers/helpers'
+import {getFavouritesCountriesForDropDown, addCountryNameKey, getMapDataLayer, getArrofNameFromIso, getAllCountriesForDropDown} from '../helpers/helpers'
 import AllCountriesSelection from '../components/AllCountriesSelection'
 import {getHistoricalCountry} from '../hooks/useApplicationData'
 
@@ -61,6 +61,8 @@ const countryOptionsFavourites = [
 
 ]
 
+
+
 const periodicTime = [
   {key:'10', text: '10 days', value: '10'}, 
   {key:'20', text: '20 days', value: '20'}, 
@@ -76,6 +78,9 @@ export default function Favourites({state, saveFavourites, getHistoricalCountry}
   const [user, setUser] = useState('');
   const [favouritesFinal, setFavouritesFinal] = useState([]);
   console.log (state)
+
+  const countryOptions =
+  !state.loading && getAllCountriesForDropDown(state.mapData);
 
 
 
@@ -153,14 +158,14 @@ export default function Favourites({state, saveFavourites, getHistoricalCountry}
   }
 
 
-
-
   const onSave = (favourites) => {
-    console.log(favourites)
-    saveFavourites(favourites)
-    .then(()=> console.log((addCountryNameKey(favourites))))
-    .then(()=> setFavouritesFinal(JSON.parse(localStorage.getItem("favourites"))))
-  }
+    console.log(favourites);
+    const arrOfFavCountryNames = getArrofNameFromIso(favourites, countryOptions);
+    console.log(arrOfFavCountryNames, favourites)
+    saveFavourites(arrOfFavCountryNames)
+      .then(() => console.log(localStorage.getItem("favourites")))
+      .then(() => setFavouritesFinal(JSON.parse(localStorage.getItem("favourites"))));
+  };
 
 const favouritesForDropDown = favouritesFinal.length > 0 && !state.loading && getFavouritesCountriesForDropDown(favouritesFinal, state.mapData)
 
