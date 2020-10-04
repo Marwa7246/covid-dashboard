@@ -11,7 +11,7 @@ class AuthController < ApplicationController
         payload = {user_id: user.id}
         token = encode_token(payload)
         puts params
-        favourites = Favourite.where(user_id: user.id).order(country_name: :asc)
+        favourites = Favourite.where(user_id: user.id).order(country_name: :asc).distinct
         byebug
         render json: {user: user, jwt: token, favourites: favourites, success: "Welcome back, #{user.email}"}
     else

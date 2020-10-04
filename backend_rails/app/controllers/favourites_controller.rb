@@ -22,7 +22,8 @@ class Api::FavouritesController < ApplicationController
     end
 
     if finishedSuccessfully
-      render json: {favourite: @favourite}, notice: 'Favourites created!'
+      favourites_all = Favourite.where(user_id: user.id).order(country_name: :asc).distinct
+      render json: {favourites: favourites_all.order(country_name: :asc), success: 'Favourites created!'}
     end  
 
   end

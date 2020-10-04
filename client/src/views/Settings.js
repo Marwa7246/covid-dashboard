@@ -118,14 +118,10 @@ export default function Settings({
   const onSave = (favourites) => {
     console.log(favourites);
     saveFavourites(favourites)
-      .then(() => console.log(addCountryNameKey(favourites)))
-      .then(() =>
-        localStorage.setItem(
-          "favourites",
-          JSON.stringify(addCountryNameKey(favourites))
-        )
-      )
-      .then(() => setFavouritesFinal(addCountryNameKey(favourites)));
+      .then(() => console.log(localStorage.getItem("favourites"))
+ 
+       )
+      .then(() => setFavouritesFinal(JSON.parse(localStorage.getItem("favourites"))));
   };
 
   const favouritesForDropDown =

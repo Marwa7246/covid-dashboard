@@ -160,7 +160,7 @@ export default function Favourites({state, saveFavourites, getHistoricalCountry}
     saveFavourites(favourites)
     .then(()=> console.log((addCountryNameKey(favourites))))
     .then(()=> localStorage.setItem("favourites", JSON.stringify(addCountryNameKey(favourites))))
-    .then(()=> setFavouritesFinal(addCountryNameKey(favourites)))
+    .then(()=> setFavouritesFinal(JSON.parse(localStorage.getItem("favourites"))))
   }
 
 const favouritesForDropDown = favouritesFinal.length > 0 && !state.loading && getFavouritesCountriesForDropDown(favouritesFinal, state.mapData)
@@ -233,7 +233,7 @@ const favouritesForDropDown = favouritesFinal.length > 0 && !state.loading && ge
                 <h4> Choose one</h4>  
      
                 </GridItem>            
-
+                { country.countryName && 
                 <GridItem xs={12} sm={12} md={12}>
                    <Dropdown
                     placeholder='Select one'
@@ -244,7 +244,7 @@ const favouritesForDropDown = favouritesFinal.length > 0 && !state.loading && ge
                     onChange={handleChangeTime}
                     options={periodicTime}
                   />   
-                </GridItem>
+                </GridItem>}
               </GridContainer>
             </CardBody>
  
