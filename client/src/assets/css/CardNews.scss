@@ -1,0 +1,41 @@
+
+
+.news-image {
+  display: flex;
+  flex: auto;
+  // flex-basis: 60%;
+  // width: 1em;
+   width: 30em;
+
+  // padding: 10rem;
+}
+.news-container {
+  display: flex;
+  flex-flow: row wrap;
+  padding-right: 20px;
+  align-items: flex-start;
+
+}
+
+.news-item {
+  display: flex;
+  flex: auto;
+flex-grow: 2;
+// flex-basis: 60%;
+}
+
+.news-body-container {
+  display: flex;
+  flex-flow: column;
+  align-items: flex-start;
+}
+
+.news-image-div{
+  display: flex;
+  flex: auto;
+  // flex-basis: 60%;
+  flex-grow: 1;
+  // width: 1em;
+   width: 20px;
+
+}

@@ -4,21 +4,31 @@ import { makeStyles } from "@material-ui/core/styles";
 
 // core components
 import Card from "components/Card/Card.js";
+import GridItem from "components/Grid/GridItem.js";
+
 import CardHeader from "components/Card/CardHeader.js";
 import CardBody from "components/Card/CardBody.js";
 import CardFooter from "components/Card/CardFooter.js";
+import GridContainer from "components/Grid/GridContainer.js";
+
 
 import styles from "assets/jss/material-dashboard-react/views/dashboardStyle.js";
+
+import "../assets/css/CardNews.scss";
+
 
 const useStyles = makeStyles(styles);
 
 export default function CardNews(props) {
-  const { newsTitle, newsDescription, newsURL, newsPublishedAt } = props;
+  console.log('props', props)
+  const { newsTitle, newsDescription, newsURL, newsPublishedAt, source, urlToImage } = props;
+
+  console.log('urlToImage', urlToImage)
 
   const classes = useStyles();
   return (
     <div>
-      <Card>
+      <Card >
         <CardHeader color="primary">
           <h4
             className={classes.cardCategory}
@@ -27,26 +37,42 @@ export default function CardNews(props) {
             {newsTitle}
           </h4>
         </CardHeader>
-        <CardBody>
-          <p
-            className={classes.cardTitle}
-            style={{ fontSize: 16, paddingTop: "1em", paddingBottom: "1em" }}
-          >
-            {newsDescription}
-          </p>
-          <a href={newsURL} target="_blank" style={{ color: "red" }}>
-            Click here to read full article...
-          </a>
-        </CardBody>
+        <CardBody className='news-body-container'>
+          <div className='news-container'>
+            <div  className='news-item'>
+
+              <p 
+                className={classes.cardTitle}
+                style={{ fontSize: 16, paddingTop: "1em", paddingBottom: "1em" }}
+              >
+                {newsDescription}
+              </p>
+
+            </div>
+
+            <div  className="news-image-div" >
+              <img className="news-image" src={urlToImage} alt={newsTitle}/>          
+            </div>
+          </div>
+          <div>
+            <a href={newsURL} target="_blank" style={{ color: "red" }}>
+                Click here to read full article...
+            </a>
+          </div>
+
+
+
+
+
+          </CardBody>
         <CardFooter stats>
           <div className={classes.stats}>
-            <a
-              href="#pablo"
+            <span
               onClick={(e) => e.preventDefault()}
               style={{ fontWeight: "bold", fontStyle: "italic" }}
             >
-              {newsPublishedAt} {}
-            </a>
+              Source: {source}, {newsPublishedAt} 
+            </span>
           </div>
         </CardFooter>
       </Card>

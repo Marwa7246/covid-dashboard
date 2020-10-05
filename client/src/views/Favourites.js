@@ -87,11 +87,15 @@ export default function Favourites({state, saveFavourites, getHistoricalCountry}
     console.log(JSON.parse(localStorage.getItem("favourites")))
   }, []);
 
+
+
   
   const classes = useStyles();
 
   const favouriteCountryHistorical = state.favouriteCountryHistorical;
   const favouriteCountryNews = state.favouriteCountryNews;
+
+  !state.loadingFavouriteCountry && console.log('ffff', favouriteCountryNews)
 
   const newsList = !state.loadingFavouriteCountry &&
     favouriteCountryNews.articles.map((item, index) => {
@@ -106,6 +110,9 @@ export default function Favourites({state, saveFavourites, getHistoricalCountry}
             newsDescription={item.description}
             newsURL={item.url}
             newsPublishedAt={timeFormat}
+            source={item.source.name}
+            urlToImage={item.urlToImage}
+
           />
       );
     })
@@ -245,15 +252,7 @@ const favouritesForDropDown = favouritesFinal.length > 0 && !state.loading && ge
     <h4>{country.error}</h4>
     </GridItem>}
 
- 
-    
-
-
-
-
-        
-
-                                  {/* Containter of country card */}
+    {/* Containter of country card */}
 
         <GridItem xs={12} sm={12} md={6}>
 

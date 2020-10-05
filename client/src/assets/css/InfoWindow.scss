@@ -1,7 +1,9 @@
 .InfoWindow {
   display: flex;
   flex-direction: column;
-  padding: 10px;
+  padding-top: 10px;
+  padding-left: 10px;
+
 }
 
 .firstBox {
@@ -12,8 +14,8 @@
 .InfoWindow-image {
   display: flex;
   flex: auto;
-  width: 5em;
-  height: 2em;
+  width: 2.5em;
+  height: 1.7em;
 }
 
 .InfoWindow span {
@@ -41,4 +43,20 @@
 
 .InfoWindow strong {
   padding: 10px;
+}
+
+.gm-style .gm-style-iw-c {
+  position: absolute;
+  box-sizing: border-box;
+  overflow: hidden;
+  top: 0;
+  left: 0;
+  transform: translate(-50%,-100%);
+  // background-color: white;
+  border-radius: 10px;
+  padding: 0px;
+  // box-shadow: 0 2px 7px 1px rgba(0,0,0,0.3);
+  width: 15em;
+  height: 11em;
+  // max-height: fit-content;
 }
