@@ -83,6 +83,11 @@ const AllCountriesSelection = (props) => {
   return (
     <div>
       <GridContainer>
+        {error && 
+        <GridItem xs={12} sm={12} md={12}>
+                {error}
+        </GridItem>}
+
         <GridItem xs={12} sm={12} md={12}>
           <Card>
             <CardHeader color="primary">

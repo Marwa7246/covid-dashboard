@@ -175,7 +175,7 @@ const onSave = (favourites) => {
   return (
     <div>
 
-      {!state.loading && (
+      {!state.loading && favouritesForDropDown && (
         <GridContainer>
           <GridItem xs={12} sm={12} md={12}>
             {<AllCountriesSelection onSave={onSave} defaultValue={favouritesFinal} countryOptions={countryOptions}
@@ -197,7 +197,7 @@ const onSave = (favourites) => {
               <CardBody>
                 <GridContainer>
                   <GridItem xs={12} sm={12} md={12}>
-                    <h4> You can remove countries from your list by unchecking the CheckBox</h4>
+                    <h4> You can remove countries from your list by unticking the checkbox</h4>
                   </GridItem>
 
                   <GridItem xs={12} sm={12} md={12}>
