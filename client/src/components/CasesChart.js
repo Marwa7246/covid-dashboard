@@ -43,9 +43,10 @@ export default function CasesChart({
       showPoint: true,
       axisX: {
         labelInterpolationFnc: function (value, index) {
-          if (days.length < 40) return index % 5 === 0 ? value : null;
-          if (days.length > 40 && days.length < 70) return index % 8 === 0 ? value : null;
-          if (days.length > 70) return index % 10 === 0 ? value : null;
+          if (days.length < 30) return index % 2 === 0 ? value : null;
+          if (days.length >= 30 && days.length < 40 ) return index % 4 === 0 ? value : null;
+          if (days.length >= 40 && days.length < 70) return index % 8 === 0 ? value : null;
+          if (days.length >= 70) return index % 10 === 0 ? value : null;
 
         },
       },

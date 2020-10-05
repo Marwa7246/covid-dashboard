@@ -43,15 +43,13 @@ export default function CardCountry(props) {
             </CardHeader>
  
             <CardBody >
-
-                        <Table
-                            tableHeaderColor="primary"
-                            tableHead={['Cases',"Today's Cases", 'Deaths', "Today's Deaths", 'Recovered', 'Critical', 'Last Updated']}
-                            tableData={[
-                                [ digitFormat(selectedCountry.cases), digitFormat(selectedCountry.todayCases), digitFormat(selectedCountry.deaths) , digitFormat(selectedCountry.todayDeaths), digitFormat(selectedCountry.recovered) , digitFormat(selectedCountry.critical), timeFormat,  ] ,
-
-                            ]}
-                        />
+              <Table
+                tableHeaderColor="primary"
+                tableHead={['Cases',"Today's Cases", 'Deaths', "Today's Deaths", 'Recovered', 'Critical', 'Last Updated']}
+                tableData={[
+                  [ digitFormat(selectedCountry.cases), digitFormat(selectedCountry.todayCases), digitFormat(selectedCountry.deaths) , digitFormat(selectedCountry.todayDeaths), digitFormat(selectedCountry.recovered) , digitFormat(selectedCountry.critical), timeFormat,  ] ,
+                 ]}
+                />
 
             </CardBody>
           </Card>
