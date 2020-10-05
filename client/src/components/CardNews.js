@@ -28,7 +28,7 @@ export default function CardNews(props) {
   const classes = useStyles();
   return (
     <div>
-      <Card>
+      <Card >
         <CardHeader color="primary">
           <h4
             className={classes.cardCategory}
@@ -37,37 +37,42 @@ export default function CardNews(props) {
             {newsTitle}
           </h4>
         </CardHeader>
-        <CardBody>
-          <GridContainer>
-            <GridItem xs={12} sm={12} md={8}>
+        <CardBody className='news-body-container'>
+          <div className='news-container'>
+            <div  className='news-item'>
 
-              <p
+              <p 
                 className={classes.cardTitle}
                 style={{ fontSize: 16, paddingTop: "1em", paddingBottom: "1em" }}
               >
                 {newsDescription}
               </p>
-              <a href={newsURL} target="_blank" style={{ color: "red" }}>
-                Click here to read full article...
-              </a>
-              </GridItem>
 
-              <GridItem xs={12} sm={12} md={4}>
-                <img className="news-image" src={urlToImage} alt={newsTitle} />          
-              </GridItem>
-          </GridContainer>
+            </div>
+
+            <div  className="news-image-div" >
+              <img className="news-image" src={urlToImage} alt={newsTitle}/>          
+            </div>
+          </div>
+          <div>
+            <a href={newsURL} target="_blank" style={{ color: "red" }}>
+                Click here to read full article...
+            </a>
+          </div>
+
+
 
 
 
           </CardBody>
         <CardFooter stats>
           <div className={classes.stats}>
-            <a
+            <span
               onClick={(e) => e.preventDefault()}
               style={{ fontWeight: "bold", fontStyle: "italic" }}
             >
               Source: {source}, {newsPublishedAt} 
-            </a>
+            </span>
           </div>
         </CardFooter>
       </Card>
