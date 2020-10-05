@@ -178,7 +178,7 @@ export default function Application({ ...rest }) {
         <StateContext.Provider value={state}>
           <Sidebar
             routes={routes}
-            logoText={"COVID-19 DASHBOARD"}
+            logoText={"COVID DASHBOARD"}
             logo={logo}
             image={image}
             handleDrawerToggle={handleDrawerToggle}
