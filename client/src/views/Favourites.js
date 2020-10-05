@@ -276,19 +276,6 @@ const favouritesForDropDown = favouritesFinal.length > 0 && !state.loading && ge
 
         <GridItem xs={12} sm={12} md={6}>
         <CasesChart
-            color="danger"
-            title="deaths"
-            days={days}
-            series={deaths}
-            multiple='Thousands'
-            type="Bar"
-            warning="warning"
-            />
-
-        </GridItem>
-
-        <GridItem xs={12} sm={12} md={6}>
-        <CasesChart
               color="info"
               title="accumulated cases"
               days={days}
@@ -296,7 +283,19 @@ const favouritesForDropDown = favouritesFinal.length > 0 && !state.loading && ge
               multiple='Thousands'
 
               type="Line"
+            />
 
+        </GridItem>
+
+        <GridItem xs={12} sm={12} md={6}>
+        <CasesChart
+            color="danger"
+            title="deaths"
+            days={days}
+            series={deaths}
+            multiple='Thousands'
+            type="Bar"
+            warning="warning"
           /> 
         </GridItem>
 
