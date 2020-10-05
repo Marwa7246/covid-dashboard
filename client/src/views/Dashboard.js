@@ -214,18 +214,20 @@ export default function Dashboard({ state }) {
                 />
               </GridItem>
             </GridContainer>
+            <GridContainer>
             <div>
               <a
                 style={{
                   fontStyle: "italic",
                   color: "blue",
-                  paddingLeft: "580px",
+                  paddingLeft: "20px",
                 }}
               >
                 <b>Updated:</b> {timeFormat_World}; <b>Sources:</b>{" "}
                 Worldometers, JHUCSSE {}
               </a>
             </div>
+            </GridContainer>
           </Collapse>
         </div>
       </div>
@@ -311,18 +313,21 @@ export default function Dashboard({ state }) {
                 />
               </GridItem>
             </GridContainer>
+            <GridContainer>
             <div>
               <a
                 style={{
                   fontStyle: "italic",
                   color: "blue",
-                  paddingLeft: "580px",
+                  paddingLeft: "20px",
                 }}
               >
                 <b>Updated:</b> {timeFormat_Canada}; <b>Sources:</b>{" "}
                 Worldometers, JHUCSSE {}
               </a>
             </div>
+            </GridContainer>
+
           </Collapse>
         </div>
       </div>
