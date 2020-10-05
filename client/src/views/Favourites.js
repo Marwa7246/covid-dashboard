@@ -218,7 +218,7 @@ const favouritesForDropDown = favouritesFinal.length > 0 && !state.loading && ge
                     <FormControlLabel value="20" control={<Radio />} label="20 days" />
                     <FormControlLabel value="30" control={<Radio />} label="30 days" />
                     <FormControlLabel value="60" control={<Radio />} label="60 days" />
-                    <FormControlLabel value="120" control={<Radio />} label="120 days" />
+                    <FormControlLabel value="90" control={<Radio />} label="90 days" />
 
 
                   </RadioGroup>

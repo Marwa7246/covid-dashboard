@@ -43,7 +43,10 @@ export default function CasesChart({
       showPoint: true,
       axisX: {
         labelInterpolationFnc: function (value, index) {
-          return index % 5 === 0 ? value : null;
+          if (days.length < 40) return index % 5 === 0 ? value : null;
+          if (days.length > 40 && days.length < 70) return index % 8 === 0 ? value : null;
+          if (days.length > 70) return index % 10 === 0 ? value : null;
+
         },
       },
       low: Math.min(...series),
@@ -126,9 +129,7 @@ export default function CasesChart({
           )}
         </CardBody>
         <CardFooter chart>
-          {/* <div className={classes.stats}>
-                <AccessTime /> updated 4 minutes ago
-              </div> */}
+
         </CardFooter>
       </Card>
     </div>
