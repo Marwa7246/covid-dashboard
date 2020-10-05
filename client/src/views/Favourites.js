@@ -111,6 +111,8 @@ export default function Favourites({state, saveFavourites, getHistoricalCountry}
             newsURL={item.url}
             newsPublishedAt={timeFormat}
             source={item.source.name}
+            urlToImage={item.urlToImage}
+
           />
       );
     })

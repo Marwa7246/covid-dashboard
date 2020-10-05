@@ -1,0 +1,78 @@
+.InfoWindow {
+<<<<<<< HEAD
+  text-align: left;
+  padding-top: 0.5em;
+  padding-bottom: 0;
+=======
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+>>>>>>> origin/master
+}
+
+.firstBox {
+  display: flex;
+  flex-direction: row;
+}
+
+.InfoWindow-image {
+<<<<<<< HEAD
+  width: 2em;
+  height: 1.2em;
+=======
+  display: flex;
+  flex: auto;
+  width: 5em;
+  height: 2em;
+>>>>>>> origin/master
+}
+
+.InfoWindow span {
+<<<<<<< HEAD
+  font-size: 1.1em;
+=======
+  display: flex;
+  flex: auto;
+  font-size: 1em;
+>>>>>>> origin/master
+  font-weight: bolder;
+  padding: 10px;
+}
+
+.InfoWindow .fa {
+  color: blue;
+}
+
+.InfoWindow-description {
+  display: flex;
+  flex-direction: column;
+  font-size: 0.8em;
+}
+
+.desc {
+  display: flex;
+  flex-direction: row;
+}
+
+.InfoWindow strong {
+  padding: 10px;
+}
+<<<<<<< HEAD
+
+.gm-style .gm-style-iw-c {
+    position: absolute;
+    box-sizing: border-box;
+    overflow: hidden;
+    top: 0;
+    left: 0;
+    transform: translate(-50%,-100%);
+    background-color: white;
+    border-radius: 10px;
+    padding-top: 0px;
+    box-shadow: 0 2px 7px 1px rgba(0,0,0,0.3);
+    width: 13rem;
+    max-height: fit-content;}
+
+
+=======
+>>>>>>> origin/master
