@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
-import { Map, GoogleApiWrapper, InfoWindow, Marker } from 'google-maps-react';
-import InfoWindowsName from './InforWindowName'
+import React, { Component } from "react";
+import { Map, GoogleApiWrapper, InfoWindow, Marker } from "google-maps-react";
+import InfoWindowName from "./InfoWindowName";
 // import InfoWindowEx from './InfoWindowEX'
 
 // import "./App.css"
@@ -10,74 +10,67 @@ import InfoWindowsName from './InforWindowName'
 //  import jason from './jason'
 
 const mapStyles = {
-  width: '100%',
-  height: '100%'
+  width: "100%",
+  height: "100%",
 };
 
-
 export class MapContainer extends Component {
-
-
-
   state = {
-    showingInfoWindow: false,  // Hides or shows the InfoWindow
-    activeMarker: {},          // Shows the active marker upon click
-    selectedPlace: {}          // Shows the InfoWindow to the selected place upon a marker
+    showingInfoWindow: false, // Hides or shows the InfoWindow
+    activeMarker: {}, // Shows the active marker upon click
+    selectedPlace: {}, // Shows the InfoWindow to the selected place upon a marker
   };
-
-
 
   onMarkerClick = (props, marker, e) =>
     this.setState({
       selectedPlace: props,
       activeMarker: marker,
-      showingInfoWindow: true
+      showingInfoWindow: true,
     });
 
-  onClose = props => {
+  onClose = (props) => {
     if (this.state.showingInfoWindow) {
       this.setState({
         showingInfoWindow: false,
-        activeMarker: null
+        activeMarker: null,
       });
     }
   };
 
-
   render() {
-    console.log(this.props.mapData)
-
-
-
-const customMarkerMap2 = this.props.mapData.map(elem=>{
-  return (
-    <Marker
+    console.log("!!!!!!!!!!!!!!!!!!!!!", this.props.mapData);
+    const customMarkerMap2 = this.props.mapData.map((elem) => {
+      return (
+        <Marker
           key={elem.country}
           position={elem.position}
           onClick={this.onMarkerClick}
-          name={<InfoWindowsName country={elem.country} updated={elem.updated} cases={elem.cases} flag={elem.flag} deaths={elem.deaths} recovered={elem.recovered} onClick={()=> console.log('from infowindow')}/>}
+          name={
+            <InfoWindowName
+              country={elem.country}
+              updated={elem.updated}
+              cases={elem.cases}
+              flag={elem.flag}
+              deaths={elem.deaths}
+              recovered={elem.recovered}
+              onClick={() => console.log("from infowindow")}
+            />
+          }
         />
-
-  )
-}) 
-
-
+      );
+    });
 
     return (
       <Map
         google={this.props.google}
-        zoom={3}
+        zoom={2}
         // style={mapStyles}
-        initialCenter={
-          {
-            lat: 30.2884,
-            lng: -6.8233
-          }
-        }
+        initialCenter={{
+          lat: 30.2884,
+          lng: -6.8233,
+        }}
       >
-        
         {this.props.loaded && customMarkerMap2}
-
 
         <InfoWindow
           marker={this.state.activeMarker}
@@ -94,8 +87,6 @@ const customMarkerMap2 = this.props.mapData.map(elem=>{
   }
 }
 
-export default GoogleApiWrapper(
-  (props) => ({
-  apiKey: process.env.REACT_APP_MAPS_KEY 
-}
-))(MapContainer);
+export default GoogleApiWrapper((props) => ({
+  apiKey: process.env.REACT_APP_MAPS_KEY,
+}))(MapContainer);

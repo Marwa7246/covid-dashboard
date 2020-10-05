@@ -1,50 +1,44 @@
 .InfoWindow {
-  text-align: left;
-  padding-top: 0.5em;
-  padding-bottom: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
 }
 
+.firstBox {
+  display: flex;
+  flex-direction: row;
+}
 
 .InfoWindow-image {
-  width: 2em;
-  height: 1.2em;
+  display: flex;
+  flex: auto;
+  width: 5em;
+  height: 2em;
 }
 
-
 .InfoWindow span {
-  font-size: 1.1em;
+  display: flex;
+  flex: auto;
+  font-size: 1em;
   font-weight: bolder;
+  padding: 10px;
 }
 
 .InfoWindow .fa {
-  color: blue
+  color: blue;
 }
 
 .InfoWindow-description {
+  display: flex;
+  flex-direction: column;
   font-size: 0.8em;
 }
 
-
-h1, p {
-  font-family: Lato;
+.desc {
+  display: flex;
+  flex-direction: row;
 }
 
-.gm-style .gm-style-iw-d {
-     overflow: hidden; 
+.InfoWindow strong {
+  padding: 10px;
 }
-
-.gm-style .gm-style-iw-c {
-    position: absolute;
-    box-sizing: border-box;
-    overflow: hidden;
-    top: 0;
-    left: 0;
-    transform: translate(-50%,-100%);
-    background-color: white;
-    border-radius: 10px;
-    padding-top: 0px;
-    box-shadow: 0 2px 7px 1px rgba(0,0,0,0.3);
-    width: 13rem;
-    max-height: fit-content;}
-
-
