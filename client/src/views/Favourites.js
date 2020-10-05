@@ -87,11 +87,15 @@ export default function Favourites({state, saveFavourites, getHistoricalCountry}
     console.log(JSON.parse(localStorage.getItem("favourites")))
   }, []);
 
+
+
   
   const classes = useStyles();
 
   const favouriteCountryHistorical = state.favouriteCountryHistorical;
   const favouriteCountryNews = state.favouriteCountryNews;
+
+  !state.loadingFavouriteCountry && console.log('ffff', favouriteCountryNews)
 
   const newsList = !state.loadingFavouriteCountry &&
     favouriteCountryNews.articles.map((item, index) => {
@@ -106,6 +110,7 @@ export default function Favourites({state, saveFavourites, getHistoricalCountry}
             newsDescription={item.description}
             newsURL={item.url}
             newsPublishedAt={timeFormat}
+            source={item.source.name}
           />
       );
     })

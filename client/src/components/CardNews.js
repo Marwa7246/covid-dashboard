@@ -13,7 +13,10 @@ import styles from "assets/jss/material-dashboard-react/views/dashboardStyle.js"
 const useStyles = makeStyles(styles);
 
 export default function CardNews(props) {
-  const { newsTitle, newsDescription, newsURL, newsPublishedAt } = props;
+  console.log('props', props)
+  const { newsTitle, newsDescription, newsURL, newsPublishedAt, source, urlToImage } = props;
+
+  console.log('source', urlToImage)
 
   const classes = useStyles();
   return (
@@ -41,11 +44,10 @@ export default function CardNews(props) {
         <CardFooter stats>
           <div className={classes.stats}>
             <a
-              href="#pablo"
               onClick={(e) => e.preventDefault()}
               style={{ fontWeight: "bold", fontStyle: "italic" }}
             >
-              {newsPublishedAt} {}
+              {newsPublishedAt} , Source: {source}
             </a>
           </div>
         </CardFooter>

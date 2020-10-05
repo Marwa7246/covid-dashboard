@@ -42,6 +42,8 @@ export default function News({state}) {
                   newsDescription={item.description}
                   newsURL={item.url}
                   newsPublishedAt={timeFormat}
+                  source={item.source.name}
+                  image={item.urlToImage}
                 />
               </GridItem>
             );
