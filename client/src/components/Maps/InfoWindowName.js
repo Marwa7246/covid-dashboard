@@ -1,6 +1,7 @@
 import React from "react";
 import "../../assets/css/InfoWindow.scss";
 import NumberFormat from "react-number-format";
+import {digitFormat} from '../../helpers/helpers'
 
 function InfoWindowName(props) {
   const { country, cases, onClick, flag, deaths, recovered, updated } = props;
@@ -16,32 +17,17 @@ function InfoWindowName(props) {
       </div>
 
       <div className="InfoWindow-description">
-        <div className="desc">
-          <strong>Total Cases:</strong>
+        <div >
+          <strong>Total Cases:</strong>{digitFormat(cases)}
 
-          <NumberFormat
-            value={cases}
-            displayType={"text"}
-            thousandSeparator={true}
-          />
         </div>
-        <div className="desc">
-          <strong>Total Deaths:</strong>
+        <div >
+          <strong>Total Deaths:</strong>{digitFormat(deaths)}
 
-          <NumberFormat
-            value={deaths}
-            displayType={"text"}
-            thousandSeparator={true}
-          />
         </div>
-        <div className="desc">
-          <strong>Total Recovered:</strong>
+        <div >
+          <strong>Total Recovered:</strong>{digitFormat(recovered)}
 
-          <NumberFormat
-            value={recovered}
-            displayType={"text"}
-            thousandSeparator={true}
-          />
         </div>
       </div>
     </div>

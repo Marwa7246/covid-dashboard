@@ -14,8 +14,8 @@
 .InfoWindow-image {
   display: flex;
   flex: auto;
-  width: 3em;
-  height: 2em;
+  width: 2.5em;
+  height: 1.7em;
 }
 
 .InfoWindow span {
@@ -52,10 +52,11 @@
   top: 0;
   left: 0;
   transform: translate(-50%,-100%);
-  background-color: white;
+  // background-color: white;
   border-radius: 10px;
   padding: 0px;
-  box-shadow: 0 2px 7px 1px rgba(0,0,0,0.3);
-  width: 18em;
-  height: 15em;
-  max-height: fit-content;}
+  // box-shadow: 0 2px 7px 1px rgba(0,0,0,0.3);
+  width: 15em;
+  height: 11em;
+  // max-height: fit-content;
+}

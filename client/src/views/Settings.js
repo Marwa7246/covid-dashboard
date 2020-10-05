@@ -77,26 +77,6 @@ const styles = {
   },
 };
 
-const countryOptionsFavourites = [
-  { key: "af", value: "af", flag: "af", text: "Afghanistan" },
-  { key: "ca", value: "ca", flag: "ca", text: "Canada" },
-  { key: "al", value: "al", flag: "al", text: "Albania" },
-];
-
-
-
-const GreenCheckbox = withStyles({
-  root: {
-    color: green[400],
-    '&$checked': {
-      color: green[600],
-    },
-  },
-  checked: {},
-})((props) => <Checkbox color="default" {...props} />);
-
-// let array = ['1','2','3','4']
-
 
 
 const useStyles = makeStyles(styles);
@@ -110,7 +90,6 @@ export default function Settings({
     countryName: "",
   });
   const [favouritesFinal, setFavouritesFinal] = useState([]);
-  // const[countryOptions, setCountryOptions] = useState([]);
 
 /////////////////////////////////////////////////////////////////
   const [total, setTotal]=useState({country:''})
@@ -133,9 +112,7 @@ export default function Settings({
 
    !state.loading && console.log('test', favouritesForDropDown, countryOptions.length, countryOptionsAll.length )
 
-  //  setCountryOptions(updatedCountryOptions)
-
-    
+   
  
 
   const classes = useStyles();
@@ -164,9 +141,7 @@ const onSave = (favourites) => {
 
 
 
-    ////////////////////////////////////////////////////////
-
-    const handleChangeRemove = (event) => {
+   const handleChangeRemove = (event) => {
       const newFav = favouritesForDropDown.filter(ele => ele.text!==event.target.name )
       setTotal({...total, country: event.target.name});
       console.log (event.target, newFav)
@@ -189,10 +164,9 @@ const onSave = (favourites) => {
           onChange={handleChangeRemove} name={ele.text} 
           color="primary"
           />}
-          label={<a className='toBeHovered' href="#"><Flag name= {ele.key} /><strong>{ele.text}</strong> <span className='box'>DELETE</span></a>}
+          label={<span className='toBeHovered' ><Flag name= {ele.key} /><strong>{ele.text}</strong> <span className='box'>DELETE</span></span>}
         />
       </FormGroup>
-  // <span className='mouseHover '><Flag name= {ele.key} /><strong>{ele.text}</strong> <span className='.hoverBox'>DELETE</span></span>
   
       )
     } 
@@ -200,7 +174,6 @@ const onSave = (favourites) => {
     ////////////////////////////////////////////////////////
   return (
     <div>
-<a className='toBeHovered' href="#">Hover Me!<span className='box'>Hello, World!</span></a>
 
       {!state.loading && (
         <GridContainer>

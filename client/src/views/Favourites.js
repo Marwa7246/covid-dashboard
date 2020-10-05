@@ -252,15 +252,7 @@ const favouritesForDropDown = favouritesFinal.length > 0 && !state.loading && ge
     <h4>{country.error}</h4>
     </GridItem>}
 
- 
-    
-
-
-
-
-        
-
-                                  {/* Containter of country card */}
+    {/* Containter of country card */}
 
         <GridItem xs={12} sm={12} md={6}>
 
