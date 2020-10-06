@@ -17,6 +17,7 @@ COVID Dashboard is a full stack responsive web application built with ReactJS as
 !["Screenshot of Dashboard page"](https://github.com/Marwa7246/covid-dashboard/blob/master/Screenshots/1_Dashboard.png)
 !["Screenshot of News page"](https://github.com/Marwa7246/covid-dashboard/blob/master/Screenshots/3_News.png)
 !["Screenshot of Maps page"](https://github.com/Marwa7246/covid-dashboard/blob/master/Screenshots/5_Maps.png)
+!["Screenshot of SMS alert"](https://github.com/Marwa7246/covid-dashboard/blob/master/Screenshots/18_SMS alert.jpg)
 !["Screenshot of Login page"](https://github.com/Marwa7246/covid-dashboard/blob/master/Screenshots/6_Login.png)
 !["Screenshot of Sign-up page"](https://github.com/Marwa7246/covid-dashboard/blob/master/Screenshots/7_Signup.png)
 !["Screenshot of Settings page"](https://github.com/Marwa7246/covid-dashboard/blob/master/Screenshots/11_Settings3.png)
@@ -25,10 +26,11 @@ COVID Dashboard is a full stack responsive web application built with ReactJS as
 
 ## Functionalities
 
-- View COVID-19 statistics for world-wide and Canada.
-- View COVID-19 news for world-wide and Canada.
+- View COVID-19 statistics for different countries.
+- View COVID-19 news for different countries.
 - Register and login to add/delete countries as your favourites.
-- Post login, view your favourite country's COVID-19 statistics and news.
+- Login to view your favourite country's COVID-19 statistics and news.
+- Get SMS alerts
 
 ## Getting Started
 
