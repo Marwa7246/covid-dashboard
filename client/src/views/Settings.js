@@ -38,10 +38,11 @@ import {
   addCountryNameKey,
   getMapDataLayer,
   getArrofNameFromIso,
-  getAllCountriesForDropDown
+  getAllCountriesForDropDown,
+  getMaxDifferenceCasesForSms
+  
 } from "../helpers/helpers";
 import AllCountriesSelection from "../components/AllCountriesSelection";
-import { getHistoricalCountry } from "../hooks/useApplicationData";
 
 import avatar from "assets/img/faces/marc.jpg";
 import { isConstructSignatureDeclaration } from "typescript";
@@ -49,11 +50,6 @@ import "semantic-ui-css/semantic.min.css";
 import { Dropdown } from "semantic-ui-react";
 
 import '../assets/css/Settings.scss'
-
-
-
-
-
 
 
 
@@ -84,7 +80,8 @@ const useStyles = makeStyles(styles);
 export default function Settings({
   state,
   saveFavourites,
-  deleteFavourites
+  deleteFavourites,
+  sendSMS
 }) {
   const [country, setCountry] = useState({
     countryName: "",
@@ -95,7 +92,6 @@ export default function Settings({
   const [total, setTotal]=useState({country:''})
 /////////////////////////////////////////////////////////////////
 
-// let favouritesForDropDown= []
 
   useEffect(() => {
     setFavouritesFinal(JSON.parse(localStorage.getItem("favourites")));
@@ -125,7 +121,16 @@ export default function Settings({
   !state.loading && console.log(mapData[0]);
 
 
-  
+  const ValidateSendSMS = () => {
+  const countriesOfHighIncrease = getMaxDifferenceCasesForSms(state.historicalCountriesForSms)
+
+    if (!state.loading && countriesOfHighIncrease.length) {
+      console.log ('countriesOfHighIncrease', countriesOfHighIncrease)
+      sendSMS(countriesOfHighIncrease)
+    }
+  }
+
+
 
 
 
@@ -135,7 +140,8 @@ const onSave = (favourites) => {
     console.log(arrOfFavCountryNames, favourites)
     saveFavourites(arrOfFavCountryNames)
       .then(() => console.log(localStorage.getItem("favourites")))
-      .then(() => setFavouritesFinal(JSON.parse(localStorage.getItem("favourites"))));
+      .then(() => setFavouritesFinal(JSON.parse(localStorage.getItem("favourites"))))
+      .then(()=>ValidateSendSMS())
   };
 
 
@@ -191,7 +197,6 @@ const onSave = (favourites) => {
               <CardHeader color="primary">
                 <h4 className={classes.cardTitleWhite}>
                   List of Your Favourites Countries
-                  {/* <p className='mouseHover' >Hover here<span className='hoverBox'>remove</span></p> */}
                 </h4>
               </CardHeader>
               <CardBody>
@@ -210,8 +215,6 @@ const onSave = (favourites) => {
             </Card>
           </GridItem>
         )}
-
-
 
       </GridContainer>
 
