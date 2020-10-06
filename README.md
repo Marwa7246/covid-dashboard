@@ -14,15 +14,15 @@ COVID Dashboard is a full stack responsive web application built with ReactJS as
 
 ## Screenshots
 
-!["Screenshot of Dashboard page"](https://github.com/Marwa7246/covid-dashboard/blob/master/Screenshots/01_Dashboard.png)
-!["Screenshot of News page"](https://github.com/Marwa7246/covid-dashboard/blob/master/Screenshots/03_News.png)
-!["Screenshot of Maps page"](https://github.com/Marwa7246/covid-dashboard/blob/master/Screenshots/05_Maps.png)
-!["Screenshot of SMS alert"](https://github.com/Marwa7246/covid-dashboard/blob/master/Screenshots/18_SMS alert.jpg)
-!["Screenshot of Login page"](https://github.com/Marwa7246/covid-dashboard/blob/master/Screenshots/06_Login.png)
-!["Screenshot of Sign-up page"](https://github.com/Marwa7246/covid-dashboard/blob/master/Screenshots/07_Signup.png)
-!["Screenshot of Settings page"](https://github.com/Marwa7246/covid-dashboard/blob/master/Screenshots/11_Settings3.png)
-!["Screenshot of Favourites page"](https://github.com/Marwa7246/covid-dashboard/blob/master/Screenshots/13_Favourites3.png)
-!["Screenshot of Responsive Design"](https://github.com/Marwa7246/covid-dashboard/blob/master/Screenshots/15_ResponsiveDesign1.png)
+!["Screenshot of Dashboard page"](https://github.com/Marwa7246/covid-dashboard/blob/master/screenshots/01_Dashboard.png)
+!["Screenshot of News page"](https://github.com/Marwa7246/covid-dashboard/blob/master/screenshots/03_News.png)
+!["Screenshot of Maps page"](https://github.com/Marwa7246/covid-dashboard/blob/master/screenshots/05_Maps.png)
+!["Screenshot of SMS alert"](https://github.com/Marwa7246/covid-dashboard/blob/master/screenshots/18_SMS alert.jpg)
+!["Screenshot of Login page"](https://github.com/Marwa7246/covid-dashboard/blob/master/screenshots/06_Login.png)
+!["Screenshot of Sign-up page"](https://github.com/Marwa7246/covid-dashboard/blob/master/screenshots/07_Signup.png)
+!["Screenshot of Settings page"](https://github.com/Marwa7246/covid-dashboard/blob/master/screenshots/11_Settings3.png)
+!["Screenshot of Favourites page"](https://github.com/Marwa7246/covid-dashboard/blob/master/screenshots/13_Favourites3.png)
+!["Screenshot of Responsive Design"](https://github.com/Marwa7246/covid-dashboard/blob/master/screenshots/15_ResponsiveDesign1.png)
 
 ## Functionalities
 
