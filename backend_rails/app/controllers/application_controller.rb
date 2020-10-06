@@ -7,7 +7,6 @@ before_action :require_login
     end
 
     def auth_header
-        # byebug
         request.headers["Authorization"]
     end
 

@@ -37,7 +37,7 @@ import Login from "views/Login";
 import Signup from "views/Signup";
 import Logout from "views/Logout";
 import { isPropertySignature } from "typescript";
-import { getMapDataLayer } from "../../helpers/helpers";
+import { getMapDataLayer, getMaxDifferenceCasesForSms } from "../../helpers/helpers";
 
 let ps;
 
@@ -67,11 +67,19 @@ export default function Application({ ...rest }) {
     getFavourites,
     deleteFavourites,
     getHistoricalCountry,
+    getMaxDifferenceCasesForSms,
+    sendSMS,
   } = useApplicationData();
+
+
   const [user, setUser] = useState("");
   // const [new_routes, setNewRoutes] = useState([])
   let mapData = [];
   if (!state.loading) mapData = getMapDataLayer(state.mapData);
+
+
+
+
 
   // const newRoutes = (routes) => {
   //   let new_routes2 = []
@@ -111,6 +119,8 @@ export default function Application({ ...rest }) {
               user={user}
               getFavourites={getFavourites}
               getHistoricalCountry={getHistoricalCountry}
+              sendSMS={sendSMS}
+              getMaxDifferenceCasesForSms={getMaxDifferenceCasesForSms}
             />
           </Route>
         );

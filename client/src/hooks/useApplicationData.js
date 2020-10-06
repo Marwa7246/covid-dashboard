@@ -24,6 +24,7 @@ const useApplicationData = () => {
     currentGlobalData: {},
     currentCanadaData: {},
     historicalCanadaData: {},
+    historicalCountriesForSms: [],
 
     loading: true,
     loadingFavourites: true,
@@ -39,9 +40,8 @@ const useApplicationData = () => {
       axios.get(newsUrl),
       axios.get(" https://disease.sh/v3/covid-19/all"),
       axios.get(" https://disease.sh/v3/covid-19/countries/canada?strict=true"),
-      axios.get(
-        " https://disease.sh/v3/covid-19/historical/canada?lastdays=30"
-      ),
+      axios.get(" https://disease.sh/v3/covid-19/historical/canada?lastdays=30"),
+      axios.get(" https://disease.sh/v3/covid-19/historical?lastdays=7")
     ]).then((all) => {
       // update the state with the result
       dispatch({
@@ -54,6 +54,7 @@ const useApplicationData = () => {
         currentGlobalData: all[5].data,
         currentCanadaData: all[6].data,
         historicalCanadaData: all[7].data,
+        historicalCountriesForSms: all[8].data
       });
     });
   }, []);
@@ -137,6 +138,25 @@ const useApplicationData = () => {
     });
   }
 
+  function sendSMS (countries) {
+    const token = localStorage.getItem("token");
+    const email = localStorage.getItem("userEmail");
+
+
+    const message = 'from react'
+    return axios({
+      method: "POST",
+      url: `/api/twilios`,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      data: { countries: countries, email: email },
+    }).then((res) => {
+      console.log("After sending SMS", res);
+
+    });
+  }
+
   return {
     state,
     dispatch,
@@ -144,6 +164,7 @@ const useApplicationData = () => {
     getFavourites,
     getHistoricalCountry,
     deleteFavourites,
+    sendSMS
   };
 };
 

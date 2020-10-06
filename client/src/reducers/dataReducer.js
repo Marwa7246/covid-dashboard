@@ -24,6 +24,8 @@ const dataReducer = (state, action) => {
         currentGlobalData: action.currentGlobalData,
         currentCanadaData: action.currentCanadaData,
         historicalCanadaData: action.historicalCanadaData,
+        historicalCountriesForSms: action.historicalCountriesForSms,
+
 
         loading: false,
       };

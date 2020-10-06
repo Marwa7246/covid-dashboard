@@ -17,6 +17,8 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@material-ui/icons/CheckBox';
+import Alert from "@material-ui/lab/Alert";
+
 
 import moment from "moment";
 
@@ -38,10 +40,11 @@ import {
   addCountryNameKey,
   getMapDataLayer,
   getArrofNameFromIso,
-  getAllCountriesForDropDown
+  getAllCountriesForDropDown,
+  getMaxDifferenceCasesForSms
+  
 } from "../helpers/helpers";
 import AllCountriesSelection from "../components/AllCountriesSelection";
-import { getHistoricalCountry } from "../hooks/useApplicationData";
 
 import avatar from "assets/img/faces/marc.jpg";
 import { isConstructSignatureDeclaration } from "typescript";
@@ -49,11 +52,6 @@ import "semantic-ui-css/semantic.min.css";
 import { Dropdown } from "semantic-ui-react";
 
 import '../assets/css/Settings.scss'
-
-
-
-
-
 
 
 
@@ -84,60 +82,63 @@ const useStyles = makeStyles(styles);
 export default function Settings({
   state,
   saveFavourites,
-  deleteFavourites
+  deleteFavourites,
+  sendSMS
 }) {
   const [country, setCountry] = useState({
     countryName: "",
   });
   const [favouritesFinal, setFavouritesFinal] = useState([]);
+  const [user, setUser] = useState('');
+
 
 /////////////////////////////////////////////////////////////////
   const [total, setTotal]=useState({country:''})
 /////////////////////////////////////////////////////////////////
 
-// let favouritesForDropDown= []
 
   useEffect(() => {
     setFavouritesFinal(JSON.parse(localStorage.getItem("favourites")));
     console.log(JSON.parse(localStorage.getItem("favourites")));
- }, []);
-  const favouritesForDropDown =    
-    getFavouritesCountriesForDropDown(favouritesFinal, state.mapData);
+    const email = localStorage.getItem("userEmail");
+    setUser(email);
+  }, []);
 
-    console.log(favouritesForDropDown)
+  const favouritesForDropDown = user &&    
+    getFavouritesCountriesForDropDown(favouritesFinal, state.mapData);
 
    const countryOptionsAll = getAllCountriesForDropDown(state.mapData);
 
-  const countryOptions = countryOptionsAll.filter(ele =>  !favouritesForDropDown.filter(item=>item.text === ele.text).length )
+  const countryOptions = user && countryOptionsAll.filter(ele =>  !favouritesForDropDown.filter(item=>item.text === ele.text).length )
 
-   !state.loading && console.log('test', favouritesForDropDown, countryOptions.length, countryOptionsAll.length )
-
-   
- 
 
   const classes = useStyles();
 
 
-
-
-
   const mapData = getMapDataLayer(state.mapData);
-  !state.loading && console.log(mapData[0]);
+  // !state.loading && console.log(mapData[0]);
 
 
-  
+  const ValidateSendSMS = () => {
+  const countriesOfHighIncrease = getMaxDifferenceCasesForSms(state.historicalCountriesForSms)
+
+    if (!state.loading && countriesOfHighIncrease.length) {
+      console.log ('countriesOfHighIncrease', countriesOfHighIncrease)
+      sendSMS(countriesOfHighIncrease)
+    }
+  }
 
 
 
 const onSave = (favourites) => {
-    console.log(favourites);
+    // console.log(favourites);
     const arrOfFavCountryNames = getArrofNameFromIso(favourites, countryOptions);
-    console.log(arrOfFavCountryNames, favourites)
+    // console.log(arrOfFavCountryNames, favourites)
     saveFavourites(arrOfFavCountryNames)
       .then(() => console.log(localStorage.getItem("favourites")))
-      .then(() => setFavouritesFinal(JSON.parse(localStorage.getItem("favourites"))));
+      .then(() => setFavouritesFinal(JSON.parse(localStorage.getItem("favourites"))))
+      .then(()=>ValidateSendSMS())
   };
-
 
 
 
@@ -154,7 +155,7 @@ const onSave = (favourites) => {
       
     };
 
-    const favList = favouritesFinal.length > 0 && !state.loading &&  favouritesForDropDown.map(ele =>{
+    const favList = user && favouritesFinal.length > 0 && !state.loading &&  favouritesForDropDown.map(ele =>{
       return (
         <FormGroup column>
         <FormControlLabel 
@@ -174,6 +175,13 @@ const onSave = (favourites) => {
     ////////////////////////////////////////////////////////
   return (
     <div>
+      {!user && 
+      <GridContainer>
+          <Alert severity="error">
+            <b>Please login first.</b>
+          </Alert>
+      </GridContainer>}
+  {user && <>
 
       {!state.loading && favouritesForDropDown && (
         <GridContainer>
@@ -191,7 +199,6 @@ const onSave = (favourites) => {
               <CardHeader color="primary">
                 <h4 className={classes.cardTitleWhite}>
                   List of Your Favourites Countries
-                  {/* <p className='mouseHover' >Hover here<span className='hoverBox'>remove</span></p> */}
                 </h4>
               </CardHeader>
               <CardBody>
@@ -201,7 +208,7 @@ const onSave = (favourites) => {
                   </GridItem>
 
                   <GridItem xs={12} sm={12} md={12}>
-                  {favouritesFinal.length > 0 && !state.loading && favList}
+                  {favouritesFinal.length > 0 && !state.loading && user &&favList}
 
 
                   </GridItem>
@@ -211,11 +218,10 @@ const onSave = (favourites) => {
           </GridItem>
         )}
 
-
-
       </GridContainer>
 
-
+</>
+}
     </div>
   );
 }
