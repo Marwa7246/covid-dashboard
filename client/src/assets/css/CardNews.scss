@@ -1,0 +1,17 @@
+.news-card-body {
+  display: flex;
+  flex-direction: row;
+}
+
+.news-part1 {
+  display: flex-wrap;
+  flex-grow: 4;
+}
+.news-part2 {
+  max-width: 400px;
+  overflow: hidden;
+}
+.news-part2 img {
+  width: 100%;
+  object-fit: contain;
+}
