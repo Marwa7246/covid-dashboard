@@ -175,12 +175,7 @@ const onSave = (favourites) => {
     ////////////////////////////////////////////////////////
   return (
     <div>
-      {!user && 
-      <GridContainer>
-          <Alert severity="error">
-            <b>Please login first.</b>
-          </Alert>
-      </GridContainer>}
+
   {user && <>
 
       {!state.loading && favouritesForDropDown && (

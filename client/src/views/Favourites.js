@@ -156,18 +156,18 @@ const favouritesForDropDown = user && favouritesFinal.length > 0 && !state.loadi
 
   return (
     <div>
-    {!user && 
+    {/* {!user && 
       <GridContainer>
           <Alert severity="error">
             <b>Please login first.</b>
           </Alert>
-      </GridContainer>}
+      </GridContainer>} */}
 
      {/* Containter of error if no country added */}
 
-    {favouritesFinal.length === 0 && !state.loading &&  
+    {user && favouritesFinal.length === 0 && !state.loading &&  
 
-      <GridItem xs={12} sm={12} md={12}>
+      <GridItem xs={12} sm={12} md={6}>
         <Alert severity="error">
           <b> No countries in you favourite list. Please go to the settings page first.</b>
         </Alert>

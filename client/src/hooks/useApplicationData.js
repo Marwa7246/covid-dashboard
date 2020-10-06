@@ -142,8 +142,6 @@ const useApplicationData = () => {
     const token = localStorage.getItem("token");
     const email = localStorage.getItem("userEmail");
 
-
-    const message = 'from react'
     return axios({
       method: "POST",
       url: `/api/twilios`,
