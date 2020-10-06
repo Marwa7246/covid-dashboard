@@ -14,21 +14,23 @@ COVID Dashboard is a full stack responsive web application built with ReactJS as
 
 ## Screenshots
 
-!["Screenshot of Dashboard page"](https://github.com/Marwa7246/covid-dashboard/blob/master/Screenshots/1_Dashboard.png)
-!["Screenshot of News page"](https://github.com/Marwa7246/covid-dashboard/blob/master/Screenshots/3_News.png)
-!["Screenshot of Maps page"](https://github.com/Marwa7246/covid-dashboard/blob/master/Screenshots/5_Maps.png)
-!["Screenshot of Login page"](https://github.com/Marwa7246/covid-dashboard/blob/master/Screenshots/6_Login.png)
-!["Screenshot of Sign-up page"](https://github.com/Marwa7246/covid-dashboard/blob/master/Screenshots/7_Signup.png)
-!["Screenshot of Settings page"](https://github.com/Marwa7246/covid-dashboard/blob/master/Screenshots/11_Settings3.png)
-!["Screenshot of Favourites page"](https://github.com/Marwa7246/covid-dashboard/blob/master/Screenshots/13_Favourites3.png)
-!["Screenshot of Responsive Design"](https://github.com/Marwa7246/covid-dashboard/blob/master/Screenshots/15_ResponsiveDesign1.png)
+!["Screenshot of Dashboard page"](https://github.com/Marwa7246/covid-dashboard/blob/master/screenshots/01_Dashboard.png)
+!["Screenshot of News page"](https://github.com/Marwa7246/covid-dashboard/blob/master/screenshots/03_News.png)
+!["Screenshot of Maps page"](https://github.com/Marwa7246/covid-dashboard/blob/master/screenshots/05_Maps.png)
+!["Screenshot of Login page"](https://github.com/Marwa7246/covid-dashboard/blob/master/screenshots/06_Login.png)
+!["Screenshot of Sign-up page"](https://github.com/Marwa7246/covid-dashboard/blob/master/screenshots/07_Signup.png)
+!["Screenshot of Settings page"](https://github.com/Marwa7246/covid-dashboard/blob/master/screenshots/11_Settings3.png)
+!["Screenshot of Favourites page"](https://github.com/Marwa7246/covid-dashboard/blob/master/screenshots/13_Favourites3.png)
+!["Screenshot of Responsive Design"](https://github.com/Marwa7246/covid-dashboard/blob/master/screenshots/15_ResponsiveDesign1.png)
+!["Screenshot of SMS alert"](https://github.com/Marwa7246/covid-dashboard/blob/master/screenshots/18_SMS%20alert.jpg)
 
 ## Functionalities
 
-- View COVID-19 statistics for world-wide and Canada.
-- View COVID-19 news for world-wide and Canada.
+- View COVID-19 statistics for different countries.
+- View COVID-19 news for different countries.
 - Register and login to add/delete countries as your favourites.
-- Post login, view your favourite country's COVID-19 statistics and news.
+- Login to view your favourite country's COVID-19 statistics and news.
+- Get SMS alerts
 
 ## Getting Started
 
