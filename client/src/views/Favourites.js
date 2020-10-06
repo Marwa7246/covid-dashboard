@@ -83,14 +83,19 @@ export default function Favourites({state, saveFavourites, getHistoricalCountry}
 
   
   useEffect(() => {
-    setFavouritesFinal(JSON.parse(localStorage.getItem("favourites")))
+    setFavouritesFinal(JSON.parse(localStorage.getItem("favourites")));
+    console.log(JSON.parse(localStorage.getItem("favourites")))
   }, []);
+
+
 
   
   const classes = useStyles();
 
   const favouriteCountryHistorical = state.favouriteCountryHistorical;
   const favouriteCountryNews = state.favouriteCountryNews;
+
+  !state.loadingFavouriteCountry && console.log('ffff', favouriteCountryNews)
 
   const newsList = !state.loadingFavouriteCountry &&
     favouriteCountryNews.articles.map((item, index) => {
@@ -105,6 +110,9 @@ export default function Favourites({state, saveFavourites, getHistoricalCountry}
             newsDescription={item.description}
             newsURL={item.url}
             newsPublishedAt={timeFormat}
+            source={item.source.name}
+            urlToImage={item.urlToImage}
+
           />
       );
     })
@@ -134,7 +142,7 @@ export default function Favourites({state, saveFavourites, getHistoricalCountry}
     // e.preventDefault()    
     console.log('handleChange',  e.target, data.value)
     getHistoricalCountry(data.value,  country.period)
-    .then(()=>setCountry(prev=>({...prev, countryName: data.value})))
+    .then(()=>setCountry(prev=>({...prev, countryName: data.value, error:''})))
     .catch(() => {
       setCountry(prev=>({...prev, countryName: data.value, error: 'This country does not have historical data'}));
       console.log('state.loadingFavouriteCountry',state.loadingFavouriteCountry)
@@ -142,17 +150,7 @@ export default function Favourites({state, saveFavourites, getHistoricalCountry}
 
   }
 
-  // const handleChangeTime = (e: any, data?: any) => {
-  //   console.log('country.countryName',data.value)
-  //   country.countryName && getHistoricalCountry(country.countryName, data.value)
-  //   .then(()=>setCountry(prev=>({...prev, period: data.value})))
-  //   .catch(() => {
-  //     setCountry(prev=>({...prev, period: data.value, error: 'This country does not have historical data'}));
-  //     console.log('state.loadingFavouriteCountry',state.loadingFavouriteCountry)
-  //   })
 
-
-  // }
 
   const handleChangeTimeRadio = (e) => {
     console.log('time',e.target.value)
@@ -167,36 +165,12 @@ export default function Favourites({state, saveFavourites, getHistoricalCountry}
 
   }
 
-
-
-
 const favouritesForDropDown = favouritesFinal.length > 0 && !state.loading && getFavouritesCountriesForDropDown(favouritesFinal, state.mapData)
-
 
   return (
     <div>      
-      {/* Containter of error */}
-    {country.error && 
-    <GridContainer>{country.error} {!state.loadingFavouriteCountry && 'hello'}
-    </GridContainer>}
-
-
-      {/* Containter of error if no country added */}
-
-{favouritesFinal.length === 0 && !state.loading &&  
-      <GridContainer>
-      <GridItem xs={12} sm={12} md={12}>
-      <h4> No countries in you favourite list. Please go to settings page first.</h4>
-
-      </GridItem >
-
-
-      </GridContainer>}
-
-      {/* Containter of error if no country added */}
 
       <GridContainer>
-
 
              {/* FAvourite countries dropdown menu */}
 
@@ -212,8 +186,9 @@ const favouritesForDropDown = favouritesFinal.length > 0 && !state.loading && ge
               <GridItem xs={12} sm={12} md={12}>
                 <h4> Select a country to see more information</h4>  
      
-                </GridItem>            
- { !state.loading && 
+                </GridItem> 
+
+                { !state.loading && 
                 <GridItem xs={12} sm={12} md={12}>
                    <Dropdown
                     placeholder='Select Country'
@@ -223,6 +198,47 @@ const favouritesForDropDown = favouritesFinal.length > 0 && !state.loading && ge
                     options={favouritesForDropDown}
                   />   
                 </GridItem> } 
+
+
+                {!country.error  && country.countryName &&
+                <GridItem xs={12} sm={12} md={12}>
+                  <h4> <br/> </h4>  
+     
+                </GridItem> }
+
+
+                        {/* /////////////////////////////////Radio Button//////////////// */}
+
+                <GridItem xs={12} sm={12} md={12}>
+          {!country.error  && country.countryName && 
+                <FormControl component="fieldset">
+                  <FormLabel component="legend"><strong>Select A time Interval</strong></FormLabel>
+                  <RadioGroup row aria-label="time" name="time" value={country.period} onChange={handleChangeTimeRadio} >
+                    <FormControlLabel value="10" control={<Radio />} label="10 days" />
+                    <FormControlLabel value="20" control={<Radio />} label="20 days" />
+                    <FormControlLabel value="30" control={<Radio />} label="30 days" />
+                    <FormControlLabel value="60" control={<Radio />} label="60 days" />
+                    <FormControlLabel value="90" control={<Radio />} label="90 days" />
+
+
+                  </RadioGroup>
+                </FormControl> 
+              }    
+                </GridItem> 
+
+
+
+                      {/* Containter of error if no country added */}
+
+              {favouritesFinal.length === 0 && !state.loading &&  
+
+                <GridItem xs={12} sm={12} md={12}>
+                <h4> No countries in you favourite list. Please go to the settings page first.</h4>
+              
+                </GridItem >
+
+
+      }
               </GridContainer>
             </CardBody>
  
@@ -230,12 +246,16 @@ const favouritesForDropDown = favouritesFinal.length > 0 && !state.loading && ge
         </GridItem>    
 
 
-    
+              {/* Containter of error */}
+    {country.error && 
+    <GridItem xs={12} sm={12} md={6}>
+    <h4>{country.error}</h4>
+    </GridItem>}
 
-
-                          {/* Containter of country card */}
+    {/* Containter of country card */}
 
         <GridItem xs={12} sm={12} md={6}>
+
          { country.countryName && 
          <CardCountry
           mapData={mapData}
@@ -244,33 +264,6 @@ const favouritesForDropDown = favouritesFinal.length > 0 && !state.loading && ge
         }
         </GridItem>
 
-        
-
-      </GridContainer>
-      <GridContainer>
-        {/* /////////////////////////////////Radio Button//////////////// */}
-        {!country.error  && country.countryName && 
-        <GridItem xs={12} sm={12} md={5}>
-          <Card>
-
-            <CardBody>
- 
-
-                <FormControl component="fieldset">
-                  <FormLabel component="legend"></FormLabel>
-                  <RadioGroup row aria-label="time" name="time" value={country.period} onChange={handleChangeTimeRadio} >
-                    <FormControlLabel value="10" control={<Radio />} label="10 days" />
-                    <FormControlLabel value="20" control={<Radio />} label="20 days" />
-                    <FormControlLabel value="30" control={<Radio />} label="30 days" />
-                    <FormControlLabel value="60" control={<Radio />} label="60 days" />
-
-                  </RadioGroup>
-                </FormControl>
-
-            </CardBody>
- 
-          </Card>
-        </GridItem>  } 
       </GridContainer>
 
 
@@ -283,19 +276,6 @@ const favouritesForDropDown = favouritesFinal.length > 0 && !state.loading && ge
 
         <GridItem xs={12} sm={12} md={6}>
         <CasesChart
-            color="danger"
-            title="deaths"
-            days={days}
-            series={deaths}
-            multiple='Thousands'
-            type="Bar"
-            warning="warning"
-            />
-
-        </GridItem>
-
-        <GridItem xs={12} sm={12} md={6}>
-        <CasesChart
               color="info"
               title="accumulated cases"
               days={days}
@@ -303,7 +283,19 @@ const favouritesForDropDown = favouritesFinal.length > 0 && !state.loading && ge
               multiple='Thousands'
 
               type="Line"
+            />
 
+        </GridItem>
+
+        <GridItem xs={12} sm={12} md={6}>
+        <CasesChart
+            color="danger"
+            title="deaths"
+            days={days}
+            series={deaths}
+            multiple='Thousands'
+            type="Bar"
+            warning="warning"
           /> 
         </GridItem>
 

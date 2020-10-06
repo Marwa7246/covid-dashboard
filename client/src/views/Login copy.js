@@ -1,51 +1,76 @@
 import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 
 // core components
 import GridItem from "components/Grid/GridItem.js";
 import GridContainer from "components/Grid/GridContainer.js";
-import CustomInput from "components/CustomInput/CustomInput.js";
 import Button from "components/CustomButtons/Button.js";
 import Card from "components/Card/Card.js";
 import CardHeader from "components/Card/CardHeader.js";
 import CardBody from "components/Card/CardBody.js";
 import CardFooter from "components/Card/CardFooter.js";
-import axios from "axios";
 import TextField from "@material-ui/core/TextField";
+import Alert from "@material-ui/lab/Alert";
 
-import useLogin from "../hooks/useLogin";
-import { Redirect } from "react-router-dom";
+import axios from "axios";
 
-export default function Login(props) {
+import { getFavouritesCountriesForDropDown } from "../helpers/helpers";
+
+export default function Login({ state }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [user, setUser] = useState({});
-  const [form, setForm] = useState("");
+  const [favouritesFinal, setFavouritesFinal] = useState([]);
 
-  const { loginShowing, toggleLogin } = useLogin();
+  const history = useHistory();
 
-  const validate = () => {
-    if (!email) {
-      setError("Email is required!");
-      return;
-    }
-    if (!password) {
-      setError("Password is required!");
-      console.log(error);
-      return;
-    }
-
-    const user = {
-      email,
-      password,
-    };
+  const handleEmailChange = (e) => {
+    setEmail(e.target.value);
   };
 
-  //////////////////////////////////// 2- after login ---> auto login ---> get requet to auto login
+  const handlePasswordChange = (e) => {
+    setPassword(e.target.value);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!email && !password) {
+      setError("All fields required!");
+      return;
+    } else if (!email) {
+      setError("Email is required!");
+      return;
+    } else if (!password) {
+      setError("Password is required!");
+      return;
+    }
+    axios
+      .post(`/login`, { email, password })
+      .then((res) => {
+        localStorage.setItem("user", res.data.user);
+        localStorage.setItem("userEmail", res.data.user.email);
+        localStorage.setItem("userFirstName", res.data.user.first_name);
+        localStorage.setItem("token", res.data.jwt);
+        localStorage.setItem("favourites", JSON.stringify(res.data.favourites));
+        // console.log("favourites", getFavouritesCountriesForDropDown(res.data.favourites));
+        // dispatch({ type: SET_FAVOURITES, allFavouriteCountries: res.data.favourites })
+        // setFavouritesFinal(getFavouritesCountriesForDropDown(res.data.favourites))
+
+        handleLogin(res.data.user);
+      })
+      .catch((err) => {
+        console.log(err);
+        setError("Incorrect Email or Password!");
+      });
+    setEmail("");
+    setPassword("");
+  };
+
   const handleLogin = (user) => {
     setUser(user);
-
     const token = localStorage.getItem("token");
+
     if (token) {
       axios
         .get(`/auto_login`, {
@@ -54,17 +79,12 @@ export default function Login(props) {
           },
         })
         .then((res) => {
-          console.log("res.data : ", res.data);
-
           setUser(res.data);
-          // console.log("user after auto login : ", user);
-          // console.log("email after auto login : ", email);
           handleAuthClick();
         });
     }
   };
 
-  ///////////////////////////3- after auto login, get to user_is_auth
   const handleAuthClick = () => {
     setError("");
     const token = localStorage.getItem("token");
@@ -75,119 +95,67 @@ export default function Login(props) {
         },
       })
       .then((res) => {
-        console.log("data after user is authenticated ", res);
-        console.log("email after user is authenticated ", res.data.email);
-        console.log("redirecting to dashboard after successful authentication");
-        //Redirect(`/dashboard`);
+        history.push("/dashboard");
       })
       .catch((err) => {
         console.log(err);
         setError("Incorrect Email or Password!");
       });
-  };
-
-  const handleFormSwitch = (input) => {
-    setForm(input);
-  };
-
-  ////////////////////////// 1- after submitting the form--post request to login
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    axios
-      .post(`/login`, { email, password })
-      .then((res) => {
-        console.log(res.data);
-        localStorage.setItem("token", res.data.jwt);
-
-        handleLogin(res.data.user);
-        // toggleLogin();
-      })
-      .catch((err) => {
-        console.log(err);
-        setError("Incorrect Email or Password!");
-      });
-    setEmail("");
-    setPassword("");
-
-    // validate();
-  };
-
-  // useEffect(() => {
-  //   const token = localStorage.getItem("token");
-  //   if (token) {
-  //     axios
-  //       .get(`/auto_login`, {
-  //         headers: {
-  //           Authorization: `Bearer ${token}`,
-  //         },
-  //       })
-  //       // .then(resp => resp.json())
-  //       .then((res) => {
-  //         setUser(res.data);
-  //         console.log("res after auto login : ", res);
-  //       });
-  //   }
-  // }, []);
-
-  const handleChangeEmail = (e) => {
-    setEmail(e.target.value);
-  };
-
-  const handleChangePassword = (e) => {
-    setPassword(e.target.value);
   };
 
   return (
     <div>
       <GridContainer>
         <GridItem xs={12} sm={12} md={12}>
+          <div>
+            {error && (
+              <Alert severity="error">
+                <b>{error && <p>{error}</p>}</b>
+              </Alert>
+            )}
+          </div>
           <Card>
-            <div>
-              <br />
-              {error && <p>{error}</p>}
-              <form onSubmit={handleSubmit}>
-                <CardHeader color="primary" style={{ color: "white" }}>
-                  <h4>Enter your credentials</h4>
-                </CardHeader>
-
-                <CardBody>
-                  <GridContainer>
-                    <GridItem xs={12} sm={12} md={5}>
-                      <TextField
-                        labelText="Email address"
-                        id="email"
-                        value={email}
-                        onChange={handleChangeEmail}
-                        placeholder="Email"
-                        formControlProps={{
-                          fullWidth: true,
-                        }}
-                      />
-                    </GridItem>
-                  </GridContainer>
-                  <GridContainer>
-                    <GridItem xs={12} sm={12} md={5}>
-                      <TextField
-                        onChange={handleChangePassword}
-                        labelText="Password"
-                        id="password"
-                        type="password"
-                        value={password}
-                        placeholder="Password"
-                        formControlProps={{
-                          fullWidth: true,
-                        }}
-                      />
-                    </GridItem>
-                  </GridContainer>
-                </CardBody>
-                <CardFooter>
-                  <Button variant="contained" color="primary" type="submit">
-                    Login
-                  </Button>
-                </CardFooter>
-              </form>
-            </div>
+            <form onSubmit={handleSubmit}>
+              <CardHeader color="primary" style={{ color: "white" }}>
+                <h4>Login</h4>
+              </CardHeader>
+              <CardBody>
+                <GridContainer>
+                  <GridItem xs={12} sm={12} md={5}>
+                    <TextField
+                      labelText="Email address"
+                      id="email"
+                      value={email}
+                      onChange={handleEmailChange}
+                      placeholder="Email"
+                      formControlProps={{
+                        fullWidth: true,
+                      }}
+                    />
+                  </GridItem>
+                </GridContainer>
+                <GridContainer>
+                  <GridItem xs={12} sm={12} md={5}>
+                    <TextField
+                      onChange={handlePasswordChange}
+                      labelText="Password"
+                      id="password"
+                      type="password"
+                      value={password}
+                      placeholder="Password"
+                      formControlProps={{
+                        fullWidth: true,
+                      }}
+                    />
+                  </GridItem>
+                </GridContainer>
+              </CardBody>
+              <CardFooter>
+                <Button variant="contained" color="primary" type="submit">
+                  Submit
+                </Button>
+              </CardFooter>
+            </form>
           </Card>
         </GridItem>
       </GridContainer>

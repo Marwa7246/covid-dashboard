@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 // @material-ui/core components
 import { makeStyles, withStyles } from "@material-ui/core/styles";
+import { Flag, Segment } from 'semantic-ui-react'
+
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import DropdownButton from "react-bootstrap/DropdownButton";
@@ -36,15 +38,21 @@ import {
   addCountryNameKey,
   getMapDataLayer,
   getArrofNameFromIso,
-  getAllCountriesForDropDown
+  getAllCountriesForDropDown,
+  getMaxDifferenceCasesForSms
+  
 } from "../helpers/helpers";
 import AllCountriesSelection from "../components/AllCountriesSelection";
-import { getHistoricalCountry } from "../hooks/useApplicationData";
 
 import avatar from "assets/img/faces/marc.jpg";
 import { isConstructSignatureDeclaration } from "typescript";
 import "semantic-ui-css/semantic.min.css";
 import { Dropdown } from "semantic-ui-react";
+
+import '../assets/css/Settings.scss'
+
+
+
 
 const styles = {
   cardCategoryWhite: {
@@ -65,26 +73,6 @@ const styles = {
   },
 };
 
-const countryOptionsFavourites = [
-  { key: "af", value: "af", flag: "af", text: "Afghanistan" },
-  { key: "ca", value: "ca", flag: "ca", text: "Canada" },
-  { key: "al", value: "al", flag: "al", text: "Albania" },
-];
-
-
-
-const GreenCheckbox = withStyles({
-  root: {
-    color: green[400],
-    '&$checked': {
-      color: green[600],
-    },
-  },
-  checked: {},
-})((props) => <Checkbox color="default" {...props} />);
-
-// let array = ['1','2','3','4']
-
 
 
 const useStyles = makeStyles(styles);
@@ -92,19 +80,18 @@ const useStyles = makeStyles(styles);
 export default function Settings({
   state,
   saveFavourites,
-  deleteFavourites
+  deleteFavourites,
+  sendSMS
 }) {
   const [country, setCountry] = useState({
     countryName: "",
   });
   const [favouritesFinal, setFavouritesFinal] = useState([]);
-  // const[countryOptions, setCountryOptions] = useState([]);
 
 /////////////////////////////////////////////////////////////////
   const [total, setTotal]=useState({country:''})
 /////////////////////////////////////////////////////////////////
 
-// let favouritesForDropDown= []
 
   useEffect(() => {
     setFavouritesFinal(JSON.parse(localStorage.getItem("favourites")));
@@ -121,9 +108,7 @@ export default function Settings({
 
    !state.loading && console.log('test', favouritesForDropDown, countryOptions.length, countryOptionsAll.length )
 
-  //  setCountryOptions(updatedCountryOptions)
-
-    
+   
  
 
   const classes = useStyles();
@@ -136,7 +121,16 @@ export default function Settings({
   !state.loading && console.log(mapData[0]);
 
 
-  
+  const ValidateSendSMS = () => {
+  const countriesOfHighIncrease = getMaxDifferenceCasesForSms(state.historicalCountriesForSms)
+
+    if (!state.loading && countriesOfHighIncrease.length) {
+      console.log ('countriesOfHighIncrease', countriesOfHighIncrease)
+      sendSMS(countriesOfHighIncrease)
+    }
+  }
+
+
 
 
 
@@ -146,15 +140,14 @@ const onSave = (favourites) => {
     console.log(arrOfFavCountryNames, favourites)
     saveFavourites(arrOfFavCountryNames)
       .then(() => console.log(localStorage.getItem("favourites")))
-      .then(() => setFavouritesFinal(JSON.parse(localStorage.getItem("favourites"))));
+      .then(() => setFavouritesFinal(JSON.parse(localStorage.getItem("favourites"))))
+      .then(()=>ValidateSendSMS())
   };
 
 
 
 
-    ////////////////////////////////////////////////////////
-
-    const handleChangeRemove = (event) => {
+   const handleChangeRemove = (event) => {
       const newFav = favouritesForDropDown.filter(ele => ele.text!==event.target.name )
       setTotal({...total, country: event.target.name});
       console.log (event.target, newFav)
@@ -165,21 +158,21 @@ const onSave = (favourites) => {
         setFavouritesFinal(JSON.parse(localStorage.getItem("favourites")))
       })
       
-      // console.log('zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz', newFav)
     };
 
     const favList = favouritesFinal.length > 0 && !state.loading &&  favouritesForDropDown.map(ele =>{
       return (
         <FormGroup column>
-        <FormControlLabel
+        <FormControlLabel 
           key={ele}
-          control={<GreenCheckbox 
+          control={<Checkbox 
           checked={true} 
-          onChange={handleChangeRemove} name={ele.text} />}
-          label={ele.text}
+          onChange={handleChangeRemove} name={ele.text} 
+          color="primary"
+          />}
+          label={<span className='toBeHovered' ><Flag name= {ele.key} /><strong>{ele.text}</strong> <span className='box'>DELETE</span></span>}
         />
       </FormGroup>
-  
   
       )
     } 
@@ -188,8 +181,7 @@ const onSave = (favourites) => {
   return (
     <div>
 
-
-      {!state.loading && (
+      {!state.loading && favouritesForDropDown && (
         <GridContainer>
           <GridItem xs={12} sm={12} md={12}>
             {<AllCountriesSelection onSave={onSave} defaultValue={favouritesFinal} countryOptions={countryOptions}
@@ -210,21 +202,13 @@ const onSave = (favourites) => {
               <CardBody>
                 <GridContainer>
                   <GridItem xs={12} sm={12} md={12}>
-                    <h4> You can remove countries from your list by unchecking the CheckBox</h4>
+                    <h4> You can remove countries from your list by unticking the checkbox</h4>
                   </GridItem>
 
                   <GridItem xs={12} sm={12} md={12}>
                   {favouritesFinal.length > 0 && !state.loading && favList}
 
-                    {/* <Dropdown
-                      placeholder="Select Country"
-                      fluid
-                      multiple
 
-                      selection
-                      // onChange={handleChange}
-                      options={favouritesForDropDown}
-                    /> */}
                   </GridItem>
                 </GridContainer>
               </CardBody>
@@ -232,10 +216,7 @@ const onSave = (favourites) => {
           </GridItem>
         )}
 
-
-
       </GridContainer>
-      {/* {favouritesFinal.length > 0 && !state.loading && favList} */}
 
 
     </div>

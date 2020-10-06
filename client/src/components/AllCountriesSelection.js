@@ -19,7 +19,6 @@ import CardNews from "components/CardNews.js";
 import { getMapDataLayer } from "../helpers/helpers";
 import CardCountry from "components/CardCountry.js";
 
-const MAX_COUNTRIES_SELECTION = 3;
 
 const styles = {
   cardCategoryWhite: {
@@ -54,17 +53,9 @@ const AllCountriesSelection = (props) => {
 
   const classes = useStyles();
 
-  // const countryOptions = [
-  //   { key: 'af', value: 'af', flag: 'af', text: 'Afghanistan' },
-  //   { key: 'ca', value: 'ca', flag: 'ca', text: 'Canada' },
-  //   { key: 'al', value: 'al', flag: 'al', text: 'Albania' },
-
-  // ]
 
   const handleAllCountriesChange = (e: any, data?: any) => {
-    // if (data.value.length <= MAX_COUNTRIES_SELECTION) {
-    //   setAllFavouriteCountries(data.value);
-    // }
+
     setAllFavouriteCountries(data.value);
   };
 
@@ -75,13 +66,18 @@ const AllCountriesSelection = (props) => {
     }
     setError("");
     onSave(allFavouriteCountries);
+    setAllFavouriteCountries([])
   };
 
-  // console.log(allFavouriteCountries)
 
   return (
     <div>
       <GridContainer>
+        {error && 
+        <GridItem xs={12} sm={12} md={12}>
+                {error}
+        </GridItem>}
+
         <GridItem xs={12} sm={12} md={12}>
           <Card>
             <CardHeader color="primary">
@@ -98,7 +94,7 @@ const AllCountriesSelection = (props) => {
                     placeholder="Enter atleast 3 characters for a quick search"
                     onChange={handleAllCountriesChange}
                     value={allFavouriteCountries}
-                    defaultValue={defaultValue}
+                    defaultValue=''
                     fluid
                     multiple
                     selectOnNavigation={false}

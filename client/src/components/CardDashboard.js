@@ -14,7 +14,7 @@ import styles from "assets/jss/material-dashboard-react/views/dashboardStyle.js"
 const useStyles = makeStyles(styles);
 
 export default function CardDashboard(props) {
-  const { statType, value, statColor, statIcon, state } = props;
+  const { statType, value, statColor, statIcon, PublishedAt } = props;
   // console.log(props)
 
   const classes = useStyles();
@@ -31,7 +31,15 @@ export default function CardDashboard(props) {
           </h3>
         </CardHeader>
         <CardFooter stats>
-
+          <div className={classes.stats}>
+            <a
+              href="#pablo"
+              onClick={(e) => e.preventDefault()}
+              style={{ fontWeight: "bold", fontStyle: "italic" }}
+            >
+              {PublishedAt} {}
+            </a>
+          </div>
         </CardFooter>
       </Card>
     </div>

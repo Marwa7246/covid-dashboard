@@ -45,7 +45,10 @@ export default function Header(props) {
           {/* <Button color="transparent" href="#" className={classes.title}>
             {makeBrand()}
           </Button> */}
-          <h3> {makeBrand()}</h3>
+          <h3 style={{ color: "gray", fontWeight: "bold", fontSize: "45px" }}>
+            {" "}
+            {makeBrand()}
+          </h3>
         </div>
         <Hidden smDown implementation="css">
           {<AdminNavbarLinks />}

@@ -5,14 +5,51 @@ import { useHistory } from "react-router-dom";
 import GridItem from "components/Grid/GridItem.js";
 import GridContainer from "components/Grid/GridContainer.js";
 import Button from "components/CustomButtons/Button.js";
-import Card from "components/Card/Card.js";
-import CardHeader from "components/Card/CardHeader.js";
-import CardBody from "components/Card/CardBody.js";
-import CardFooter from "components/Card/CardFooter.js";
-import TextField from "@material-ui/core/TextField";
+
 import Alert from "@material-ui/lab/Alert";
+import Avatar from "@material-ui/core/Avatar";
+
+import CssBaseline from "@material-ui/core/CssBaseline";
+import TextField from "@material-ui/core/TextField";
+import Link from "@material-ui/core/Link";
+import Paper from "@material-ui/core/Paper";
+import Box from "@material-ui/core/Box";
+import Grid from "@material-ui/core/Grid";
+import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+import Typography from "@material-ui/core/Typography";
+import { makeStyles } from "@material-ui/core/styles";
+
+import imagine4 from "assets/img/4.png";
 
 import axios from "axios";
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    height: "100vh",
+  },
+  image: {
+    backgroundImage: `url(${imagine4})`,
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+  },
+  paper: {
+    margin: theme.spacing(8, 4),
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+  },
+  avatar: {
+    margin: theme.spacing(1),
+    backgroundColor: theme.palette.secondary.main,
+  },
+  form: {
+    width: "100%",
+    marginTop: theme.spacing(1),
+  },
+  submit: {
+    margin: theme.spacing(3, 0, 2),
+  },
+}));
 
 export default function Signup(props) {
   const [first_name, setFirstName] = useState("");
@@ -25,6 +62,7 @@ export default function Signup(props) {
   const [user, setUser] = useState({});
 
   const history = useHistory();
+  const classes = useStyles();
 
   const handleFirstNameChange = (e) => {
     setFirstName(e.target.value);
@@ -52,11 +90,11 @@ export default function Signup(props) {
     setMessage("");
     if (!first_name || !last_name || !email || !mobile || !password) {
       setError("All fields required!");
-      setFirstName("");
-      setLastName("");
-      setMobile("");
-      setEmail("");
-      setPassword("");
+      // setFirstName("");
+      // setLastName("");
+      // setMobile("");
+      // setEmail("");
+      // setPassword("");
       return;
     }
     const user = { first_name, last_name, email, password, mobile };
@@ -79,107 +117,110 @@ export default function Signup(props) {
   };
 
   return (
-    <div>
-      <GridContainer>
-        <GridItem xs={12} sm={12} md={12}>
-          <div>
-            {error && (
-              <Alert severity="error">
-                <b>{error && <p>{error}</p>}</b>
-              </Alert>
-            )}
-          </div>
-          <div>
-            {message && (
-              <Alert severity="success">
-                <b>{message && <p>{message}</p>}</b>
-              </Alert>
-            )}
-          </div>
-          <Card>
-            <form onSubmit={handleSubmit}>
-              <CardHeader color="primary" style={{ color: "white" }}>
-                <h4>Signup</h4>
-              </CardHeader>
-              <CardBody>
-                <GridContainer>
-                  <GridItem xs={12} sm={12} md={5}>
-                    <TextField
-                      labelText="First Name"
-                      id="first-name"
-                      placeholder="First Name"
-                      value={first_name}
-                      onChange={handleFirstNameChange}
-                      formControlProps={{
-                        fullWidth: true,
-                      }}
-                    />
-                  </GridItem>
-                  <GridItem xs={12} sm={12} md={5}>
-                    <TextField
-                      onSubmit={() => console.log("from submit")}
-                      labelText="Last Name"
-                      id="last-name"
-                      placeholder="Last Name"
-                      value={last_name}
-                      onChange={handleLastNameChange}
-                      formControlProps={{
-                        fullWidth: true,
-                      }}
-                    />
-                  </GridItem>
-                </GridContainer>
-                <GridContainer>
-                  <GridItem xs={12} sm={12} md={5}>
-                    <TextField
-                      labelText="Email address"
-                      placeholder="Email address"
-                      id="email"
-                      value={email}
-                      onChange={handleEmailChange}
-                      formControlProps={{
-                        fullWidth: true,
-                      }}
-                    />
-                  </GridItem>
-                  <GridItem xs={12} sm={12} md={5}>
-                    <TextField
-                      labelText="Mobile Number"
-                      placeholder="Mobile Number"
-                      value={mobile}
-                      onChange={handleMobileChange}
-                      id="mobile"
-                      formControlProps={{
-                        fullWidth: true,
-                      }}
-                    />
-                  </GridItem>
-                </GridContainer>
-                <GridContainer>
-                  <GridItem xs={12} sm={12} md={5}>
-                    <TextField
-                      type="password"
-                      labelText="Password"
-                      placeholder="Password"
-                      id="password"
-                      value={password}
-                      onChange={handlePasswordChange}
-                      formControlProps={{
-                        fullWidth: true,
-                      }}
-                    />
-                  </GridItem>
-                </GridContainer>
-              </CardBody>
-              <CardFooter>
-                <Button variant="contained" color="primary" type="submit">
-                  Register
-                </Button>
-              </CardFooter>
+    <Grid container component="main" className={classes.root}>
+      <CssBaseline />
+      <Grid item xs={false} sm={4} md={7} className={classes.image} />
+      <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+        <GridContainer>
+          <div className={classes.paper}>
+            <GridItem>
+              <div>
+                {error && (
+                  <Alert severity="error">
+                    <b>{error && <p>{error}</p>}</b>
+                  </Alert>
+                )}
+              </div>
+              <div>
+                {message && (
+                  <Alert severity="success">
+                    <b>{message && <p>{message}</p>}</b>
+                  </Alert>
+                )}
+              </div>
+            </GridItem>
+            <Avatar className={classes.avatar}>
+              <LockOutlinedIcon />
+            </Avatar>
+            <Typography component="h1" variant="h5">
+              Sign up
+            </Typography>
+            <form className={classes.form} onSubmit={handleSubmit}>
+              <TextField
+                variant="outlined"
+                margin="normal"
+                fullWidth
+                labelText="First Name"
+                id="first-name"
+                placeholder="First Name"
+                value={first_name}
+                onChange={handleFirstNameChange}
+                formControlProps={{
+                  fullWidth: true,
+                }}
+              />
+              <TextField
+                variant="outlined"
+                margin="normal"
+                fullWidth
+                labelText="Last Name"
+                id="last-name"
+                placeholder="Last Name"
+                value={last_name}
+                onChange={handleLastNameChange}
+                formControlProps={{
+                  fullWidth: true,
+                }}
+              />
+              <TextField
+                variant="outlined"
+                margin="normal"
+                fullWidth
+                labelText="Mobile Number"
+                placeholder="Mobile Number"
+                value={mobile}
+                onChange={handleMobileChange}
+                id="mobile"
+                formControlProps={{
+                  fullWidth: true,
+                }}
+              />
+              <TextField
+                variant="outlined"
+                margin="normal"
+                //required
+                fullWidth
+                id="email"
+                value={email}
+                onChange={handleEmailChange}
+                label="Email Address"
+                autoFocus
+              />
+              <TextField
+                variant="outlined"
+                margin="normal"
+                //required
+                fullWidth
+                label="Password"
+                value={password}
+                onChange={handlePasswordChange}
+                type="password"
+                id="password"
+              />
+
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                color="primary"
+                className={classes.submit}
+              >
+                Sign Up
+              </Button>
             </form>
-          </Card>
-        </GridItem>
-      </GridContainer>
-    </div>
+          </div>
+        </GridContainer>
+      </Grid>
+    </Grid>
   );
 }

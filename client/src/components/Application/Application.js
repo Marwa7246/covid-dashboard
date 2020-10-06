@@ -37,7 +37,7 @@ import Login from "views/Login";
 import Signup from "views/Signup";
 import Logout from "views/Logout";
 import { isPropertySignature } from "typescript";
-import { getMapDataLayer } from "../../helpers/helpers";
+import { getMapDataLayer, getMaxDifferenceCasesForSms } from "../../helpers/helpers";
 
 let ps;
 
@@ -60,11 +60,26 @@ let ps;
 const useStyles = makeStyles(styles);
 
 export default function Application({ ...rest }) {
-  const { state, dispatch, saveFavourites, getFavourites, deleteFavourites, getHistoricalCountry } = useApplicationData();
+  const {
+    state,
+    dispatch,
+    saveFavourites,
+    getFavourites,
+    deleteFavourites,
+    getHistoricalCountry,
+    getMaxDifferenceCasesForSms,
+    sendSMS,
+  } = useApplicationData();
+
+
   const [user, setUser] = useState("");
   // const [new_routes, setNewRoutes] = useState([])
   let mapData = [];
   if (!state.loading) mapData = getMapDataLayer(state.mapData);
+
+
+
+
 
   // const newRoutes = (routes) => {
   //   let new_routes2 = []
@@ -102,8 +117,10 @@ export default function Application({ ...rest }) {
               saveFavourites={saveFavourites}
               deleteFavourites={deleteFavourites}
               user={user}
-              getFavourites ={getFavourites}
-              getHistoricalCountry = {getHistoricalCountry}
+              getFavourites={getFavourites}
+              getHistoricalCountry={getHistoricalCountry}
+              sendSMS={sendSMS}
+              getMaxDifferenceCasesForSms={getMaxDifferenceCasesForSms}
             />
           </Route>
         );
@@ -119,7 +136,7 @@ export default function Application({ ...rest }) {
   // states and functions
   const [image, setImage] = React.useState(bgImage);
   const [color, setColor] = React.useState("blue");
-  const [fixedClasses, setFixedClasses] = React.useState("dropdown show");
+  const [fixedClasses, setFixedClasses] = React.useState("dropdown");
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const handleImageClick = (image) => {
     setImage(image);
@@ -127,6 +144,7 @@ export default function Application({ ...rest }) {
   const handleColorClick = (color) => {
     setColor(color);
   };
+
   const handleFixedClick = () => {
     if (fixedClasses === "dropdown") {
       setFixedClasses("dropdown show");
@@ -134,6 +152,7 @@ export default function Application({ ...rest }) {
       setFixedClasses("dropdown");
     }
   };
+
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
