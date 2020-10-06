@@ -11,6 +11,7 @@ import ButtonGroup from 'react-bootstrap/ButtonGroup'
 
 import InputLabel from "@material-ui/core/InputLabel";
 import { RadioGroup, FormControlLabel, Radio, FormControl, FormLabel } from '@material-ui/core';
+import Alert from "@material-ui/lab/Alert";
 
 import moment from "moment";
 
@@ -78,7 +79,7 @@ export default function Favourites({state, saveFavourites, getHistoricalCountry}
     setFavouritesFinal(JSON.parse(localStorage.getItem("favourites")));
     console.log(JSON.parse(localStorage.getItem("favourites")))
     const email = localStorage.getItem("userEmail");
-    setUser(email)
+    setUser(email);
   }, []);
 
   
@@ -155,10 +156,31 @@ const favouritesForDropDown = user && favouritesFinal.length > 0 && !state.loadi
 
   return (
     <div>
-      {!user && 
+    {!user && 
       <GridContainer>
-          <h3>Please login first.</h3>
+          <Alert severity="error">
+            <b>Please login first.</b>
+          </Alert>
       </GridContainer>}
+
+     {/* Containter of error if no country added */}
+
+    {favouritesFinal.length === 0 && !state.loading &&  
+
+      <GridItem xs={12} sm={12} md={12}>
+        <Alert severity="error">
+          <b> No countries in you favourite list. Please go to the settings page first.</b>
+        </Alert>
+      </GridItem >
+    }
+
+    {country.error && 
+        <GridItem xs={12} sm={12} md={6}>
+          <Alert severity="error">
+            <b>{country.error}</b>
+          </Alert>    
+        </GridItem>}
+
 {user && <>
       <GridContainer>
              {/* FAvourite countries dropdown menu */}
@@ -215,17 +237,7 @@ const favouritesForDropDown = user && favouritesFinal.length > 0 && !state.loadi
                 </GridItem> 
 
 
-               {/* Containter of error if no country added */}
 
-              {favouritesFinal.length === 0 && !state.loading &&  
-
-                <GridItem xs={12} sm={12} md={12}>
-                <h4> No countries in you favourite list. Please go to the settings page first.</h4>
-              
-                </GridItem >
-
-
-      }
               </GridContainer>
             </CardBody>
  
@@ -234,10 +246,7 @@ const favouritesForDropDown = user && favouritesFinal.length > 0 && !state.loadi
 
 
               {/* Containter of error */}
-    {country.error && 
-    <GridItem xs={12} sm={12} md={6}>
-    <h4>{country.error}</h4>
-    </GridItem>}
+
 
     {/* Containter of country card */}
 
@@ -252,6 +261,8 @@ const favouritesForDropDown = user && favouritesFinal.length > 0 && !state.loadi
         </GridItem>
 
       </GridContainer>
+
+
 
 
                   {/* Containter of charts */}

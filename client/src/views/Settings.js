@@ -17,6 +17,8 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@material-ui/icons/CheckBox';
+import Alert from "@material-ui/lab/Alert";
+
 
 import moment from "moment";
 
@@ -175,7 +177,9 @@ const onSave = (favourites) => {
     <div>
       {!user && 
       <GridContainer>
-          <h3>Please login first.</h3>
+          <Alert severity="error">
+            <b>Please login first.</b>
+          </Alert>
       </GridContainer>}
   {user && <>
 
