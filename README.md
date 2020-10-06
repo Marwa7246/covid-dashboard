@@ -17,7 +17,7 @@ COVID Dashboard is a full stack responsive web application built with ReactJS as
 !["Screenshot of Dashboard page"](https://github.com/Marwa7246/covid-dashboard/blob/master/screenshots/01_Dashboard.png)
 !["Screenshot of News page"](https://github.com/Marwa7246/covid-dashboard/blob/master/screenshots/03_News.png)
 !["Screenshot of Maps page"](https://github.com/Marwa7246/covid-dashboard/blob/master/screenshots/05_Maps.png)
-!["Screenshot of SMS alert"](https://github.com/Marwa7246/covid-dashboard/blob/master/screenshots/18_SMS alert.jpg)
+!["Screenshot of SMS alert"](https://github.com/Marwa7246/covid-dashboard/blob/master/screenshots/18_SMS%20alert.jpg)
 !["Screenshot of Login page"](https://github.com/Marwa7246/covid-dashboard/blob/master/screenshots/06_Login.png)
 !["Screenshot of Sign-up page"](https://github.com/Marwa7246/covid-dashboard/blob/master/screenshots/07_Signup.png)
 !["Screenshot of Settings page"](https://github.com/Marwa7246/covid-dashboard/blob/master/screenshots/11_Settings3.png)
