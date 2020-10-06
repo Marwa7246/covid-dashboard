@@ -55,12 +55,6 @@ const styles = {
   }
 };
 
-// const countryOptionsFavourites = [
-//   { key: 'af', value: 'af', flag: 'af', text: 'Afghanistan' },
-//   { key: 'ca', value: 'ca', flag: 'ca', text: 'Canada' },
-//   { key: 'al', value: 'al', flag: 'al', text: 'Albania' },
-
-// ]
 
 
 
@@ -79,15 +73,13 @@ export default function Favourites({state, saveFavourites, getHistoricalCountry}
   const [user, setUser] = useState('');
   const [favouritesFinal, setFavouritesFinal] = useState([]);
   console.log (state)
-
-
   
   useEffect(() => {
     setFavouritesFinal(JSON.parse(localStorage.getItem("favourites")));
     console.log(JSON.parse(localStorage.getItem("favourites")))
+    const email = localStorage.getItem("userEmail");
+    setUser(email)
   }, []);
-
-
 
   
   const classes = useStyles();
@@ -112,7 +104,6 @@ export default function Favourites({state, saveFavourites, getHistoricalCountry}
             newsPublishedAt={timeFormat}
             source={item.source.name}
             urlToImage={item.urlToImage}
-
           />
       );
     })
@@ -147,33 +138,30 @@ export default function Favourites({state, saveFavourites, getHistoricalCountry}
       setCountry(prev=>({...prev, countryName: data.value, error: 'This country does not have historical data'}));
       console.log('state.loadingFavouriteCountry',state.loadingFavouriteCountry)
     })
-
   }
-
 
 
   const handleChangeTimeRadio = (e) => {
     console.log('time',e.target.value)
     setCountry(prev=>({...prev, period: e.target.value}))
     country.countryName && getHistoricalCountry(country.countryName, e.target.value)
-    // .then(()=>setCountry(prev=>({...prev, period: e.target.value})))
     .catch(() => {
       setCountry(prev=>({...prev, period: e.target.value, error: 'This country does not have historical data'}));
       console.log('state.loadingFavouriteCountry',state.loadingFavouriteCountry)
     })
-
-
   }
 
-const favouritesForDropDown = favouritesFinal.length > 0 && !state.loading && getFavouritesCountriesForDropDown(favouritesFinal, state.mapData)
+const favouritesForDropDown = user && favouritesFinal.length > 0 && !state.loading &&  getFavouritesCountriesForDropDown(favouritesFinal, state.mapData)
 
   return (
-    <div>      
-
+    <div>
+      {!user && 
       <GridContainer>
-
+          <h3>Please login first.</h3>
+      </GridContainer>}
+{user && <>
+      <GridContainer>
              {/* FAvourite countries dropdown menu */}
-
         <GridItem xs={12} sm={12} md={6}>
           <Card>
             <CardHeader color="primary">
@@ -188,7 +176,7 @@ const favouritesForDropDown = favouritesFinal.length > 0 && !state.loading && ge
      
                 </GridItem> 
 
-                { !state.loading && 
+        { !state.loading && user &&
                 <GridItem xs={12} sm={12} md={12}>
                    <Dropdown
                     placeholder='Select Country'
@@ -200,7 +188,7 @@ const favouritesForDropDown = favouritesFinal.length > 0 && !state.loading && ge
                 </GridItem> } 
 
 
-                {!country.error  && country.countryName &&
+        {!country.error  && country.countryName &&
                 <GridItem xs={12} sm={12} md={12}>
                   <h4> <br/> </h4>  
      
@@ -227,8 +215,7 @@ const favouritesForDropDown = favouritesFinal.length > 0 && !state.loading && ge
                 </GridItem> 
 
 
-
-                      {/* Containter of error if no country added */}
+               {/* Containter of error if no country added */}
 
               {favouritesFinal.length === 0 && !state.loading &&  
 
@@ -277,10 +264,9 @@ const favouritesForDropDown = favouritesFinal.length > 0 && !state.loading && ge
         <GridItem xs={12} sm={12} md={6}>
         <CasesChart
               color="info"
-              title="accumulated cases"
+              title="accumulated cases (in Thousands)"
               days={days}
               series={cases}
-              multiple='Thousands'
 
               type="Line"
             />
@@ -290,10 +276,9 @@ const favouritesForDropDown = favouritesFinal.length > 0 && !state.loading && ge
         <GridItem xs={12} sm={12} md={6}>
         <CasesChart
             color="danger"
-            title="deaths"
+            title="deaths (in Thousands)"
             days={days}
             series={deaths}
-            multiple='Thousands'
             type="Bar"
             warning="warning"
           /> 
@@ -320,7 +305,8 @@ const favouritesForDropDown = favouritesFinal.length > 0 && !state.loading && ge
 
 }
 
-
+</>
+}
     </div>
   );
 }

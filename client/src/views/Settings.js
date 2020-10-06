@@ -87,6 +87,8 @@ export default function Settings({
     countryName: "",
   });
   const [favouritesFinal, setFavouritesFinal] = useState([]);
+  const [user, setUser] = useState('');
+
 
 /////////////////////////////////////////////////////////////////
   const [total, setTotal]=useState({country:''})
@@ -96,29 +98,23 @@ export default function Settings({
   useEffect(() => {
     setFavouritesFinal(JSON.parse(localStorage.getItem("favourites")));
     console.log(JSON.parse(localStorage.getItem("favourites")));
- }, []);
-  const favouritesForDropDown =    
-    getFavouritesCountriesForDropDown(favouritesFinal, state.mapData);
+    const email = localStorage.getItem("userEmail");
+    setUser(email);
+  }, []);
 
-    console.log(favouritesForDropDown)
+  const favouritesForDropDown = user &&    
+    getFavouritesCountriesForDropDown(favouritesFinal, state.mapData);
 
    const countryOptionsAll = getAllCountriesForDropDown(state.mapData);
 
-  const countryOptions = countryOptionsAll.filter(ele =>  !favouritesForDropDown.filter(item=>item.text === ele.text).length )
+  const countryOptions = user && countryOptionsAll.filter(ele =>  !favouritesForDropDown.filter(item=>item.text === ele.text).length )
 
-   !state.loading && console.log('test', favouritesForDropDown, countryOptions.length, countryOptionsAll.length )
-
-   
- 
 
   const classes = useStyles();
 
 
-
-
-
   const mapData = getMapDataLayer(state.mapData);
-  !state.loading && console.log(mapData[0]);
+  // !state.loading && console.log(mapData[0]);
 
 
   const ValidateSendSMS = () => {
@@ -132,18 +128,15 @@ export default function Settings({
 
 
 
-
-
 const onSave = (favourites) => {
-    console.log(favourites);
+    // console.log(favourites);
     const arrOfFavCountryNames = getArrofNameFromIso(favourites, countryOptions);
-    console.log(arrOfFavCountryNames, favourites)
+    // console.log(arrOfFavCountryNames, favourites)
     saveFavourites(arrOfFavCountryNames)
       .then(() => console.log(localStorage.getItem("favourites")))
       .then(() => setFavouritesFinal(JSON.parse(localStorage.getItem("favourites"))))
       .then(()=>ValidateSendSMS())
   };
-
 
 
 
@@ -160,7 +153,7 @@ const onSave = (favourites) => {
       
     };
 
-    const favList = favouritesFinal.length > 0 && !state.loading &&  favouritesForDropDown.map(ele =>{
+    const favList = user && favouritesFinal.length > 0 && !state.loading &&  favouritesForDropDown.map(ele =>{
       return (
         <FormGroup column>
         <FormControlLabel 
@@ -180,6 +173,11 @@ const onSave = (favourites) => {
     ////////////////////////////////////////////////////////
   return (
     <div>
+      {!user && 
+      <GridContainer>
+          <h3>Please login first.</h3>
+      </GridContainer>}
+  {user && <>
 
       {!state.loading && favouritesForDropDown && (
         <GridContainer>
@@ -206,7 +204,7 @@ const onSave = (favourites) => {
                   </GridItem>
 
                   <GridItem xs={12} sm={12} md={12}>
-                  {favouritesFinal.length > 0 && !state.loading && favList}
+                  {favouritesFinal.length > 0 && !state.loading && user &&favList}
 
 
                   </GridItem>
@@ -218,7 +216,8 @@ const onSave = (favourites) => {
 
       </GridContainer>
 
-
+</>
+}
     </div>
   );
 }
