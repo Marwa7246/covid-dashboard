@@ -17,10 +17,8 @@ class Api::UsersController < ApplicationController
   end
 
   def create
-    puts 'createeeeeeeeeeeeee'
     puts params
     user = User.create(user_params)
-    # byebug
 
     if user.valid?
         payload = {user_id: user.id}
@@ -35,7 +33,6 @@ class Api::UsersController < ApplicationController
   private 
 
   def user_params
-    puts 'helllllllllllllllllloooooooooooooo'
     puts params
     params.require(:user).permit(:first_name, :last_name, :email, :password, :mobile)
   end
