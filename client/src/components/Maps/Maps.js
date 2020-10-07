@@ -1,29 +1,100 @@
 import React, { Component } from 'react';
-import { render } from 'react-dom';
-import { withScriptjs } from "react-google-maps";
-import MapWindow from './MapWindow';
-// import './style.css';
+import { Map, GoogleApiWrapper, InfoWindow, Marker } from 'google-maps-react';
+import InfoWindowName from './InfoWindowName'
+// import InfoWindowEx from './InfoWindowEX'
 
-import { getMapDataLayer } from "../../helpers/helpers";
+import {mapData, getMapDataLayer} from '../../helpers/helpers'
 
-const Maps = ({state}) => {
+// import {dataLayer} from './helpers'
 
-  const mapData = !state.loading && getMapDataLayer(state.mapData)
+//  import jason from './jason'
 
-  const MapLoader = withScriptjs(MapWindow);
-
-  const mapUrl = `https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_MAP_KEY}`
-
-  return (
-    <MapLoader
-    mapData={mapData}
-      googleMapURL={mapUrl}
-      loadingElement={<div style={{ height: `100%` }} />}
-      containerElement={<div style={{ height: `100vh` }} />}
-      mapElement={<div style={{ height: `100%` }} />}
-    />
-  );
+const mapStyles = {
+  width: '100%',
+  height: '100%'
 };
 
+  const mapDataNew = getMapDataLayer(mapData);
 
-export default Maps;
+export class MapContainer extends Component {
+
+
+
+  state = {
+    showingInfoWindow: false,  // Hides or shows the InfoWindow
+    activeMarker: {},          // Shows the active marker upon click
+    selectedPlace: {}          // Shows the InfoWindow to the selected place upon a marker
+  };
+
+
+
+  onMarkerClick = (props, marker, e) =>
+    this.setState({
+      selectedPlace: props,
+      activeMarker: marker,
+      showingInfoWindow: true
+    });
+
+  onClose = props => {
+    if (this.state.showingInfoWindow) {
+      this.setState({
+        showingInfoWindow: false,
+        activeMarker: null
+      });
+    }
+  };
+
+  render() {
+    const customMarkerMap2 = mapDataNew.map((elem) => {
+      return (
+        <Marker
+          key={elem.country}
+          position={elem.position}
+          onClick={this.onMarkerClick}
+          name={
+            <InfoWindowName
+              country={elem.country}
+              updated={elem.updated}
+              cases={elem.cases}
+              flag={elem.flag}
+              deaths={elem.deaths}
+              recovered={elem.recovered}
+            />
+          }
+        />
+      );
+    });
+
+    return (
+      <Map
+        google={this.props.google}
+        zoom={2}
+        // style={mapStyles}
+        initialCenter={{
+          lat: 30.2884,
+          lng: -6.8233,
+        }}
+      >
+        {this.props.loaded && customMarkerMap2}
+
+        <InfoWindow
+          marker={this.state.activeMarker}
+          visible={this.state.showingInfoWindow}
+          onClose={this.onClose}
+          // options= {{maxWidth:100}}
+        >
+          <div>
+            <h4>{this.state.selectedPlace.name}</h4>
+          </div>
+        </InfoWindow>
+      </Map>
+    );
+  }
+
+}
+
+export default GoogleApiWrapper(
+  (props) => ({
+  apiKey: process.env.REACT_APP_MAP_KEY 
+}
+))(MapContainer);

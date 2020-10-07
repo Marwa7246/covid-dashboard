@@ -34109,4 +34109,4 @@ function getArrofNameFromIso (arrOfIso, arrOfObjectOfDropDown) {
 
 
 
- export  {getMapDataLayer, getAllCountriesForDropDown, getFavouritesCountriesForDropDown, addCountryNameKey, getArrofNameFromIso, digitFormat, getMaxDifferenceCasesForSms}
+ export  {getMapDataLayer, getAllCountriesForDropDown, getFavouritesCountriesForDropDown, addCountryNameKey, getArrofNameFromIso, digitFormat, getMaxDifferenceCasesForSms, mapData}

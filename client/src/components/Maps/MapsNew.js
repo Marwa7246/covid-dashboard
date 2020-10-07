@@ -1,39 +1,52 @@
-import React, { Component } from "react";
-import { Map, GoogleApiWrapper, InfoWindow, Marker } from "google-maps-react";
-import InfoWindowName from "./InfoWindowName";
+import React, { Component } from 'react';
+import { Map, GoogleApiWrapper, InfoWindow, Marker } from 'google-maps-react';
+import InfoWindowName from './InfoWindowName'
+// import InfoWindowEx from './InfoWindowEX'
 
+import {mapData, getMapDataLayer} from '../../helpers/helpers'
+
+// import {dataLayer} from './helpers'
+
+//  import jason from './jason'
 
 const mapStyles = {
-  width: "100%",
-  height: "100%",
+  width: '100%',
+  height: '100%'
 };
 
+  const mapDataNew = getMapDataLayer(mapData);
+
 export class MapContainer extends Component {
+
+
+
   state = {
-    showingInfoWindow: false, // Hides or shows the InfoWindow
-    activeMarker: {}, // Shows the active marker upon click
-    selectedPlace: {}, // Shows the InfoWindow to the selected place upon a marker
+    showingInfoWindow: false,  // Hides or shows the InfoWindow
+    activeMarker: {},          // Shows the active marker upon click
+    selectedPlace: {}          // Shows the InfoWindow to the selected place upon a marker
   };
+
+
 
   onMarkerClick = (props, marker, e) =>
     this.setState({
       selectedPlace: props,
       activeMarker: marker,
-      showingInfoWindow: true,
+      showingInfoWindow: true
     });
 
-  onClose = (props) => {
+  onClose = props => {
     if (this.state.showingInfoWindow) {
       this.setState({
         showingInfoWindow: false,
-        activeMarker: null,
+        activeMarker: null
       });
     }
   };
 
   render() {
-    console.log("!!!!!!!!!!!!!!!!!!!!!", this.props.mapData);
-    const customMarkerMap2 = this.props.mapData.map((elem) => {
+    // console.log("!!!!!!!!!!!!!!!!!!!!!", this.props.mapData);
+    const customMarkerMap2 = mapDataNew.map((elem) => {
       return (
         <Marker
           key={elem.country}
@@ -47,7 +60,6 @@ export class MapContainer extends Component {
               flag={elem.flag}
               deaths={elem.deaths}
               recovered={elem.recovered}
-              onClick={() => console.log("from infowindow")}
             />
           }
         />
@@ -79,8 +91,11 @@ export class MapContainer extends Component {
       </Map>
     );
   }
+
 }
 
-export default GoogleApiWrapper((props) => ({
-  apiKey: process.env.REACT_APP_MAP_KEY,
-}))(MapContainer);
+export default GoogleApiWrapper(
+  (props) => ({
+  apiKey: process.env.REACT_APP_MAP_KEY 
+}
+))(MapContainer);
