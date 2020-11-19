@@ -1,5 +1,4 @@
 import React from "react";
-import logo from "./logo.svg";
 import "./App.scss";
 import useApplicationData from "./hooks/useApplicationData";
 
@@ -20,8 +19,6 @@ function App() {
     console.log(oneCountry.cases);
   }
 
-  console.log("HEEEEEEEEEEEEEEELLLLLLLLLLLLLLLOOOOOOOOOOOOOOOOOOOO", userList);
-  console.log("HIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII", first);
 
   return (
     <div className="App">

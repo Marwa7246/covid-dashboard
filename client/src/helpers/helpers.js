@@ -34027,7 +34027,7 @@ return  {
     maxDifference: Math.ceil(100 * (Object.values(ele.timeline.cases)[6] - Object.values(ele.timeline.cases)[0])/Object.values(ele.timeline.cases)[6])
 }
 });
-return x.filter(ele => ele.maxDifference > 20 )
+return x.filter(ele => ele.maxDifference > 1 )
 }
 
 

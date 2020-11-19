@@ -55,6 +55,7 @@ export default function Dashboard({ state }) {
   let days = [];
   let cases = [];
   let casesRecovered = [];
+  let deaths = []
   let canCases = [];
   let canDeaths = [];
 
@@ -213,6 +214,23 @@ export default function Dashboard({ state }) {
                   period="20"
                 />
               </GridItem>
+            </GridContainer>
+            <GridContainer>
+            <GridItem xs={12} sm={12} md={6}>
+                <CasesChart
+                  color="warning"
+                  title="Deaths (in Millions)"
+                  multiple="Millions"
+                  days={days}
+                  series={casesRecovered}
+                  type="Line"
+                  period="20"
+                />
+              </GridItem>
+              <GridItem xs={24} sm={24} md={6}>
+                <ChartPie state={state} />
+              </GridItem>
+
             </GridContainer>
             <GridContainer>
             <div>
