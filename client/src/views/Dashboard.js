@@ -65,6 +65,8 @@ export default function Dashboard({ state }) {
     const casesObject = globalHistorical.cases;
     days = Object.keys(casesObject);
     cases = Object.values(casesObject).map((e) => Number(e) / 1000000);
+    const DeathsObj = globalHistorical.deaths;
+    deaths = Object.values(DeathsObj).map((e) => Number(e) / 1000);
 
     const casesRecoveredObject = globalHistorical.recovered;
     casesRecovered = Object.values(casesRecoveredObject).map(
@@ -218,11 +220,11 @@ export default function Dashboard({ state }) {
             <GridContainer>
             <GridItem xs={12} sm={12} md={6}>
                 <CasesChart
-                  color="warning"
+                  color="danger"
                   title="Deaths (in Millions)"
                   multiple="Millions"
                   days={days}
-                  series={casesRecovered}
+                  series={deaths}
                   type="Line"
                   period="20"
                 />
