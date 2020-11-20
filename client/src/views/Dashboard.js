@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
 // react plugin for creating charts
 // @material-ui/core
+import {
+  Container,
+  Grid
+} from '@material-ui/core';
 import { makeStyles } from "@material-ui/core/styles";
 // @material-ui/icons
 import moment from "moment";
@@ -96,6 +100,8 @@ export default function Dashboard({ state }) {
   const classes = useStyles();
   return (
     <div>
+            <Container maxWidth={false}>
+
       <div className={classes.root}>
         <GridContainer>
           <GridItem>
@@ -323,7 +329,7 @@ export default function Dashboard({ state }) {
               </GridItem>
               <GridItem xs={12} sm={12} md={6}>
                 <CasesChart
-                  color="warning"
+                  color="danger"
                   title="deaths (in Thousands)"
                   multiple="Thousands"
                   days={days}
@@ -376,6 +382,8 @@ export default function Dashboard({ state }) {
           </Collapse>
         </div>
       </div> */}
+            </Container>
+
     </div>
   );
 }
