@@ -1,14 +1,7 @@
 import ChartistGraph from "react-chartist";
 
 import React from "react";
-import {
-  Box,
-  CardContent,
-  Divider,
-  Typography,
-  colors,
-  useTheme
-} from '@material-ui/core';
+
 import { makeStyles } from "@material-ui/core/styles";
 import Icon from "@material-ui/core/Icon";
 // @material-ui/icons
@@ -105,13 +98,7 @@ export default function CasesChart({
   return (
     <div>
       <Card chart>
-        <CardHeader color={color} height={300} position="relative"/>
-        <Divider />
-        <CardContent>
-        <Box
-          height={300}
-          position="relative"
-        >
+        <CardHeader color={color}>
           <ChartistGraph
             className="ct-chart"
             data={chartInfo.data}
@@ -119,8 +106,8 @@ export default function CasesChart({
             options={chartInfo.options}
             listener={chartInfo.animation}
           />
-          </Box>
-        {/* </CardHeader> */}
+        </CardHeader>
+        <CardBody>
           {days && (
             <h4 className={classes.cardTitle}>
               Total {title} in the last {days.length} days
@@ -141,7 +128,7 @@ export default function CasesChart({
               % increase
             </p>
           )}
-      </CardContent>
+        </CardBody>
         <CardFooter chart>
 
         </CardFooter>

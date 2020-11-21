@@ -73,9 +73,9 @@ export default function ChartPie({ state }) {
   return (
     <div>
       <Card chart>
-        <CardHeader color="info"/>
+        <CardHeader color="info">
           <ChartistGraph data={dataPie} options={options} type="Pie" />
-        {/* </CardHeader> */}
+        </CardHeader>
         <CardBody>
           <h4 className={classes.cardTitle}>Continents Cases </h4>
           <p className={classes.legend}>{createLegend(legendPie)}</p>

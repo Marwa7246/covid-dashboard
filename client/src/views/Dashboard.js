@@ -202,7 +202,7 @@ export default function Dashboard({ state }) {
             <GridContainer>
               <GridItem xs={12} sm={12} md={6}>
                 <CasesChart
-                  color="info"
+                  color="warning"
                   title="registered cases (in Millions)"
                   multiple="Millions"
                   days={days}
@@ -318,7 +318,7 @@ export default function Dashboard({ state }) {
             <GridContainer>
               <GridItem xs={12} sm={12} md={6}>
                 <CasesChart
-                  color="info"
+                  color="warning"
                   title="registered cases (in Thousands)"
                   multiple="Thousands"
                   days={days}
