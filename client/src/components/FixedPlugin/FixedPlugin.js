@@ -1,5 +1,7 @@
 /*eslint-disable*/
 import React, { Component } from "react";
+import { useHistory } from "react-router-dom";
+
 // nodejs library to set properties for components
 import PropTypes from "prop-types";
 // nodejs library that concatenates classes
@@ -11,11 +13,14 @@ import imagine3 from "assets/img/asia.png";
 import imagine4 from "assets/img/north_america.png";
 
 import Button from "components/CustomButtons/Button.js";
+const name = "  Marwa Ragheb"
 
 export default function FixedPlugin(props) {
   const [classes, setClasses] = React.useState("dropdown");
   const [bg_checked, setBg_checked] = React.useState(true);
   const [bgImage, setBgImage] = React.useState(props.bgImage);
+  const history = useHistory();
+
   const handleClick = () => {
     props.handleFixedClick();
   };
@@ -132,6 +137,7 @@ export default function FixedPlugin(props) {
               onClick={() => {
                 setBgImage(imagine4);
                 props.handleImageClick(imagine4);
+
               }}
             >
               <img src={imagine4} alt="..." />
@@ -147,7 +153,7 @@ export default function FixedPlugin(props) {
                 target="_blank"
                 fullWidth
               >
-                Marwa Ragheb
+                {name}
               </Button>
             </div>
           </li>

@@ -8,7 +8,7 @@ import dataReducer, {
 } from "../reducers/dataReducer";
 require("dotenv").config();
 
-const newsUrl = `http://newsapi.org/v2/top-headlines?q=covid&language=en&apiKey=${process.env.REACT_APP_NEWS_API_KEY}`;
+const newsUrl = `https://newsapi.org/v2/top-headlines?q=covid&language=en&apiKey=${process.env.REACT_APP_NEWS_API_KEY}`;
 
 const useApplicationData = () => {
   const [state, dispatch] = useReducer(dataReducer, {
@@ -122,7 +122,7 @@ const useApplicationData = () => {
   function getHistoricalCountry(countryName, period) {
     const historicalCountryUrl = `https://disease.sh/v3/covid-19/historical/${countryName}?lastdays=${period}`;
 
-    const newsUrlCountry = `http://newsapi.org/v2/top-headlines?country=${countryName}&q=covid&lang=en&apiKey=${process.env.REACT_APP_NEWS_API_KEY}`;
+    const newsUrlCountry = `https://newsapi.org/v2/top-headlines?country=${countryName}&q=covid&lang=en&apiKey=${process.env.REACT_APP_NEWS_API_KEY}`;
     console.log('countryName',countryName, newsUrlCountry);
 
     return Promise.all([
