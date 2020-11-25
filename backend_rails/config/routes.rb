@@ -16,7 +16,7 @@ Rails.application.routes.draw do
   end
 
 
-  get '/api/news' => 'api/news#index'
+  get '/news' => '/news#index'
   
 
   post "/login", to: "auth#login"
