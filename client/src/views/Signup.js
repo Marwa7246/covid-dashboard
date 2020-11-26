@@ -99,7 +99,7 @@ export default function Signup(props) {
     }
     const user = { first_name, last_name, email, password, mobile };
     axios
-      .post(`/api/users`, { user })
+      .post(`${process.env.REACT_APP_API_BASE_URL}api/users`, { user })
       .then((res) => {
         console.log(res.data.user);
         setMessage("Registration Successful! Please login to proceed...");

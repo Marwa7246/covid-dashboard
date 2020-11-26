@@ -79,7 +79,7 @@ export default function Login() {
     }
 
     axios
-      .post(`/login`, { email, password })
+      .post(`${process.env.REACT_APP_API_BASE_URL}login`, { email, password })
       .then((res) => {
         localStorage.setItem("user", res.data.user);
         localStorage.setItem("userEmail", res.data.user.email);
@@ -102,7 +102,7 @@ export default function Login() {
 
     if (token) {
       axios
-        .get(`/auto_login`, {
+        .get(`${process.env.REACT_APP_API_BASE_URL}auto_login`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -118,7 +118,7 @@ export default function Login() {
     setError("");
     const token = localStorage.getItem("token");
     axios
-      .get(`/user_is_authed`, {
+      .get(`${process.env.REACT_APP_API_BASE_URL}user_is_authed`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

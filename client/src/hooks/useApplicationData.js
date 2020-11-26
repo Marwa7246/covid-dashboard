@@ -67,7 +67,7 @@ const useApplicationData = () => {
 
     return axios({
       method: "POST",
-      url: `/api/favourites`,
+      url: `${process.env.REACT_APP_API_BASE_URL}api/favourites`,
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -89,7 +89,7 @@ const useApplicationData = () => {
 
     return axios({
       method: "DELETE",
-      url: `/api/favourites/${email}`,
+      url: `${process.env.REACT_APP_API_BASE_URL}api/favourites/${email}`,
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -113,7 +113,7 @@ const useApplicationData = () => {
     // const email="test2@gmail.com";
     console.log("from getFavourites", userEmail);
 
-    return axios.get(`/api/users/${email}`).then((res) => {
+    return axios.get(`${process.env.REACT_APP_API_BASE_URL}api/users/${email}`).then((res) => {
       console.log("after axios get", res.data);
       dispatch({ type: SET_FAVOURITES, allFavouriteCountries: res.data });
     });
@@ -146,7 +146,7 @@ const useApplicationData = () => {
 
     return axios({
       method: "POST",
-      url: `/api/twilios`,
+      url: `${process.env.REACT_APP_API_BASE_URL}api/twilios`,
       headers: {
         Authorization: `Bearer ${token}`,
       },
