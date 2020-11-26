@@ -10,7 +10,7 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 
-import axios from "axios";
+// import axios from "axios";
 
 
 
@@ -24,9 +24,9 @@ import Application from "./components/Application/Application";
 
 import "assets/css/material-dashboard-react.css?v=1.9.0";
 
-if (process.env.REACT_APP_API_BASE_URL) {
-  axios.defaults.baseURL = process.env.REACT_APP_API_BASE_URL;
-}
+// if (process.env.REACT_APP_API_BASE_URL) {
+//   axios.defaults.baseURL = process.env.REACT_APP_API_BASE_URL;
+// }
 
 const hist = createBrowserHistory();
 
