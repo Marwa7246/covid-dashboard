@@ -21,6 +21,7 @@ const useStyles = makeStyles(styles);
 export default function News({state}) {
 
   const worldCovidNews = state.worldCovidNews;
+  console.log(worldCovidNews)
 
   
 
@@ -43,7 +44,7 @@ export default function News({state}) {
                   newsURL={item.url}
                   newsPublishedAt={timeFormat}
                   source={item.source.name}
-                  urlToImage={item.urlToImage}
+                  image={item.image}
                 />
               </GridItem>
             );

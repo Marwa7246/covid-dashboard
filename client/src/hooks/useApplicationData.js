@@ -8,7 +8,7 @@ import dataReducer, {
 } from "../reducers/dataReducer";
 require("dotenv").config();
 
-const newsUrl = `https://newsapi.org/v2/top-headlines?q=covid&language=en&apiKey=${process.env.REACT_APP_NEWS_API_KEY}`;
+const newsUrl = `/api/news`;
 
 const useApplicationData = () => {
   const [state, dispatch] = useReducer(dataReducer, {
@@ -163,7 +163,7 @@ const useApplicationData = () => {
     getFavourites,
     getHistoricalCountry,
     deleteFavourites,
-    sendSMS
+    sendSMS,
   };
 };
 

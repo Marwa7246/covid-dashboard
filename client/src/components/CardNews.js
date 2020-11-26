@@ -25,10 +25,10 @@ export default function CardNews(props) {
     newsURL,
     newsPublishedAt,
     source,
-    urlToImage,
+    image,
   } = props;
 
-  console.log("urlToImage", urlToImage);
+  console.log("image", image);
 
   const classes = useStyles();
   return (
@@ -66,7 +66,7 @@ export default function CardNews(props) {
               </div>
 
               <div className="news-part2">
-                <img src={urlToImage} alt={newsTitle} />
+                <img src={image} alt={newsTitle} />
               </div>
             </CardBody>
             <CardFooter stats className="news-card-footer">
