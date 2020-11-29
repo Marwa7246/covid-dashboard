@@ -3,13 +3,7 @@ import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 
 import 'bootstrap/dist/css/bootstrap.min.css';
-import DropdownButton from 'react-bootstrap/DropdownButton'
-import SplitButton from 'react-bootstrap/SplitButton'
-import ButtonGroup from 'react-bootstrap/ButtonGroup'
 
- 
-
-import InputLabel from "@material-ui/core/InputLabel";
 import { RadioGroup, FormControlLabel, Radio, FormControl, FormLabel } from '@material-ui/core';
 import Alert from "@material-ui/lab/Alert";
 
@@ -18,22 +12,15 @@ import moment from "moment";
 // core components
 import GridItem from "components/Grid/GridItem.js";
 import GridContainer from "components/Grid/GridContainer.js";
-import CustomInput from "components/CustomInput/CustomInput.js";
-import Button from "components/CustomButtons/Button.js";
+
 import Card from "components/Card/Card.js";
 import CardHeader from "components/Card/CardHeader.js";
-import CardAvatar from "components/Card/CardAvatar.js";
 import CardBody from "components/Card/CardBody.js";
-import CardFooter from "components/Card/CardFooter.js";
 import CasesChart from "components/CasesChart.js";
 import CardNews from "components/CardNews.js";
 import CardCountry from "components/CardCountry.js";
-import {getFavouritesCountriesForDropDown, addCountryNameKey, getMapDataLayer, getArrofNameFromIso, getAllCountriesForDropDown} from '../helpers/helpers'
-import AllCountriesSelection from '../components/AllCountriesSelection'
-import {getHistoricalCountry} from '../hooks/useApplicationData'
+import {getFavouritesCountriesForDropDown, getMapDataLayer,} from '../helpers/helpers'
 
-import avatar from "assets/img/faces/marc.jpg";
-import { isConstructSignatureDeclaration } from "typescript";
 import 'semantic-ui-css/semantic.min.css'
 import { Dropdown } from 'semantic-ui-react'
 
@@ -55,15 +42,6 @@ const styles = {
     textDecoration: "none"
   }
 };
-
-
-
-
-const periodicTime = [
-  {key:'10', text: '10 days', value: '10'}, 
-  {key:'20', text: '20 days', value: '20'}, 
-  {key:'30', text: '30 days', value: '30'},
-  {key:'60', text: '60 days', value: '60'}];
 
 const useStyles = makeStyles(styles);
 

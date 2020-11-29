@@ -1,5 +1,3 @@
-const { object } = require("prop-types");
-
 const mapData = [
   {
       "updated": 1601560189928,
@@ -34033,9 +34031,8 @@ return x.filter(ele => ele.maxDifference > 1 )
 
 
 const y = Math.max(...Object.values(dataForSms[0].timeline.cases))
-console.log(y, dataForSms[0].country , Math.min(...Object.values(dataForSms[0].timeline.cases)), 100*(Math.max(...Object.values(dataForSms[0].timeline.cases)) - Math.min(...Object.values(dataForSms[0].timeline.cases)))/Math.max(...Object.values(dataForSms[0].timeline.cases)))
+// console.log(y, dataForSms[0].country , Math.min(...Object.values(dataForSms[0].timeline.cases)), 100*(Math.max(...Object.values(dataForSms[0].timeline.cases)) - Math.min(...Object.values(dataForSms[0].timeline.cases)))/Math.max(...Object.values(dataForSms[0].timeline.cases)))
 
-console.log (getMaxDifferenceCasesForSms(dataForSms))
 
 function getMapDataLayer (mapData) {
   const notNullISO2Countries = mapData.filter(ele => ele["countryInfo"]['iso2']!==null)
@@ -34055,7 +34052,6 @@ function getMapDataLayer (mapData) {
 function digitFormat(num) {
     return '' + num.toFixed().replace(/(\d)(?=(\d{3})+(?!\d))/g, '1,')
  }
- console.log(digitFormat(5000000)); // $2,665.00
 
 function addCountryNameKey (favourites) {
     const x = favourites.map(ele => {
@@ -34064,7 +34060,6 @@ function addCountryNameKey (favourites) {
     
     return x
 }
-const favourites = ['af', 'ca' , 'eg']
 
 
 function getAllCountriesForDropDown (mapData) {
@@ -34079,34 +34074,17 @@ function getAllCountriesForDropDown (mapData) {
    return allCountries
 }
 
-
-const arrOfCode = [{country_name: 'af'}, {country_name: 'ca'} , {country_name: 'eg'}]
 function getFavouritesCountriesForDropDown (arrOfCode, mapData) {
     const allCountries = getAllCountriesForDropDown (mapData)
     const favCountries = arrOfCode.map (item => allCountries.find(ele => {return ele['text']===item['country_name'] }))
     return favCountries
 }
 
-
-
 ////////////////////////////////////////////////////get array of names to be saved into the db from arr of iso2
 function getArrofNameFromIso (arrOfIso, arrOfObjectOfDropDown) {
-    console.log(arrOfIso)
-    console.log(arrOfObjectOfDropDown)
     const favNamesArr = arrOfIso.map (item => arrOfObjectOfDropDown.find(ele => ele['key']===item).text) 
     return favNamesArr
 }
-
-
-
-
-// console.log(countryOptions.filter(ele => ele['text'] === fav.map(ele=>ele.txt)).length, countryOptions.length)
-
-//     const arr= countryOptions.filter(ele => !fav.filter(item => item.text ===ele.text).length )
-//     console.log(arr.length)
-
-
-
 
 
  export  {getMapDataLayer, getAllCountriesForDropDown, getFavouritesCountriesForDropDown, addCountryNameKey, getArrofNameFromIso, digitFormat, getMaxDifferenceCasesForSms, mapData}

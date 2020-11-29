@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { useHistory } from "react-router-dom";
+import React, { useState } from "react";
+// import { useHistory } from "react-router-dom";
 
 // core components
 import GridItem from "components/Grid/GridItem.js";
@@ -11,9 +11,7 @@ import Avatar from "@material-ui/core/Avatar";
 
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
-import Link from "@material-ui/core/Link";
 import Paper from "@material-ui/core/Paper";
-import Box from "@material-ui/core/Box";
 import Grid from "@material-ui/core/Grid";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
@@ -59,9 +57,8 @@ export default function Signup(props) {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
-  const [user, setUser] = useState({});
 
-  const history = useHistory();
+  // const history = useHistory();
   const classes = useStyles();
 
   const handleFirstNameChange = (e) => {
@@ -90,11 +87,7 @@ export default function Signup(props) {
     setMessage("");
     if (!first_name || !last_name || !email || !mobile || !password) {
       setError("All fields required!");
-      // setFirstName("");
-      // setLastName("");
-      // setMobile("");
-      // setEmail("");
-      // setPassword("");
+
       return;
     }
     const user = { first_name, last_name, email, password, mobile };

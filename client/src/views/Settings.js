@@ -1,55 +1,35 @@
 import React, { useState, useEffect } from "react";
 // @material-ui/core components
-import { makeStyles, withStyles } from "@material-ui/core/styles";
-import { Flag, Segment } from 'semantic-ui-react'
+import { makeStyles } from "@material-ui/core/styles";
+import { Flag } from 'semantic-ui-react'
 
 
 import "bootstrap/dist/css/bootstrap.min.css";
-import DropdownButton from "react-bootstrap/DropdownButton";
-import SplitButton from "react-bootstrap/SplitButton";
-import ButtonGroup from "react-bootstrap/ButtonGroup";
 
-import InputLabel from "@material-ui/core/InputLabel";
-
-import { green } from '@material-ui/core/colors';
 import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
-import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
-import CheckBoxIcon from '@material-ui/icons/CheckBox';
 import Alert from "@material-ui/lab/Alert";
 
 
-import moment from "moment";
 
 // core components
 import GridItem from "components/Grid/GridItem.js";
 import GridContainer from "components/Grid/GridContainer.js";
-import CustomInput from "components/CustomInput/CustomInput.js";
-import Button from "components/CustomButtons/Button.js";
 import Card from "components/Card/Card.js";
 import CardHeader from "components/Card/CardHeader.js";
-import CardAvatar from "components/Card/CardAvatar.js";
 import CardBody from "components/Card/CardBody.js";
-import CardFooter from "components/Card/CardFooter.js";
-import CasesChart from "components/CasesChart.js";
-import CardNews from "components/CardNews.js";
-import CardCountry from "components/CardCountry.js";
+
 import {
   getFavouritesCountriesForDropDown,
-  addCountryNameKey,
   getMapDataLayer,
   getArrofNameFromIso,
   getAllCountriesForDropDown,
-  getMaxDifferenceCasesForSms
-  
+  getMaxDifferenceCasesForSms,
 } from "../helpers/helpers";
 import AllCountriesSelection from "../components/AllCountriesSelection";
 
-import avatar from "assets/img/faces/marc.jpg";
-import { isConstructSignatureDeclaration } from "typescript";
 import "semantic-ui-css/semantic.min.css";
-import { Dropdown } from "semantic-ui-react";
 
 import '../assets/css/Settings.scss'
 
@@ -85,9 +65,9 @@ export default function Settings({
   deleteFavourites,
   sendSMS
 }) {
-  const [country, setCountry] = useState({
-    countryName: "",
-  });
+  // const [country, setCountry] = useState({
+  //   countryName: "",
+  // });
   const [favouritesFinal, setFavouritesFinal] = useState([]);
   const [user, setUser] = useState('');
 

@@ -1,10 +1,9 @@
 import React from "react";
 import "../../assets/css/InfoWindow.scss";
-import NumberFormat from "react-number-format";
 import {digitFormat} from '../../helpers/helpers'
 
 function InfoWindowName(props) {
-  const { country, cases, onClick, flag, deaths, recovered, updated } = props;
+  const { country, cases, flag, deaths, recovered } = props;
   console.log(props);
 
   return (

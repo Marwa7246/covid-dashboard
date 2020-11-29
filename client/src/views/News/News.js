@@ -1,7 +1,5 @@
 import React from "react";
 
-// @material-ui/core
-import { makeStyles } from "@material-ui/core/styles";
 // moment for time-zone calculation
 import moment from "moment";
 
@@ -11,21 +9,14 @@ import GridContainer from "components/Grid/GridContainer.js";
 
 import CardNews from "components/CardNews.js";
 
-import styles from "assets/jss/material-dashboard-react/views/dashboardStyle.js";
-
 import "../../App.scss";
 
-
-const useStyles = makeStyles(styles);
 
 export default function News({state}) {
 
   const worldCovidNews = state.worldCovidNews;
   console.log(worldCovidNews)
 
-  
-
-  const classes = useStyles();
   return (
     <div>
       <GridContainer>

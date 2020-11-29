@@ -1,23 +1,15 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import { Dropdown } from "semantic-ui-react";
 import { makeStyles } from "@material-ui/core/styles";
 
-import StateContext from "../StateContext";
-import { getAllCountriesForDropDown } from "../helpers/helpers";
-
 import GridItem from "components/Grid/GridItem.js";
 import GridContainer from "components/Grid/GridContainer.js";
-import CustomInput from "components/CustomInput/CustomInput.js";
 import Button from "components/CustomButtons/Button.js";
 import Card from "components/Card/Card.js";
 import CardHeader from "components/Card/CardHeader.js";
-import CardAvatar from "components/Card/CardAvatar.js";
 import CardBody from "components/Card/CardBody.js";
 import CardFooter from "components/Card/CardFooter.js";
-import CasesChart from "components/CasesChart.js";
-import CardNews from "components/CardNews.js";
-import { getMapDataLayer } from "../helpers/helpers";
-import CardCountry from "components/CardCountry.js";
+
 
 
 const styles = {
@@ -43,13 +35,10 @@ const useStyles = makeStyles(styles);
 
 const AllCountriesSelection = (props) => {
   console.log(props);
-  const { onSave, defaultValue, countryOptions } = props;
+  const { onSave, countryOptions } = props;
 
   const [error, setError] = useState("");
   const [allFavouriteCountries, setAllFavouriteCountries] = useState([]);
-  const state = useContext(StateContext);
-
-
 
   const classes = useStyles();
 

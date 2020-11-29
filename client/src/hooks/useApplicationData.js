@@ -1,7 +1,6 @@
 import { useEffect, useReducer } from "react";
 import axios from "axios";
 import dataReducer, {
-  SET_USER,
   SET_APPLICATION_DATA,
   SET_FAVOURITES,
   SET_FAVOURITE_COUNTRY_DATA,

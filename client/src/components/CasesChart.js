@@ -3,10 +3,8 @@ import ChartistGraph from "react-chartist";
 import React from "react";
 
 import { makeStyles } from "@material-ui/core/styles";
-import Icon from "@material-ui/core/Icon";
 // @material-ui/icons
 import ArrowUpward from "@material-ui/icons/ArrowUpward";
-import AccessTime from "@material-ui/icons/AccessTime";
 // core components
 import Card from "components/Card/Card.js";
 import CardHeader from "components/Card/CardHeader.js";
@@ -29,8 +27,6 @@ export default function CasesChart({
 }) {
   const delays = 80,
     durations = 500;
-  const delays2 = 80,
-    durations2 = 500;
 
   const chartInfo = {
     data: {

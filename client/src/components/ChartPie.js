@@ -1,11 +1,7 @@
 import ChartistGraph from "react-chartist";
-import legend from "chartist-plugin-legend";
-
 import React from "react";
 
 import { makeStyles } from "@material-ui/core/styles";
-
-import AccessTime from "@material-ui/icons/AccessTime";
 
 // core components
 

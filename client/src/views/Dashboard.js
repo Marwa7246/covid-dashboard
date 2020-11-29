@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 // react plugin for creating charts
 // @material-ui/core
 import {
   Container,
-  Grid
 } from '@material-ui/core';
 import { makeStyles } from "@material-ui/core/styles";
 // @material-ui/icons
@@ -15,16 +14,14 @@ import GridContainer from "components/Grid/GridContainer.js";
 
 import CasesChart from "components/CasesChart.js";
 import ChartPie from "components/ChartPie.js";
-import CardDashboard from "components/CardDashboard.js";
 import CardDashboard1 from "components/CardDashboard1.js";
 import styles from "assets/jss/material-dashboard-react/views/dashboardStyle.js";
+
 import Collapse from "@material-ui/core/Collapse";
 import "../App.scss";
 
 //
 import Switch from "@material-ui/core/Switch";
-import Paper from "@material-ui/core/Paper";
-import Fade from "@material-ui/core/Fade";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 //
 
@@ -32,7 +29,6 @@ const useStyles = makeStyles(styles);
 
 export default function Dashboard({ state }) {
   //
-  const classes123 = useStyles();
   const [checked, setChecked] = React.useState(true);
   const [checked1, setChecked1] = React.useState(true);
 
@@ -64,8 +60,6 @@ export default function Dashboard({ state }) {
   let canDeaths = [];
 
   if (!state.loading) {
-    //console.log(globalHistorical);
-    //console.log("currentGlobalData is @@@@", currentGlobalData);
     const casesObject = globalHistorical.cases;
     days = Object.keys(casesObject);
     cases = Object.values(casesObject).map((e) => Number(e) / 1000000);
@@ -82,7 +76,6 @@ export default function Dashboard({ state }) {
     canCases = Object.values(canCasesObj).map((e) => Number(e) / 1000);
     const canDeathsObj = historicalCanadaData.timeline.deaths;
     canDeaths = Object.values(canDeathsObj).map((e) => Number(e) / 1000);
-    //console.log("@@@@@@@@@@@@@@@@", historicalCanadaData.timeline.cases);
   }
 
   let publishedTime_World = moment.utc(currentGlobalData.updated).toDate();
@@ -173,32 +166,7 @@ export default function Dashboard({ state }) {
                 />
               </GridItem>
             </GridContainer>
-            {/* <GridContainer>
-              <GridItem xs={12} sm={6} md={4}>
-                <CardDashboard1
-                  statType={"Cases Today"}
-                  value={currentGlobalData.todayCases}
-                  statColor={"primary"}
-                  statIcon={"add_alert_outlined"}
-                />
-              </GridItem>
-              <GridItem xs={12} sm={6} md={4}>
-                <CardDashboard1
-                  statType={"Deaths Today"}
-                  value={currentGlobalData.todayDeaths}
-                  statColor={"danger"}
-                  statIcon={"warning"}
-                />
-              </GridItem>
-              <GridItem xs={12} sm={6} md={4}>
-                <CardDashboard1
-                  statType={"Recovered Today"}
-                  value={currentGlobalData.todayRecovered}
-                  statColor={"success"}
-                  statIcon={"accessibility_new_outlines"}
-                />
-              </GridItem>
-            </GridContainer> */}
+
             <GridContainer>
               <GridItem xs={12} sm={12} md={6}>
                 <CasesChart
@@ -242,7 +210,7 @@ export default function Dashboard({ state }) {
             </GridContainer>
             <GridContainer>
             <div>
-              <a
+              <p
                 style={{
                   fontStyle: "italic",
                   color: "blue",
@@ -251,7 +219,7 @@ export default function Dashboard({ state }) {
               >
                 <b>Updated:</b> {timeFormat_World}; <b>Sources:</b>{" "}
                 Worldometers, JHUCSSE {}
-              </a>
+              </p>
             </div>
             </GridContainer>
           </Collapse>
@@ -305,16 +273,7 @@ export default function Dashboard({ state }) {
                 />
               </GridItem>
             </GridContainer>
-            {/* <GridContainer>
-              <GridItem xs={12} sm={6} md={4}>
-                <CardDashboard1
-                  statType={"Recovered Today"}
-                  value={currentCanadaData.todayRecovered}
-                  statColor={"success"}
-                  statIcon={"accessibility_new_outlines"}
-                />
-              </GridItem>
-            </GridContainer> */}
+
             <GridContainer>
               <GridItem xs={12} sm={12} md={6}>
                 <CasesChart
@@ -341,7 +300,7 @@ export default function Dashboard({ state }) {
             </GridContainer>
             <GridContainer>
             <div>
-              <a
+              <p
                 style={{
                   fontStyle: "italic",
                   color: "blue",
@@ -350,7 +309,7 @@ export default function Dashboard({ state }) {
               >
                 <b>Updated:</b> {timeFormat_Canada}; <b>Sources:</b>{" "}
                 Worldometers, JHUCSSE {}
-              </a>
+              </p>
             </div>
             </GridContainer>
 
@@ -359,29 +318,6 @@ export default function Dashboard({ state }) {
       </div>
       <br />
 
-      {/* <div className={classes.root}>
-        <GridContainer>
-          <GridItem>
-            <h3 style={{ fontWeight: "bold" }}>Charts</h3>
-          </GridItem>
-          <GridItem>
-            <FormControlLabel
-              control={<Switch checked={checked2} onChange={handleChange2} />}
-              label="Show"
-            />
-          </GridItem>
-        </GridContainer>
-
-        <div className={classes.container}>
-          <Collapse in={checked2}>
-            <GridContainer>
-              <GridItem xs={12} sm={12} md={6}>
-                <ChartPie state={state} />
-              </GridItem>
-            </GridContainer>
-          </Collapse>
-        </div>
-      </div> */}
             </Container>
 
     </div>

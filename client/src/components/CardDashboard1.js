@@ -9,7 +9,6 @@ import Card from "components/Card/Card.js";
 import CardHeader from "components/Card/CardHeader.js";
 import CardIcon from "components/Card/CardIcon.js";
 import CardFooter from "components/Card/CardFooter.js";
-import AccessTime from "@material-ui/icons/AccessTime";
 
 import styles from "assets/jss/material-dashboard-react/views/dashboardStyle.js";
 

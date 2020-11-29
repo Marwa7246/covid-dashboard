@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   Switch,
   Route,
   Redirect,
-  BrowserRouter as Router,
 } from "react-router-dom";
 // creates a beautiful scrollbar
 import PerfectScrollbar from "perfect-scrollbar";
@@ -26,18 +25,8 @@ import styles from "assets/jss/material-dashboard-react/layouts/adminStyle.js";
 import bgImage from "assets/img/north_america.png";
 import logo from "assets/img/covid.png";
 import useApplicationData from "hooks/useApplicationData";
-import useUserData from "hooks/useUserData";
 
-import Dashboard from "views/Dashboard.js";
-import News from "views/News/News.js";
-import Favourites from "views/Favourites.js";
-import Icons from "views/Icons/Icons.js";
-import Maps from "../Maps/Maps";
-import Login from "views/Login";
-import Signup from "views/Signup";
-import Logout from "views/Logout";
-import { isPropertySignature } from "typescript";
-import { getMapDataLayer, getMaxDifferenceCasesForSms } from "../../helpers/helpers";
+import { getMapDataLayer } from "../../helpers/helpers";
 
 let ps;
 
@@ -79,30 +68,6 @@ export default function Application({ ...rest }) {
 
 
 
-
-
-  // const newRoutes = (routes) => {
-  //   let new_routes2 = []
-  //   for(let route of routes){
-  //     if (route.name !== 'Login'){
-  //       new_routes2.push(route)
-  //       console.log('added')
-  //     }
-  //   }
-  //   return new_routes2
-  // }
-
-  // React.useEffect(() => {
-  //   const user = JSON.stringify(localStorage.getItem("user"));
-  //   console.log("Application user email", user );
-  //   setUser(user)
-  //   setNewRoutes(newRoutes(routes))
-  //   console.log(`new_routes: ${newRoutes(routes)}`)
-  // }, []);
-  // let new_routes = routes
-  // if (user){
-  //   new_routes = newRoutes(routes)
-  // }
 
   const switchRoutes = (
     <Switch>

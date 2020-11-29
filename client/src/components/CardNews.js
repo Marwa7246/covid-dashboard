@@ -59,7 +59,7 @@ export default function CardNews(props) {
                   </p>
                 </div>
                 <div className="news-link">
-                  <a href={newsURL} target="_blank" style={{ color: "red" }}>
+                  <a href={newsURL} target="_blank" rel="noopener noreferrer"style={{ color: "red" }}>
                     Click here to read full article...
                   </a>
                 </div>
