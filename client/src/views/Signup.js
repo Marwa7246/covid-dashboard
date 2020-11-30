@@ -50,8 +50,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Signup(props) {
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
+  const [first_name, setFirstName] = useState("");
+  const [last_name, setLastName] = useState("");
   const [mobile, setMobile] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -85,12 +85,12 @@ export default function Signup(props) {
     e.preventDefault();
     setError("");
     setMessage("");
-    if (!firstName || !lastName || !email || !mobile || !password) {
+    if (!first_name || !last_name || !email || !mobile || !password) {
       setError("All fields required!");
 
       return;
     }
-    const user = { firstName, lastName, email, password, mobile };
+    const user = { first_name, last_name, email, password, mobile };
     axios
       .post(`${process.env.REACT_APP_API_BASE_URL}api/users`, { user })
       .then((res) => {
@@ -146,7 +146,7 @@ export default function Signup(props) {
                 labelText="First Name"
                 id="first-name"
                 placeholder="First Name"
-                value={firstName}
+                value={first_name}
                 onChange={handleFirstNameChange}
                 formControlProps={{
                   fullWidth: true,
@@ -159,7 +159,7 @@ export default function Signup(props) {
                 labelText="Last Name"
                 id="last-name"
                 placeholder="Last Name"
-                value={lastName}
+                value={last_name}
                 onChange={handleLastNameChange}
                 formControlProps={{
                   fullWidth: true,
