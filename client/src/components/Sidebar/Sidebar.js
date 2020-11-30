@@ -34,7 +34,6 @@ import styles from "assets/jss/material-dashboard-react/components/sidebarStyle.
 const useStyles = makeStyles(styles);
 
 export default function Sidebar(props) {
-  //console.log(props.user);
   const user = props.user;
   const [route, setRoutes] = useState(routes);
 
@@ -42,41 +41,7 @@ export default function Sidebar(props) {
   const firstName = localStorage.getItem("userFirstName");
   const userString = `Welcome ${firstName}!`;
 
-  // console.log("from sidebar email", email, "end");
 
-  // const newRoutes = (routes) => {
-  //   let new_routes2 = [];
-  //   for (let route of routes) {
-  //     if (route.name !== "Login" && route.name !== "Signup") {
-  //       new_routes2.push(route);
-  //       console.log("added");
-  //     }
-  //   }
-  //   return new_routes2;
-  // };
-  // const loggedRoutes = (routes) => {
-  //   let new_routes2 = [];
-  //   for (let route of routes) {
-  //     if (route.name !== "Favourites" && route.name !== "Logout") {
-  //       new_routes2.push(route);
-  //       console.log("added");
-  //     }
-  //   }
-  //   return new_routes2;
-  // };
-
-  // React.useEffect(() => {
-  //   // setEmail(localStorage.getItem("userEmail"));
-  //   // console.log('from sidebar email', email, 'end')
-
-  //   let loggedUser = localStorage.getItem("user");
-  //   console.log(`loggedUser: ${JSON.stringify(loggedUser)}`);
-  //   if (loggedUser !== "null") {
-  //     setRoutes(newRoutes(routes));
-  //   } else {
-  //     setRoutes(loggedRoutes(routes));
-  //   }
-  // }, []);
 
   const classes = useStyles();
   // verifies if routeName is the one active (in browser input)
@@ -85,56 +50,7 @@ export default function Sidebar(props) {
   }
   const { color, logo, image, logoText } = props;
 
-  // var links = (
-  //   <List className={classes.list}>
-  //     {route.map((prop, key) => {
-  //       // var activePro = " ";
-  //       var listItemClasses;
-  //       // if (prop.path === "/upgrade-to-pro") {
-  //       //   activePro = classes.activePro + " ";
-  //       //   listItemClasses = classNames({
-  //       //     [" " + classes[color]]: true,
-  //       //   });
-  //       // } else {
-  //       listItemClasses = classNames({
-  //         [" " + classes[color]]: activeRoute(prop.path),
-  //       });
-  //       // }
-  //       const whiteFontClasses = classNames({
-  //         [" " + classes.whiteFont]: activeRoute(prop.path),
-  //       });
-  //       return (
-  //         <>
-  //           <NavLink
-  //             to={prop.path}
-  //             className={classes.item}
-  //             activeClassName="active"
-  //             key={key}
-  //           >
-  //             <ListItem button className={classes.itemLink + listItemClasses}>
-  //               {typeof prop.icon === "string" ? (
-  //                 <Icon
-  //                   className={classNames(classes.itemIcon, whiteFontClasses)}
-  //                 >
-  //                   {prop.icon}
-  //                 </Icon>
-  //               ) : (
-  //                 <prop.icon
-  //                   className={classNames(classes.itemIcon, whiteFontClasses)}
-  //                 />
-  //               )}
-  //               <ListItemText
-  //                 primary={prop.name}
-  //                 className={classNames(classes.itemText, whiteFontClasses)}
-  //                 disableTypography={true}
-  //               />
-  //             </ListItem>
-  //           </NavLink>
-  //         </>
-  //       );
-  //     })}
-  //   </List>
-  // );
+  
   //////////////////////////////////////////////////////////////
   const listItemClasses0 = classNames({
     [" " + classes[color]]: activeRoute(route[0].path),

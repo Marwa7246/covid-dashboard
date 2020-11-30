@@ -4,7 +4,6 @@ import {digitFormat} from '../../helpers/helpers'
 
 function InfoWindowName(props) {
   const { country, cases, flag, deaths, recovered } = props;
-  console.log(props);
 
   return (
     <div className="InfoWindow">

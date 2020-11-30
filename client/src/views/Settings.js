@@ -9,10 +9,6 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
-import Alert from "@material-ui/lab/Alert";
-
-
-
 // core components
 import GridItem from "components/Grid/GridItem.js";
 import GridContainer from "components/Grid/GridContainer.js";
@@ -22,7 +18,6 @@ import CardBody from "components/Card/CardBody.js";
 
 import {
   getFavouritesCountriesForDropDown,
-  getMapDataLayer,
   getArrofNameFromIso,
   getAllCountriesForDropDown,
   getMaxDifferenceCasesForSms,
@@ -95,7 +90,7 @@ export default function Settings({
   const classes = useStyles();
 
 
-  const mapData = getMapDataLayer(state.mapData);
+  // const mapData = getMapDataLayer(state.mapData);
   // !state.loading && console.log(mapData[0]);
 
 

@@ -19,10 +19,9 @@ export default function AdminNavbarLinks() {
 
   const history = useHistory();
 
-  useEffect(() => {
-    const user = JSON.stringify(localStorage.getItem("user"));
-    console.log("AdminNavbarLink user email", user);
-  }, []);
+  // useEffect(() => {
+  //   const user = JSON.stringify(localStorage.getItem("user"));
+  // }, []);
 
   // const handleClickNotification = (event) => {
   //   if (openNotification && openNotification.contains(event.target)) {
@@ -48,7 +47,6 @@ export default function AdminNavbarLinks() {
   const handleLogout = () => {
     localStorage.setItem("user", null);
     localStorage.setItem("token", null);
-    console.log("Logging out");
     history.push("/dashboard");
   };
 

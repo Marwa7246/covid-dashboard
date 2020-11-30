@@ -30,7 +30,6 @@ export default function Header(props) {
     if (name === "Logout") return;
     else return name;
   }
-  // console.log(makeBrand());
 
   const { color } = props;
   const appBarClasses = classNames({

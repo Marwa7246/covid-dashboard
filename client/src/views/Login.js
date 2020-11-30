@@ -51,7 +51,7 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const [user, setUser] = useState({});
+  // const [user, setUser] = useState({});
 
   const history = useHistory();
 
@@ -92,7 +92,7 @@ export default function Login() {
   };
 
   const handleLogin = (user) => {
-    setUser(user);
+    // setUser(user);
     const token = localStorage.getItem("token");
 
     if (token) {
@@ -103,7 +103,7 @@ export default function Login() {
           },
         })
         .then((res) => {
-          setUser(res.data);
+          // setUser(res.data);
           handleAuthClick();
         });
     }

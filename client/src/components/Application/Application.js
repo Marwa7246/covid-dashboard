@@ -61,7 +61,7 @@ export default function Application({ ...rest }) {
   } = useApplicationData();
 
 
-  const [user, setUser] = useState("");
+  // const [user, setUser] = useState("");
   // const [new_routes, setNewRoutes] = useState([])
   let mapData = [];
   if (!state.loading) mapData = getMapDataLayer(state.mapData);
@@ -74,14 +74,14 @@ export default function Application({ ...rest }) {
       {routes.map((prop, key) => {
         // console.log("PROPS are: ", prop);
         const Component = prop.component;
-        if (Component === "Favourites" && user) console.log("from application");
+        // if (Component === "Favourites" && user) console.log("from application");
         return (
           <Route key={key} path={prop.path}>
             <Component
               state={state}
               saveFavourites={saveFavourites}
               deleteFavourites={deleteFavourites}
-              user={user}
+              // user={user}
               getFavourites={getFavourites}
               getHistoricalCountry={getHistoricalCountry}
               sendSMS={sendSMS}
@@ -159,7 +159,7 @@ export default function Application({ ...rest }) {
             handleDrawerToggle={handleDrawerToggle}
             open={mobileOpen}
             color={color}
-            user={user}
+            // user={user}
             {...rest}
           />
           <div className={classes.mainPanel} ref={mainPanel}>

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 // react plugin for creating charts
 // @material-ui/core
 import {
@@ -18,7 +18,7 @@ import CardDashboard1 from "components/CardDashboard1.js";
 import styles from "assets/jss/material-dashboard-react/views/dashboardStyle.js";
 
 import Collapse from "@material-ui/core/Collapse";
-import "../App.scss";
+// import "../App.scss";
 
 //
 import Switch from "@material-ui/core/Switch";
@@ -47,10 +47,9 @@ export default function Dashboard({ state }) {
   const currentCanadaData = state.currentCanadaData;
   const historicalCanadaData = state.historicalCanadaData;
 
-  useEffect(() => {
-    const userEmail = JSON.stringify(localStorage.getItem("userEmail"));
-    console.log("Dashboard user email2", userEmail);
-  }, []);
+  // useEffect(() => {
+  //   const userEmail = JSON.stringify(localStorage.getItem("userEmail"));
+  // }, []);
 
   let days = [];
   let cases = [];
@@ -203,7 +202,7 @@ export default function Dashboard({ state }) {
                   period="20"
                 />
               </GridItem>
-              <GridItem xs={24} sm={24} md={6}>
+              <GridItem xs={12} sm={12} md={6}>
                 <ChartPie state={state} />
               </GridItem>
 

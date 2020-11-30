@@ -9,7 +9,7 @@ import GridContainer from "components/Grid/GridContainer.js";
 
 import CardNews from "components/CardNews.js";
 
-import "../../App.scss";
+// import "../../App.scss";
 
 
 export default function News({state}) {

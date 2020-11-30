@@ -9,10 +9,10 @@ import {mapData, getMapDataLayer} from '../../helpers/helpers'
 
 //  import jason from './jason'
 
-const mapStyles = {
-  width: '100%',
-  height: '100%'
-};
+// const mapStyles = {
+//   width: '100%',
+//   height: '100%'
+// };
 
   const mapDataNew = getMapDataLayer(mapData);
 

@@ -42,7 +42,6 @@ const useApplicationData = () => {
       axios.get(" https://disease.sh/v3/covid-19/historical/canada?lastdays=30"),
       axios.get(" https://disease.sh/v3/covid-19/historical?lastdays=7")
     ]).then((all) => {
-      console.log('test')
       // update the state with the result
       dispatch({
         type: SET_APPLICATION_DATA,
@@ -61,7 +60,6 @@ const useApplicationData = () => {
 
   function saveFavourites(allFavouriteCountries) {
     const email = localStorage.getItem("userEmail");
-    // console.log(email);
     const token = localStorage.getItem("token");
 
     return axios({
@@ -72,7 +70,6 @@ const useApplicationData = () => {
       },
       data: { email: email, country_name: allFavouriteCountries },
     }).then((res) => {
-      // console.log("After saving favourites from userApplicationData", res.data);
       localStorage.setItem("favourites", JSON.stringify(res.data.favourites));
       dispatch({
         type: SET_FAVOURITES,
