@@ -82,7 +82,6 @@ const useApplicationData = () => {
 
   function deleteFavourites(countryName) {
     const email = localStorage.getItem("userEmail");
-    // console.log(email);
     const token = localStorage.getItem("token");
 
     return axios({
@@ -93,10 +92,6 @@ const useApplicationData = () => {
       },
       data: { email: email, country_name: countryName },
     }).then((res) => {
-      console.log(
-        "After deleting favourite from userApplicationData",
-        res.data
-      );
       localStorage.setItem("favourites", JSON.stringify(res.data.favourites));
       dispatch({
         type: SET_FAVOURITES,
@@ -108,11 +103,7 @@ const useApplicationData = () => {
   function getFavourites(userEmail) {
     const email = localStorage.getItem("userEmail");
 
-    // const email="test2@gmail.com";
-    console.log("from getFavourites", userEmail);
-
     return axios.get(`${process.env.REACT_APP_API_BASE_URL}api/users/${email}`).then((res) => {
-      console.log("after axios get", res.data);
       dispatch({ type: SET_FAVOURITES, allFavouriteCountries: res.data });
     });
   }
@@ -122,14 +113,10 @@ const useApplicationData = () => {
 
     const newsUrlCountry = `https://gnews.io/api/v4/search?q=covid&token=${process.env.REACT_APP_NEWS_API_KEY}&lang=en&country=${countryName}`;
 
-    console.log('countryName',countryName, newsUrlCountry);
-
     return Promise.all([
       axios.get(historicalCountryUrl),
       axios.get(newsUrlCountry),
     ]).then((all) => {
-      console.log("after axios get", all[0].data);
-      console.log("after axios get", all[1].data);
       dispatch({
         type: SET_FAVOURITE_COUNTRY_DATA,
         favouriteCountryHistorical: all[0].data,
@@ -150,8 +137,7 @@ const useApplicationData = () => {
       },
       data: { countries: countries, email: email },
     }).then((res) => {
-      console.log("After sending SMS", res);
-
+      // console.log("After sending SMS", res);
     });
   }
 

@@ -7,8 +7,8 @@ import { Flag } from 'semantic-ui-react'
 import "bootstrap/dist/css/bootstrap.min.css";
 
 import FormGroup from '@material-ui/core/FormGroup';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Checkbox from "@material-ui/core/Checkbox";
 // core components
 import GridItem from "components/Grid/GridItem.js";
 import GridContainer from "components/Grid/GridContainer.js";
@@ -26,10 +26,7 @@ import AllCountriesSelection from "../components/AllCountriesSelection";
 
 import "semantic-ui-css/semantic.min.css";
 
-import '../assets/css/Settings.scss'
-
-
-
+import "../assets/css/Settings.scss";
 
 const styles = {
   cardCategoryWhite: {
@@ -74,31 +71,32 @@ export default function Settings({
 
   useEffect(() => {
     setFavouritesFinal(JSON.parse(localStorage.getItem("favourites")));
-    console.log(JSON.parse(localStorage.getItem("favourites")));
     const email = localStorage.getItem("userEmail");
     setUser(email);
   }, []);
 
-  const favouritesForDropDown = user &&    
-    getFavouritesCountriesForDropDown(favouritesFinal, state.mapData);
+  const favouritesForDropDown =
+    user && getFavouritesCountriesForDropDown(favouritesFinal, state.mapData);
 
    const countryOptionsAll = getAllCountriesForDropDown(state.mapData);
 
-  const countryOptions = user && countryOptionsAll.filter(ele =>  !favouritesForDropDown.filter(item=>item.text === ele.text).length )
-
+  const countryOptions =
+    user &&
+    countryOptionsAll.filter(
+      (ele) =>
+        !favouritesForDropDown.filter((item) => item.text === ele.text).length
+    );
 
   const classes = useStyles();
 
 
   // const mapData = getMapDataLayer(state.mapData);
-  // !state.loading && console.log(mapData[0]);
 
 
   const ValidateSendSMS = () => {
   const countriesOfHighIncrease = getMaxDifferenceCasesForSms(state.historicalCountriesForSms)
 
     if (!state.loading && countriesOfHighIncrease.length) {
-      console.log ('countriesOfHighIncrease', countriesOfHighIncrease)
       sendSMS(countriesOfHighIncrease)
     }
   }
@@ -106,11 +104,8 @@ export default function Settings({
 
 
 const onSave = (favourites) => {
-    // console.log(favourites);
     const arrOfFavCountryNames = getArrofNameFromIso(favourites, countryOptions);
-    // console.log(arrOfFavCountryNames, favourites)
     saveFavourites(arrOfFavCountryNames)
-      .then(() => console.log(localStorage.getItem("favourites")))
       .then(() => setFavouritesFinal(JSON.parse(localStorage.getItem("favourites"))))
       .then(()=>ValidateSendSMS())
   };
@@ -118,13 +113,10 @@ const onSave = (favourites) => {
 
 
    const handleChangeRemove = (event) => {
-      const newFav = favouritesForDropDown.filter(ele => ele.text!==event.target.name )
       setTotal({...total, country: event.target.name});
-      console.log (event.target, newFav)
 
       deleteFavourites(event.target.name)
       .then(()=> {
-        console.log(JSON.parse(localStorage.getItem("favourites")))
         setFavouritesFinal(JSON.parse(localStorage.getItem("favourites")))
       })
       

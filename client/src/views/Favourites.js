@@ -51,11 +51,9 @@ export default function Favourites({state, saveFavourites, getHistoricalCountry}
 
   const [user, setUser] = useState('');
   const [favouritesFinal, setFavouritesFinal] = useState([]);
-  console.log (state)
   
   useEffect(() => {
     setFavouritesFinal(JSON.parse(localStorage.getItem("favourites")));
-    console.log(JSON.parse(localStorage.getItem("favourites")))
     const email = localStorage.getItem("userEmail");
     setUser(email);
   }, []);
@@ -66,7 +64,6 @@ export default function Favourites({state, saveFavourites, getHistoricalCountry}
   const favouriteCountryHistorical = state.favouriteCountryHistorical;
   const favouriteCountryNews = state.favouriteCountryNews;
 
-  !state.loadingFavouriteCountry && console.log('ffff', favouriteCountryNews)
 
   const newsList = !state.loadingFavouriteCountry &&
     favouriteCountryNews.articles.map((item, index) => {
@@ -89,7 +86,6 @@ export default function Favourites({state, saveFavourites, getHistoricalCountry}
 
     
   const mapData = getMapDataLayer(state.mapData)
-  !state.loading && console.log(mapData[0])
 
   
   let days = [];
@@ -103,30 +99,33 @@ export default function Favourites({state, saveFavourites, getHistoricalCountry}
     cases = Object.values(casesObject).map((e) => Number(e) / 1000);
 
     const deathsObject = favouriteCountryHistorical.timeline.deaths;
-    deaths = Object.values(deathsObject).map(
-      (e) => Number(e) / 1000
-    );
+    deaths = Object.values(deathsObject).map((e) => Number(e) / 1000);
   }
 
   const handleChange = (e: any, data?: any) => {
-    // e.preventDefault()    
-    console.log('handleChange',  e.target, data.value)
+    // e.preventDefault()
     getHistoricalCountry(data.value,  country.period)
-    .then(()=>setCountry(prev=>({...prev, countryName: data.value, error:''})))
-    .catch(() => {
-      setCountry(prev=>({...prev, countryName: data.value, error: 'This country does not have historical data'}));
-      console.log('state.loadingFavouriteCountry',state.loadingFavouriteCountry)
-    })
-  }
-
+      .then(() =>
+        setCountry((prev) => ({ ...prev, countryName: data.value, error: "" }))
+      )
+      .catch(() => {
+        setCountry((prev) => ({
+          ...prev,
+          countryName: data.value,
+          error: "This country does not have historical data",
+        }));
+      });
+  };
 
   const handleChangeTimeRadio = (e) => {
-    console.log('time',e.target.value)
-    setCountry(prev=>({...prev, period: e.target.value}))
-    country.countryName && getHistoricalCountry(country.countryName, e.target.value)
-    .catch(() => {
-      setCountry(prev=>({...prev, period: e.target.value, error: 'This country does not have historical data'}));
-      console.log('state.loadingFavouriteCountry',state.loadingFavouriteCountry)
+    setCountry((prev) => ({ ...prev, period: e.target.value }));
+    country.countryName &&
+      getHistoricalCountry(country.countryName, e.target.value).catch(() => {
+        setCountry((prev) => ({
+          ...prev,
+          period: e.target.value,
+          error: "This country does not have historical data",
+        }));
     })
   }
 
