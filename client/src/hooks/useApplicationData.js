@@ -39,8 +39,10 @@ const useApplicationData = () => {
       axios.get(newsUrl),
       axios.get(" https://disease.sh/v3/covid-19/all"),
       axios.get(" https://disease.sh/v3/covid-19/countries/canada?strict=true"),
-      axios.get(" https://disease.sh/v3/covid-19/historical/canada?lastdays=30"),
-      axios.get(" https://disease.sh/v3/covid-19/historical?lastdays=7")
+      axios.get(
+        " https://disease.sh/v3/covid-19/historical/canada?lastdays=30"
+      ),
+      axios.get(" https://disease.sh/v3/covid-19/historical?lastdays=7"),
     ]).then((all) => {
       // update the state with the result
       dispatch({
@@ -64,7 +66,7 @@ const useApplicationData = () => {
 
     return axios({
       method: "POST",
-      url: `${process.env.REACT_APP_API_BASE_URL}api/favourites`,
+      url: `${process.env.REACT_APP_API_BASE_URL}api/users/favourites`,
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -85,7 +87,7 @@ const useApplicationData = () => {
 
     return axios({
       method: "DELETE",
-      url: `${process.env.REACT_APP_API_BASE_URL}api/favourites/${email}`,
+      url: `${process.env.REACT_APP_API_BASE_URL}api/users/favourites/${countryName}`,
       headers: {
         Authorization: `Bearer ${token}`,
       },
