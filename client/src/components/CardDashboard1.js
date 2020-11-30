@@ -23,7 +23,6 @@ export default function CardDashboard1(props) {
     footerTitle,
     footerValue,
   } = props;
-  // console.log(props)
 
   const classes = useStyles();
   return (

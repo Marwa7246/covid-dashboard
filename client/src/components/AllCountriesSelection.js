@@ -34,7 +34,6 @@ const styles = {
 const useStyles = makeStyles(styles);
 
 const AllCountriesSelection = (props) => {
-  console.log(props);
   const { onSave, countryOptions } = props;
 
   const [error, setError] = useState("");

@@ -15,7 +15,6 @@ import styles from "assets/jss/material-dashboard-react/views/dashboardStyle.js"
 const useStyles = makeStyles(styles);
 
 export default function ChartPie({ state }) {
-  //  console.log(state)
 
   const yesterdayContinents = state.yesterdayContinents;
 

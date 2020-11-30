@@ -18,7 +18,6 @@ import "../assets/css/CardNews.scss";
 const useStyles = makeStyles(styles);
 
 export default function CardNews(props) {
-  console.log("props", props);
   const {
     newsTitle,
     newsDescription,
@@ -28,7 +27,6 @@ export default function CardNews(props) {
     image,
   } = props;
 
-  console.log("image", image);
 
   const classes = useStyles();
   return (
