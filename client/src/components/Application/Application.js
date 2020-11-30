@@ -11,7 +11,7 @@ import "perfect-scrollbar/css/perfect-scrollbar.css";
 import { makeStyles } from "@material-ui/core/styles";
 // core components
 import Navbar from "components/Navbars/Navbar.js";
-import Footer from "components/Footer/Footer.js";
+// import Footer from "components/Footer/Footer.js";
 import Sidebar from "components/Sidebar/Sidebar.js";
 import FixedPlugin from "components/FixedPlugin/FixedPlugin.js";
 
@@ -29,22 +29,6 @@ import useApplicationData from "hooks/useApplicationData";
 import { getMapDataLayer } from "../../helpers/helpers";
 
 let ps;
-
-// const switchRoutes = (
-//   <Switch>
-//     {routes.map((prop, key) => {
-//       console.log(prop)
-//         return (
-//           <Route
-//             path={prop.path}
-//             component={prop.component}
-//             key={key}
-//           />
-//         );
-//     })}
-//     <Redirect from="/" to="/dashboard" />
-//   </Switch>
-// );
 
 const useStyles = makeStyles(styles);
 
@@ -72,9 +56,7 @@ export default function Application({ ...rest }) {
   const switchRoutes = (
     <Switch>
       {routes.map((prop, key) => {
-        // console.log("PROPS are: ", prop);
         const Component = prop.component;
-        // if (Component === "Favourites" && user) console.log("from application");
         return (
           <Route key={key} path={prop.path}>
             <Component
@@ -121,9 +103,9 @@ export default function Application({ ...rest }) {
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
-  const getRoute = () => {
-    return window.location.pathname !== "/maps";
-  };
+  // const getRoute = () => {
+  //   return window.location.pathname !== "/maps";
+  // };
   const resizeFunction = () => {
     if (window.innerWidth >= 960) {
       setMobileOpen(false);
@@ -173,7 +155,7 @@ export default function Application({ ...rest }) {
             <div className={classes.content}>
               <div className={classes.container}>{switchRoutes}</div>
             </div>
-            {getRoute() ? <Footer /> : null}
+            {/* {getRoute() ? <Footer /> : null} */}
             <FixedPlugin
               handleImageClick={handleImageClick}
               handleColorClick={handleColorClick}
