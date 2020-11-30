@@ -1,5 +1,6 @@
 class User < ApplicationRecord
   has_secure_password
+  has_many :favourites
   
   def self.authenticate_with_credentials(email, password)
     user = self.find_by_email(email)

@@ -1,22 +1,23 @@
 Rails.application.routes.draw do
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 
+
   namespace :api do
-    resource :users, only: [:create, :show] do
+    resource :users, only: [:create ] do
     resources :favourites, only: [:create, :destroy] 
     end
 
     # resources :data
     resources :twilios , only: [:create]
 
-    get '/users/:email', to: 'users#show'
-    get '/users', to: 'users#index'
-    delete '/users/favourites/:email', to: 'favourites#destroy'
+    get 'users/:email', to: 'users#show'
+    get 'users', to: 'users#index'
+    delete '/users/favourites/:country_name', to: 'favourites#destroy'
 
   end
 
 
-  get '/news' => '/news#index'
+  get 'api/news' => 'api/news#index'
   
 
   post "/login", to: "auth#login"
