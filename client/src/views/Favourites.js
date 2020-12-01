@@ -79,7 +79,7 @@ export default function Favourites({state, saveFavourites, getHistoricalCountry}
             newsURL={item.url}
             newsPublishedAt={timeFormat}
             source={item.source.name}
-            urlToImage={item.urlToImage}
+            image={item.image}
           />
       );
     })
@@ -236,12 +236,7 @@ const favouritesForDropDown = user && favouritesFinal.length > 0 && !state.loadi
          />
         }
         </GridItem>
-
       </GridContainer>
-
-
-
-
                   {/* Containter of charts */}
 
       { country.countryName && !country.error &&    
@@ -271,22 +266,13 @@ const favouritesForDropDown = user && favouritesFinal.length > 0 && !state.loadi
             warning="warning"
           /> 
         </GridItem>
-
-
-      </GridContainer>
-
-      
+      </GridContainer>      
       <GridContainer>
-
         <GridItem xs={12} sm={12} md={6}>
         {newsList[0]}
-
         </GridItem>
-
-
         <GridItem xs={12} sm={12} md={6}>
             {newsList[1]}
-
         </GridItem>
       </GridContainer>
 </>

@@ -43,7 +43,8 @@ export default function CardNews(props) {
               </h4>
             </CardHeader>
             <CardBody className="news-card-body">
-              <div className="news-part1">
+            <GridContainer>
+            <GridItem xs={12} sm={12} md={8}>
                 <div className="news-description">
                   <p
                     className={classes.cardTitle}
@@ -57,15 +58,22 @@ export default function CardNews(props) {
                   </p>
                 </div>
                 <div className="news-link">
-                  <a href={newsURL} target="_blank" rel="noopener noreferrer"style={{ color: "red" }}>
+                  <a
+                    href={newsURL}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{ color: "red" }}
+                  >
                     Click here to read full article...
                   </a>
                 </div>
-              </div>
 
-              <div className="news-part2">
+              </GridItem>
+
+        <GridItem xs={12} sm={12} md={4}>
                 <img src={image} alt={newsTitle} />
-              </div>
+                </GridItem>
+              </GridContainer>
             </CardBody>
             <CardFooter stats className="news-card-footer">
               <div className={classes.stats}>
