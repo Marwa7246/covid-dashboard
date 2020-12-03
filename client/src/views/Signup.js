@@ -99,7 +99,7 @@ export default function Signup(props) {
       })
       .catch((err) => {
         console.log(err);
-        setError(err);
+        setError("err");
       });
 
     setFirstName("");
@@ -174,6 +174,7 @@ export default function Signup(props) {
                 value={mobile}
                 onChange={handleMobileChange}
                 id="mobile"
+                type="number"
                 formControlProps={{
                   fullWidth: true,
                 }}
@@ -184,6 +185,7 @@ export default function Signup(props) {
                 //required
                 fullWidth
                 id="email"
+                type="email"
                 value={email}
                 onChange={handleEmailChange}
                 label="Email Address"
