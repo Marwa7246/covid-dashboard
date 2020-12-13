@@ -1,6 +1,7 @@
 # COVID-19 Dashboard
 
 COVID Dashboard is a full stack responsive web application built with ReactJS as the front-end and ruby-on-rails as the back-end. The dashboard lets you view COVID-19 statistics and the related news for different countries across the world.
+https://covid19dashboard2020.netlify.app/dashboard
 
 ## Dependencies
 
