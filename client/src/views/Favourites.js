@@ -62,11 +62,22 @@ export default function Favourites({state, saveFavourites, getHistoricalCountry}
   const classes = useStyles();
 
   const favouriteCountryHistorical = state.favouriteCountryHistorical;
-  const favouriteCountryNews = state.favouriteCountryNews;
+  const favouriteCountryNewsDuplicated = state.favouriteCountryNews;
+
+  let favouriteCountryNews = [];
+  if (!state.loading) {
+    favouriteCountryNews = favouriteCountryNewsDuplicated.articles.filter((ele, index) => {
+      return (
+        favouriteCountryNewsDuplicated.articles.findIndex(
+          (obj) => obj.title === ele.title
+        ) === index
+      );
+    });
+  }
 
 
   const newsList = !state.loadingFavouriteCountry &&
-    favouriteCountryNews.articles.map((item, index) => {
+    favouriteCountryNews.map((item, index) => {
       let publishedTime = moment.utc(item.publishedAt).toDate();
       let localTime = moment(publishedTime)
         .local()

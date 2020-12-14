@@ -27,7 +27,6 @@ export default function CardNews(props) {
     image,
   } = props;
 
-
   const classes = useStyles();
   return (
     <div>

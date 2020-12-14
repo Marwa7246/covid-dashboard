@@ -11,17 +11,24 @@ import CardNews from "components/CardNews.js";
 
 // import "../../App.scss";
 
+export default function News({ state }) {
+  const worldCovidNewsDuplicated = state.worldCovidNews;
 
-export default function News({state}) {
-
-  const worldCovidNews = state.worldCovidNews;
-  console.log(worldCovidNews)
-
+  let worldCovidNews = [];
+  if (!state.loading) {
+    worldCovidNews = worldCovidNewsDuplicated.articles.filter((ele, index) => {
+      return (
+        worldCovidNewsDuplicated.articles.findIndex(
+          (obj) => obj.title === ele.title
+        ) === index
+      );
+    });
+  }
   return (
     <div>
       <GridContainer>
         {!state.loading &&
-          worldCovidNews.articles.map((item, index) => {
+          worldCovidNews.map((item, index) => {
             let publishedTime = moment.utc(item.publishedAt).toDate();
             let localTime = moment(publishedTime)
               .local()
@@ -30,6 +37,7 @@ export default function News({state}) {
             return (
               <GridItem xs={12} sm={12} md={12}>
                 <CardNews
+                  key={index}
                   newsTitle={item.title}
                   newsDescription={item.description}
                   newsURL={item.url}
