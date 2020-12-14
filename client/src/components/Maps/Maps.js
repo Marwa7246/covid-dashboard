@@ -3,7 +3,7 @@ import { Map, GoogleApiWrapper, InfoWindow, Marker } from 'google-maps-react';
 import InfoWindowName from './InfoWindowName'
 // import InfoWindowEx from './InfoWindowEX'
 
-import {mapData, getMapDataLayer} from '../../helpers/helpers'
+import {getMapDataLayer} from '../../helpers/helpers'
 
 // import {dataLayer} from './helpers'
 
@@ -13,8 +13,8 @@ import {mapData, getMapDataLayer} from '../../helpers/helpers'
 //   width: '100%',
 //   height: '100%'
 // };
+// const mapDataNew = getMapDataLayer(mapData);
 
-  const mapDataNew = getMapDataLayer(mapData);
 
 export class MapContainer extends Component {
 
@@ -44,27 +44,35 @@ export class MapContainer extends Component {
     }
   };
 
-  render() {
-    const customMarkerMap2 = mapDataNew.map((elem) => {
-      return (
-        <Marker
-          key={elem.country}
-          position={elem.position}
-          onClick={this.onMarkerClick}
-          name={
-            <InfoWindowName
-              country={elem.country}
-              updated={elem.updated}
-              cases={elem.cases}
-              flag={elem.flag}
-              deaths={elem.deaths}
-              recovered={elem.recovered}
-            />
-          }
-        />
-      );
-    });
 
+  render() {
+    const mapDataNew2 =
+   getMapDataLayer(this.props.state.mapData);
+
+    // console.log(this.props)
+    const customMarkerMap2 =
+      !this.props.state.loading &&
+      mapDataNew2.map((elem) => {
+        return (
+          <Marker
+            key={elem.country}
+            position={elem.position}
+            onClick={this.onMarkerClick}
+            name={
+              <InfoWindowName
+                country={elem.country}
+                updated={elem.updated}
+                cases={elem.cases}
+                flag={elem.flag}
+                deaths={elem.deaths}
+                recovered={elem.recovered}
+              />
+            }
+          />
+        );
+      });
+    
+  
     return (
       <Map
         google={this.props.google}
@@ -75,7 +83,7 @@ export class MapContainer extends Component {
           lng: -6.8233,
         }}
       >
-        {this.props.loaded && customMarkerMap2}
+        {!this.props.state.loading && customMarkerMap2}
 
         <InfoWindow
           marker={this.state.activeMarker}

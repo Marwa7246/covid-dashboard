@@ -94,7 +94,7 @@ export default function Signup(props) {
     axios
       .post(`${process.env.REACT_APP_API_BASE_URL}api/users`, { user })
       .then((res) => {
-        console.log(res.data.user);
+        // console.log(res.data.user);
         setMessage("Registration Successful! Please login to proceed...");
       })
       .catch((err) => {

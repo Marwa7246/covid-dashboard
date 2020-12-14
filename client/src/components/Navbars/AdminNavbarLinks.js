@@ -44,11 +44,11 @@ export default function AdminNavbarLinks() {
   //   setOpenProfile(null);
   // };
 
-  const handleLogout = () => {
-    localStorage.setItem("user", null);
-    localStorage.setItem("token", null);
-    history.push("/dashboard");
-  };
+  // const handleLogout = () => {
+  //   localStorage.setItem("user", null);
+  //   localStorage.setItem("token", null);
+  //   history.push("/dashboard");
+  // };
 
   return (
     <div>
