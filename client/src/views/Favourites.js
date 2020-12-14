@@ -65,7 +65,7 @@ export default function Favourites({state, saveFavourites, getHistoricalCountry}
   const favouriteCountryNewsDuplicated = state.favouriteCountryNews;
 
   let favouriteCountryNews = [];
-  if (!state.loading) {
+  if (!state.loadingFavouriteCountry) {
     favouriteCountryNews = favouriteCountryNewsDuplicated.articles.filter((ele, index) => {
       return (
         favouriteCountryNewsDuplicated.articles.findIndex(
