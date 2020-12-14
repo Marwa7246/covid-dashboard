@@ -1,9 +1,5 @@
-import React, { useState } from "react";
-import {
-  Switch,
-  Route,
-  Redirect,
-} from "react-router-dom";
+import React from "react";
+import { Switch, Route, Redirect } from "react-router-dom";
 // creates a beautiful scrollbar
 import PerfectScrollbar from "perfect-scrollbar";
 import "perfect-scrollbar/css/perfect-scrollbar.css";
@@ -26,7 +22,7 @@ import bgImage from "assets/img/north_america.png";
 import logo from "assets/img/covid.png";
 import useApplicationData from "hooks/useApplicationData";
 
-import { getMapDataLayer } from "../../helpers/helpers";
+// import { getMapDataLayer } from "../../helpers/helpers";
 
 let ps;
 
@@ -47,8 +43,8 @@ export default function Application({ ...rest }) {
 
   // const [user, setUser] = useState("");
   // const [new_routes, setNewRoutes] = useState([])
-  let mapData = [];
-  if (!state.loading) mapData = getMapDataLayer(state.mapData);
+  // let mapData = [];
+  // if (!state.loading) mapData = getMapDataLayer(state.mapData);
 
 
 

@@ -52,7 +52,7 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [user, setUser] = useState({});
-  const [favouritesFinal, setFavouritesFinal] = useState([]);
+  // const [favouritesFinal, setFavouritesFinal] = useState([]);
 
   const history = useHistory();
 
