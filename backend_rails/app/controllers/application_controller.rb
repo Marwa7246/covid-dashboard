@@ -27,7 +27,7 @@ before_action :require_login
         if !decoded_hash.empty? 
             puts decoded_hash.class
             user_id = decoded_hash[0]['user_id']
-            @user = User.find_by(id: user_id)
+            @user = User.find_by(id: user_id).slice(:id, :email, :first_name)
         else
             nil 
         end
